@@ -6,14 +6,16 @@ use App\Models\Product;
 
 class ProductService
 {
-    static function getAllProducts($id = null){
-        if(!$id){
+    static function getAllProducts($id = null)
+    {
+        if (!$id) {
             return Product::all();
         }
         return Product::find($id);
     }
 
-    static function addOrUpdateProduct($data, $product){
+    static function addOrUpdateProduct($data, $product)
+    {
 
         $product->name = $data["name"] ?? $product->name;
         $product->description = $data["description"] ?? $product->description;
@@ -23,6 +25,20 @@ class ProductService
 
         $product->save();
         return $product;
+    }
 
+    static function deleteProduct($id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return null;
+        }
+
+        if ($product->delete()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

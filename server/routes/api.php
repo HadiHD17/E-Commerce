@@ -19,6 +19,7 @@ Route::group(["prefix" => "v0.1"], function () {
             
             Route::get("products/{id?}", [AdminProductController::class, "getAllProducts"]);
             Route::post("add_update_product/{id?}", [AdminProductController::class, "addOrUpdateProduct"]);
+            Route::get("delete_product/{id}", [AdminProductController::class, "deleteProduct"]);
             
         });
     });

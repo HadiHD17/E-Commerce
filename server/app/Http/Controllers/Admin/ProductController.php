@@ -36,14 +36,33 @@ class ProductController extends Controller
             $data = $request->all();
             $product = ProductService::addOrUpdateProduct($data, $product);
 
-            if($product){
+            if ($product) {
                 return $this->responseJSON($product);
             }
 
             return $this->responseJSON(null, "Failed to save product", 400);
-
         } catch (Exception $e) {
-            return $this->responseJSON(null, "erver error while saving product", 500);
+            return $this->responseJSON(null, "Server error while saving product", 500);
+        }
+    }
+
+    public function deleteProduct($id)
+    {
+        try {
+
+            if ($id) {
+                $deleted = ProductService::deleteProduct($id);
+
+                if ($deleted) {
+                    return $this->responseJSON(null);
+                } else {
+                    return $this->responseJSON(null, "Product not found", 400);
+                }
+            } else {
+                return $this->responseJSON(null, "Product id is required", 400);
+            }
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Server error while deleting product", 500);
         }
     }
 }
