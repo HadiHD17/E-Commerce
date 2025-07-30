@@ -1,0 +1,27 @@
+:root {
+    --radius-base: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-full: 9999px;
+}
+
+.rounded-base {
+    border-radius: var(--radius-base);
+}
+.rounded-md {
+    border-radius: var(--radius-md);
+}
+.rounded-lg {
+    border-radius: var(--radius-lg);
+}
+.rounded-xl {
+    border-radius: var(--radius-xl);
+}
+.rounded-2xl {
+    border-radius: var(--radius-2xl);
+}
+.rounded-full {
+    border-radius: var(--radius-full);
+}
