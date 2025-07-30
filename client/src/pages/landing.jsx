@@ -1,3 +1,3 @@
 export default function LandingPage() {
-    return <>LandingPage</>;
+    return <>HI LandingPage</>;
 }
