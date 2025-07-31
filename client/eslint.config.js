@@ -8,7 +8,7 @@ export default defineConfig([
     globalIgnores(["dist"]),
     {
         files: ["**/*.{js,jsx}"],
-        ignores: ["./src/tests/**/*.{.js,jsx}", "./src/**/*.{js,jsx}"],
+        ignores: ["./tests/**/*.{js,jsx}", "./src/**/*.{js,jsx}"],
         extends: [
             js.configs.recommended,
             reactHooks.configs["recommended-latest"],

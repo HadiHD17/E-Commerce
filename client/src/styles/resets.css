@@ -22,16 +22,6 @@ html {
 }
 
 /*
-Sections
-========
-*/
-
-body {
-    min-height: 100vh; /* for browsers that don't support `dvh` yet */
-    min-height: 100dvh;
-}
-
-/*
 Text-level semantics
 ====================
 */
