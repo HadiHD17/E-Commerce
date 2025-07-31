@@ -4,6 +4,7 @@ use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController as AdminProductImageControler;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,6 +25,12 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("product_images/{id?}", [AdminProductImageControler::class, "getAllProductImages"]);
             Route::get("product_images_by_product_id/{product_id}", [AdminProductImageControler::class, "getAllImagesByProductId"]);
             Route::post("add_update_product_image/{id?}", [AdminProductImageControler::class, "addOrUpdateProductImage"]);
+            
+            // Admin Order Routes
+            Route::get("todays_orders", [AdminOrderController::class, "getTodaysOrders"]);
+            Route::get("todays_revenue", [AdminOrderController::class, "getTodaysRevenue"]);
+            Route::get("revenue", [AdminOrderController::class, "getRevenue"]);
+            Route::post("set_order_status/{order_id}", [AdminOrderController::class, "setOrderStatus"]);
             
         });
     });
