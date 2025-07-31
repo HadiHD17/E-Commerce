@@ -1,0 +1,40 @@
+# Dependency directories
+node_modules
+.pnpm
+.yarn
+.npm
+
+# Build output
+dist
+build
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Local environment variables
+.env
+.env.*.local
+
+# Editor directories and files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Tests and coverage
+coverage
+*.test.*
+__tests__
+__mocks__
+
+# Misc
+*.log
+*.tgz
+*.bak
+*.old
