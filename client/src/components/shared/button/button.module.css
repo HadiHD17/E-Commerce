@@ -1,0 +1,46 @@
+.button {
+    border-radius: var(--radius-md);
+
+    font-size: var(--fs-button);
+    font-weight: var(--fw-bold);
+
+    padding-inline: var(--spacing-5);
+    padding-block: var(--spacing-3);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button--var-filled {
+    color: var(--color-white);
+    background-color: var(--btn-bg-filled);
+}
+.button--var-outlined {
+    border: 2px solid var(--btn-border-color);
+    color: var(--btn-border-color);
+}
+.button--var-faded {
+    background-color: var(--btn-bg-faded);
+    color: var(--btn-text-faded);
+}
+
+.button--clr-brand {
+    --btn-bg-filled: var(--color-brand-500);
+    --btn-bg-faded: var(--color-brand-100);
+    --btn-text-faded: var(--color-brand-700);
+    --btn-border-color: var(--color-brand-700);
+}
+.button--clr-gray {
+    --btn-bg-filled: var(--color-gray-900);
+    --btn-bg-faded: var(--color-gray-100);
+    --btn-text-faded: var(--color-gray-900);
+    --btn-border-color: var(--color-gray-900);
+}
+.button--clr-danger {
+    --btn-bg-filled: var(--color-danger-500);
+    --btn-bg-faded: var(--color-danger-100);
+    --btn-text-faded: var(--color-danger-700);
+    --btn-border-color: var(--color-danger-700);
+}

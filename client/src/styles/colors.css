@@ -1,0 +1,27 @@
+:root {
+    --color-white: #fff;
+    --color-black: #000;
+
+    --color-brand-100: hsla(236, 76%, 92%, 1);
+    --color-brand-500: hsla(236, 80%, 57%, 1);
+    --color-brand-700: hsla(236, 61%, 44%, 1);
+    --color-brand-900: hsla(236, 60%, 29%, 1);
+
+    --color-gray-100: hsla(0, 0%, 96%, 1);
+    --color-gray-300: hsla(0, 0%, 75%, 1);
+    --color-gray-500: hsla(0, 0%, 45%, 1);
+    --color-gray-700: hsla(0, 0%, 28%, 1);
+    --color-gray-900: hsla(0, 0%, 12%, 1);
+
+    --color-danger-100: hsla(2, 90%, 90%, 1);
+    --color-danger-300: hsla(3, 96%, 77%, 1);
+    --color-danger-500: hsla(3, 82%, 48%, 1);
+    --color-danger-700: hsla(3, 75%, 34%, 1);
+    --color-danger-900: hsla(4, 86%, 18%, 1);
+
+    --color-success-100: hsla(101, 66%, 86%, 1);
+    --color-success-300: hsla(101, 92%, 76%, 1);
+    --color-success-500: hsla(101, 74%, 42%, 1);
+    --color-success-700: hsla(101, 80%, 29%, 1);
+    --color-success-900: hsla(101, 87%, 14%, 1);
+}
