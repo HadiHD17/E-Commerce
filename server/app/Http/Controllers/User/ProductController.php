@@ -19,5 +19,13 @@ class ProductController extends Controller{
         }
     }
     
+    public function getProductsByCategory($category){
+        try {
+            $products = ProductService::getProductsByCategory($category);
+            return $this->responseJSON($products);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to retreive products");
+        }
+    }
     
 }

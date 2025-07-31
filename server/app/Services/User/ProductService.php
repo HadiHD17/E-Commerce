@@ -14,5 +14,8 @@ class ProductService
         return Product::find($id);
     }
 
+    static function getProductsByCategory($category){
+        return Product::where("category", $category)->get();
+    }
     
 }
