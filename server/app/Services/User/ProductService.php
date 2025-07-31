@@ -17,5 +17,15 @@ class ProductService
     static function getProductsByCategory($category){
         return Product::where("category", $category)->get();
     }
+
+    static function getProductsHighToLow() {
+    return Product::orderBy('price', 'desc')->get();
+}
+
+
+   static function getProductsLowToHigh() {
+    return Product::orderBy('price', 'asc')->get();
+}
+
     
 }
