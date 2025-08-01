@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function getCartItems($id = null)
+    public function getCartItems(Request $request)
     {
-        $cartItems = CartService::getCartItems($id);
+        $cartItems = CartService::getCartItems($request);
         return $this->responseJSON($cartItems);
     }
 
