@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController as AdminProductImageControler;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\Common\FeatureController;
 use App\Http\Controllers\User\CheckoutController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,12 @@ Route::group(["prefix" => "v0.1"], function () {
             // Cart Routes
             Route::get("cart_items", [CartController::class, "getCartItems"]);
             Route::post("add_to_cart", [CartController::class, "addToCart"]);
+
+            // Notification Routes
+            Route::get("notifications", [NotificationController::class, "getNotifications"]);
+            Route::get("notifications/unread", [NotificationController::class, "getUnreadNotifications"]);
+            Route::post("notifications/mark_as_read", [NotificationController::class, "markAsRead"]);
+            Route::post("notifications/mark_all_as_read", [NotificationController::class, "markAllAsRead"]);
         });
 
         Route::group(["prefix" => "common"], function () {
