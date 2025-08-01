@@ -15,7 +15,7 @@ class OrderService
     public static function getTodaysOrders()
     {
         $today = Carbon::today();
-        
+
         return Order::with(['user', 'orderItems.product'])
             ->whereDate('created_at', $today)
             ->orderBy('created_at', 'desc')
@@ -28,11 +28,11 @@ class OrderService
     public static function getTodaysRevenue()
     {
         $today = Carbon::today();
-        
+
         $revenue = Order::whereDate('created_at', $today)
             ->where('status', '!=', 'cancelled')
             ->sum('total_price');
-            
+
         return [
             'date' => $today->format('Y-m-d'),
             'revenue' => $revenue,
@@ -46,17 +46,17 @@ class OrderService
     public static function getRevenue($startDate = null, $endDate = null)
     {
         $query = Order::where('status', '!=', 'cancelled');
-        
+
         if ($startDate) {
             $query->whereDate('created_at', '>=', $startDate);
         }
-        
+
         if ($endDate) {
             $query->whereDate('created_at', '<=', $endDate);
         }
-        
+
         $revenue = $query->sum('total_price');
-        
+
         return [
             'start_date' => $startDate,
             'end_date' => $endDate,
@@ -68,17 +68,26 @@ class OrderService
     /**
      * Set order status
      */
-    public static function setOrderStatus($orderId, $status)
+    public static function setOrderStatus($orderId)
     {
         $order = Order::find($orderId);
-        
+
         if (!$order) {
             return null;
         }
-        
-        $order->status = $status;
+
+        $statuses = ['pending', 'paid', 'packed', 'shipped'];
+        $currentStatus = $order->status;
+        $currentIndex = array_search($currentStatus, $statuses);
+
+        if ($currentIndex === false || $currentIndex === count($statuses) - 1) {
+            return $order->load(['user', 'orderItems.product']); // Already at final status
+        }
+
+        $nextStatus = $statuses[$currentIndex + 1];
+        $order->status = $nextStatus;
         $order->save();
-        
+
         return $order->load(['user', 'orderItems.product']);
     }
-} 
+}

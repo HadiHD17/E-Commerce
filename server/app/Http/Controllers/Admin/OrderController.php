@@ -34,7 +34,7 @@ class OrderController extends Controller
         try {
             $startDate = $request->get('start_date');
             $endDate = $request->get('end_date');
-            
+
             $revenue = OrderService::getRevenue($startDate, $endDate);
             return $this->responseJSON($revenue);
         } catch (Exception $e) {
@@ -42,22 +42,19 @@ class OrderController extends Controller
         }
     }
 
-    public function setOrderStatus(Request $request, $orderId)
+    public function setOrderStatus($orderId)
     {
         try {
-            $request->validate([
-                'status' => 'required|in:pending,paid,packed,shipped,cancelled'
-            ]);
 
-            $result = OrderService::setOrderStatus($orderId, $request->status);
-            
+            $result = OrderService::setOrderStatus($orderId);
+
             if ($result) {
                 return $this->responseJSON($result, "Order status updated successfully");
             }
-            
+
             return $this->responseJSON(null, "Order not found", 404);
         } catch (Exception $e) {
             return $this->responseJSON(null, "Failed to update order status", 500);
         }
     }
-} 
+}
