@@ -7,12 +7,14 @@ use App\Models\Product;
 class ProductService
 {
 
-    static function getAllProducts($id = null){
-        if(!$id){
+    static function getAllProducts($id = null)
+    {
+        if (!$id) {
             return Product::all();
         }
         return Product::find($id);
     }
+
 
     static function getProductsByCategory($category){
         return Product::where("category", $category)->get();
@@ -28,4 +30,5 @@ class ProductService
 }
 
     
+
 }

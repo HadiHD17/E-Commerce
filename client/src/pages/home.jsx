@@ -1,33 +1,22 @@
-import Button from "@/components/shared/button";
+import Input from "@/components/shared/input";
 
 export default function HomePage() {
     return (
-        <>
-            HI <Button color="brand">hi theres</Button>
-            <Button color="danger">theres</Button>
-            <Button color="gray">hi theres</Button>
-            <div>
-                <Button variant="outlined" color="brand">
-                    theres
-                </Button>
-                <Button variant="outlined" color="danger">
-                    theres
-                </Button>
-                <Button variant="outlined" color="gray">
-                    theres
-                </Button>
-            </div>
-            <div>
-                <Button variant="faded" color="brand">
-                    theres
-                </Button>
-                <Button variant="faded" color="danger">
-                    theres
-                </Button>
-                <Button variant="faded" color="gray">
-                    theres
-                </Button>
-            </div>
-        </>
+        <div
+            className="d-flex flex-col gap-8"
+            style={{ margin: 24, maxWidth: 400 }}
+        >
+            <Input label="Email" type="text" placeholder="email@example.com" />
+            <Input label="Password" type="password" />
+            <Input label="Password" type="password" withPasswordToggle />
+            <Input label="label" readOnly defaultValue="test" />
+            <Input
+                label="Password"
+                type="password"
+                withPasswordToggle
+                error="password is required"
+            />
+            <div style={{ marginBlock: 48 }}></div>
+        </div>
     );
 }

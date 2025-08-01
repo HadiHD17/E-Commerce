@@ -1,0 +1,42 @@
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+.input__label {
+    margin-bottom: var(--spacing-1\.5);
+}
+
+.input__control {
+    padding: var(--spacing-3);
+    border: 2px solid var(--color-gray-300);
+    box-shadow: var(--shadow-2xs);
+}
+.input__control:has(:focus) {
+    border-color: var(--color-brand-700);
+}
+.input--error .input__control {
+    border-color: var(--color-danger-700);
+    color: var(--color-danger-700);
+}
+.input--readonly .input__control {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.input__field {
+    outline: none;
+}
+
+.input__password-toggle {
+    font-size: 1.25rem;
+    height: 1.25rem;
+
+    margin-inline-start: var(--spacing-2);
+}
+
+.input__error {
+    margin-top: var(--spacing-1);
+    text-align: start;
+    color: var(--color-danger-700);
+}
