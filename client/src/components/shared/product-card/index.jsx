@@ -1,16 +1,33 @@
 import React from "react";
-
+import "./product-card.css";
+// import {Heart } from "@phosphor-icons/react";
 
 const ProductCard = ({ name, img, price, stock, category, newPrice }) => {
-    return <div className="product-card">
-        <div className="product-img">
-            <img src={img}></img>
+    return (
+        <div className="product-card">
+            {/* <Heart /> */}
+            <div className="product-img">
+                <img src={img}></img>
+            </div>
             <div className="product-category">{category}</div>
             <div className="product-name">{name}</div>
-            <div className="product-price">{price}$</div>
-            <div className="product-stock">{stock} left in stock</div>
+            <div className="product-price">
+                {newPrice ? (
+                    <>
+                        
+                        <div className="original-price">{price}$</div>
+                        <div className="current-price">{newPrice}$</div>
+                    </>
+                ) : (
+                    <div className="current-price">{price}$</div>
+                )}
+            </div>
+
+            <div className={`product-stock ${stock === 0 ? "out" : ""}`}>
+                {stock === 0 ? "Out of stock" : `${stock} left in stock`}
+            </div>
         </div>
-    </div>;
+    );
 };
 
 export default ProductCard;
