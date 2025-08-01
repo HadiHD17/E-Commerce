@@ -6,6 +6,7 @@ use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController as AdminProductImageControler;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\Common\FeatureController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,10 @@ Route::group(["prefix" => "v0.1"], function () {
             // Account Routes
             Route::put("account/edit", [AccountController::class, "editAccount"]);
             Route::get("account/orders", [AccountController::class, "getUserOrders"]);
+
+            Route::get("products_by_search/{search}", [ProductController::class, "getProductsBySearch"]);
+            Route::get("cart_items", [CartController::class, "getCartItems"]);
+            Route::post("add_to_cart", [CartController::class, "addToCart"]);
         });
 
         Route::group(["prefix" => "common"], function () {
