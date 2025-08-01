@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { AxiosError } from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import Input from "@/components/shared/input";
-import Button from "@/components/shared/button";
-import AuthLayoutHeader from "@/components/layouts/auth-layout/auth-layout-header";
+import { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import api from "@/api";
+import AuthLayoutHeader from "@/components/layouts/auth-layout/auth-layout-header";
+import Button from "@/components/shared/button";
 import ErrorAlert from "@/components/shared/error-alert";
+import Input from "@/components/shared/input";
 import Auth from "@/utils/auth";
 
 export default function LoginPage() {
@@ -37,6 +37,10 @@ export default function LoginPage() {
         } finally {
             setIsSubmitting(false);
         }
+    }
+
+    if (Auth.isLoggedIn()) {
+        return <Navigate to="/" replace />;
     }
 
     return (
