@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Traits\ResponseTrait;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -50,5 +51,35 @@ class AuthController extends Controller
     {
         $this->authService->logout();
         return ResponseTrait::responseJSON(null, 'Logged out successfully');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'email' => 'required|email|exists:users,email',
+            ]);
+
+            $result = $this->authService->forgotPassword($data['email']);
+            return $this->responseJSON($result);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to send reset email");
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'email' => 'required|email',
+                'token' => 'required|string',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+
+            $result = $this->authService->resetPassword($data);
+            return $this->responseJSON($result);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to reset password");
+        }
     }
 }

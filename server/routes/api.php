@@ -58,6 +58,8 @@ Route::group(["prefix" => "v0.1"], function () {
     Route::group(["prefix" => "guest"], function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login',    [AuthController::class, 'login']);
+        Route::post('forgot_password', [AuthController::class, 'forgotPassword']);
+        Route::post('reset_password', [AuthController::class, 'resetPassword']);
     });
 
 
