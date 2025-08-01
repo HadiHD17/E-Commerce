@@ -13,10 +13,6 @@
 
 ### Structure Rules
 
-- **Tests**: Unit/component tests are colocated with the file being tested
-  (e.g., `Component.test.jsx`).
-    - Otherwise if implementing e2e or broader, non-component-specific tests,
-      write them in `tests/`
 - **Assets**: Assets that you'll **IMPORT in your JS code** (e.g. images and
   fonts) should be located in `src/assets/`.
     - Otherwise, add them to the `public/` folder

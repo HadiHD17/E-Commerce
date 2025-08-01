@@ -96,3 +96,13 @@
 .flex-nowrap {
     flex-wrap: nowrap;
 }
+
+.text-center {
+    text-align: center;
+}
+.text-start {
+    text-align: start;
+}
+.text-end {
+    text-align: end;
+}

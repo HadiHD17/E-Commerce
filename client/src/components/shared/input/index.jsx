@@ -28,7 +28,6 @@ export default function Input({
 
     return (
         <div
-            data-testid="input-root"
             className={cls(
                 styles.input,
                 error && styles["input--error"],
@@ -69,10 +68,7 @@ export default function Input({
                 )}
             </div>
             {error && (
-                <p
-                    data-testid="input-error"
-                    className={cls(styles.input__error, "fs-caption")}
-                >
+                <p className={cls(styles.input__error, "fs-caption")}>
                     {error}
                 </p>
             )}

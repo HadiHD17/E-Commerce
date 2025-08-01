@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "typeRoots": ["./types", "./node_modules/@types", "./node_modules"],
-        "types": ["vitest/globals"],
         "paths": {
             "@/*": ["./src/*"]
         }
