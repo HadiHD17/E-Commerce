@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductImageController as AdminProductImageContro
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\Common\FeatureController;
+use App\Http\Controllers\User\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,12 +20,16 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("products/{id?}", [ProductController::class, "getAllProducts"]);
             Route::get("products_by_category/{category}", [ProductController::class, "getProductsByCategory"]);
             Route::get("products_by_price/{filter}", [ProductController::class, "getProductsByPrice"]);
-            
+            Route::get("products_by_search/{search}", [ProductController::class, "getProductsBySearch"]);
+
+            // Checkout Routes
+            Route::post("checkout", [CheckoutController::class, "processCheckout"]);
+
             // Account Routes
             Route::put("account/edit", [AccountController::class, "editAccount"]);
             Route::get("account/orders", [AccountController::class, "getUserOrders"]);
 
-            Route::get("products_by_search/{search}", [ProductController::class, "getProductsBySearch"]);
+            // Cart Routes
             Route::get("cart_items", [CartController::class, "getCartItems"]);
             Route::post("add_to_cart", [CartController::class, "addToCart"]);
         });

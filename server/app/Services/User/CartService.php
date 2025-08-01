@@ -3,15 +3,17 @@
 namespace App\Services\User;
 
 use App\Models\CartItem;
+use Illuminate\Http\Request;
 
 class CartService
 {
-    static function getCartItems($id = null)
+    static function getCartItems(Request $request)
     {
-        if (!$id) {
-            return CartItem::all();
-        }
-        return CartItem::find($id);
+        $userId = $request->input('user_id');
+
+        $cartItems = CartItem::where('user_id', $userId)->get();
+
+        return $cartItems;
     }
     static function addToCart($data, $cartItem)
     {
