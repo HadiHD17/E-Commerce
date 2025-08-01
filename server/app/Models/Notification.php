@@ -8,4 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_id',
+        'type',
+        'message',
+        'is_read',
+    ];
+
+    /**
+     * Get the user that owns the notification
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
