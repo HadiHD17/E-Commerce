@@ -1,9 +1,5 @@
 import Input from "@/components/shared/input";
-
 import Navbar from "@/components/shared/navbar";
-
-
-import ProductCard from "@/components/shared/product-card";
 
 export default function HomePage() {
     return (
@@ -22,7 +18,6 @@ export default function HomePage() {
                 withPasswordToggle
                 error="password is required"
             />
-            <div style={{ marginBlock: 48 }}></div>
         </div>
     );
 }

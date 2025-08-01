@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ShoppingCartSimpleIcon, UserIcon } from "@phosphor-icons/react";
 import Button from "../button";
 import Input from "../input";
-import { ShoppingCart, User } from "lucide-react"; // react-lucide icons
-import "./navbar.css"; // Assuming you have a CSS file for styling
+import "./navbar.css";
 
 export default function Navbar() {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -41,45 +41,44 @@ export default function Navbar() {
                     placeholder="Search products..."
                     aria-label="Search products"
                 />
-                <Button
-                    type="submit"
-                    variant="filled"
-                    color="brand"
-                    children="Search"
-                />
+                <button type="submit" variant="filled" color="brand">
+                    Search
+                </button>
             </form>
 
             <div className="right">
-                {!isSignedIn ? (
-                    <>
-                        <Button
-                            variant="filled"
-                            color="brand"
-                            onClick={handleLogin}
-                            children="Login"
-                        />
-                        <Button
-                            variant="filled"
-                            color="brand"
-                            onClick={handleRegister}
-                            children="Register"
-                        />
-                    </>
-                ) : (
+                {isSignedIn ? (
                     <>
                         <Button
                             variant="filled"
                             color="brand"
                             onClick={() => navigate("/cart")}
                         >
-                            <ShoppingCart size={20} />
+                            <ShoppingCartSimpleIcon size={20} />
                         </Button>
                         <Button
                             variant="filled"
                             color="brand"
                             onClick={() => navigate("/profile")}
                         >
-                            <User size={20} />
+                            <UserIcon size={20} />
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <Button
+                            variant="filled"
+                            color="brand"
+                            onClick={handleLogin}
+                        >
+                            Login
+                        </Button>
+                        <Button
+                            variant="filled"
+                            color="brand"
+                            onClick={handleRegister}
+                        >
+                            Register
                         </Button>
                     </>
                 )}

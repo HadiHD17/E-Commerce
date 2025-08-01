@@ -8,8 +8,7 @@
   `example-component.jsx`, `user-slice.js`, `use-foo.js`).
 - **Components**: Each component folder must contain three files:
     - `index.jsx` → component entry point
-    - `<component-name>.module.css` → styles scoped to the component
-    - `<component-name>.test.jsx` → unit/component tests
+    - `<component-name>.css` → styles scoped to the component
 
 ### Structure Rules
 
