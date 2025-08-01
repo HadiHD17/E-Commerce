@@ -1,29 +1,39 @@
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Input from "@/components/shared/input";
+import Button from "@/components/shared/button";
+import Auth from "@/utils/auth";
 import api from "@/api";
 import AuthLayoutHeader from "@/components/layouts/auth-layout/auth-layout-header";
-import Button from "@/components/shared/button";
 import ErrorAlert from "@/components/shared/error-alert";
-import Input from "@/components/shared/input";
-import Auth from "@/utils/auth";
 
-export default function LoginPage() {
+export default function RegisterPage() {
     const navigate = useNavigate();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+
+    const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        if (confirmPassword !== password) {
+            return setError("Password and Confirm Password fields must match");
+        }
 
         try {
             setError(null);
             setIsSubmitting(true);
 
-            const { data } = await api.post("/guest/login", {
+            const { data } = await api.post("/guest/register", {
+                name: fullName,
                 email,
+                phone: phoneNumber,
                 password,
             });
 
@@ -48,10 +58,19 @@ export default function LoginPage() {
 
     return (
         <>
-            <AuthLayoutHeader>Welcome Back</AuthLayoutHeader>
+            <AuthLayoutHeader>Create Your Account</AuthLayoutHeader>
             <form className="auth-layout__form" onSubmit={handleSubmit}>
                 <Input
-                    label="Email"
+                    label="Full Name*"
+                    type="text"
+                    value={fullName}
+                    onChange={e => setFullName(e.target.value)}
+                    placeholder="John Doe"
+                    error={error?.errors?.name}
+                    required
+                />
+                <Input
+                    label="Email*"
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
@@ -60,25 +79,38 @@ export default function LoginPage() {
                     required
                 />
                 <Input
-                    label="Password"
+                    label="Phone Number"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={e => setPhoneNumber(e.target.value)}
+                    error={error?.errors?.phone}
+                    placeholder="+1 23456789"
+                />
+                <Input
+                    label="Password*"
                     type="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder="Your password..."
+                    withPasswordToggle
                     error={error?.errors?.password}
+                    required
+                />
+                <Input
+                    label="Confirm Password*"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                    placeholder="Re-enter your password..."
                     withPasswordToggle
                     required
                 />
-                <p>
-                    <Link to="/forgot-password">Forgot password?</Link>
-                </p>
-
                 <Button type="submit" variant="filled" disabled={isSubmitting}>
-                    {isSubmitting ? "Logging in..." : "Log in"}
+                    {isSubmitting ? "Registering..." : "Register"}
                 </Button>
 
                 <p className="text-center">
-                    Don't Have An Account? <Link to="/register">Sign up</Link>
+                    Already have an account? <Link to="/login">Log in</Link>
                 </p>
 
                 {error && <ErrorAlert error={error} />}
