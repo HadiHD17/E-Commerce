@@ -1,16 +1,42 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { AxiosError } from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "@/components/shared/input";
 import Button from "@/components/shared/button";
 import AuthLayoutHeader from "@/components/layouts/auth-layout/auth-layout-header";
+import api from "@/api";
+import ErrorAlert from "@/components/shared/error-alert";
+import Auth from "@/utils/auth";
 
 export default function LoginPage() {
+    const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        alert("submitted");
+
+        try {
+            setError(null);
+            setIsSubmitting(true);
+
+            const { data } = await api.post("/guest/login", {
+                email,
+                password,
+            });
+
+            Auth.saveSession(data.payload);
+            navigate("/");
+        } catch (err) {
+            if (err instanceof AxiosError) {
+                setError(err.response.data.status);
+                console.warn(err.response.data);
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
     return (
@@ -38,13 +64,15 @@ export default function LoginPage() {
                     <Link to="/forgot-password">Forgot password?</Link>
                 </p>
 
-                <Button type="submit" variant="filled">
-                    Log in
+                <Button type="submit" variant="filled" disabled={isSubmitting}>
+                    {isSubmitting ? "Logging in..." : "Log in"}
                 </Button>
 
                 <p className="text-center">
                     Don't Have An Account? <Link to="/register">Sign up</Link>
                 </p>
+
+                {error && <ErrorAlert message={error} />}
             </form>
         </>
     );
