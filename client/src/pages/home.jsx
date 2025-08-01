@@ -1,5 +1,5 @@
 import Input from "@/components/shared/input";
-
+import ProductCard from "@/components/shared/product-card";
 export default function HomePage() {
     return (
         <div
