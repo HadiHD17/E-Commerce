@@ -26,9 +26,14 @@ class ProductService
         return Product::orderBy('price', 'desc')->get();
     }
 
-
     static function getProductsLowToHigh()
     {
         return Product::orderBy('price', 'asc')->get();
+    }
+
+    static function searchProducts($searchTerm)
+    {
+        return Product::where('name', 'like', '%' . $searchTerm . '%')
+            ->get();
     }
 }

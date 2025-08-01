@@ -20,7 +20,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("products/{id?}", [ProductController::class, "getAllProducts"]);
             Route::get("products_by_category/{category}", [ProductController::class, "getProductsByCategory"]);
             Route::get("products_by_price/{filter}", [ProductController::class, "getProductsByPrice"]);
-            Route::get("products_by_search/{search}", [ProductController::class, "getProductsBySearch"]);
+            Route::get("products_by_search", [ProductController::class, "searchProducts"]);
 
             // Checkout Routes
             Route::post("checkout", [CheckoutController::class, "processCheckout"]);
