@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController as AdminProductImageControler;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -17,6 +18,10 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("products/{id?}", [ProductController::class, "getAllProducts"]);
             Route::get("products_by_category/{category}", [ProductController::class, "getProductsByCategory"]);
             Route::get("products_by_price/{filter}", [ProductController::class, "getProductsByPrice"]);
+            
+            // Account Routes
+            Route::put("account/edit", [AccountController::class, "editAccount"]);
+            Route::get("account/orders", [AccountController::class, "getUserOrders"]);
         });
 
         Route::group(["prefix" => "common"], function () {
