@@ -6,7 +6,7 @@ import RegisterPage from "@/pages/register";
 import ForgotPasswordPage from "@/pages/forgot-password";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
-import ProductsSearchPage from "./pages/products-search/products-search";
+import ProductsSearchPage from "./pages/products-search";
 
 export default function Router() {
     return (
