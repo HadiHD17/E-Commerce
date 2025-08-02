@@ -34,6 +34,7 @@ return [
     |            "failover", "roundrobin"
     |
     */
+    
 
     'mailers' => [
 
@@ -115,4 +116,5 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+     'admin_report_email' => env('ADMIN_REPORT_EMAIL', 'admin@example.com'),
 ];
