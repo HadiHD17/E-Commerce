@@ -34,7 +34,9 @@
 }
 @media (min-width: 960px) {
     .navbar__desktop-search {
-        display: contents;
+        flex: 1;
+        display: flex;
+        justify-content: center;
     }
 }
 
