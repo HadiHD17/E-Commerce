@@ -17,10 +17,10 @@ export default function ProductDetails() {
         category: "Laptop",
         delivery: "2 days delivery",
         images: [
-            "/images/mac1.jpg",
-            "/images/mac2.jpg",
-            "/images/mac3.jpg",
-            "/images/mac4.jpg",
+            "/test-images/688a90f995ca1_test_photo.jpg",
+            "/test-images/688a90f995ca1_test_photo.jpg",
+            "/test-images/688a90f995ca1_test_photo.jpg",
+            "/test-images/688a90f995ca1_test_photo.jpg",
         ],
         description: `The Apple MacBook Air 15” (2023) in Space Grey features a powerful M2 chip, combining strong performance with energy efficiency...`,
     };
