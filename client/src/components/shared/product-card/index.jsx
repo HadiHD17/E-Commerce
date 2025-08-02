@@ -1,13 +1,17 @@
 import React from "react";
 import { HeartIcon } from "@phosphor-icons/react";
 import "./product-card.css";
+import { useNavigate } from "react-router-dom";
+// import {Heart } from "@phosphor-icons/react";
 
 const ProductCard = ({ id, name, img, price, stock, category, newPrice }) => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/products/${id}`);
+    };
     return (
-        <div className="product-card">
-            <button className="product-heart-icon fs-h2 d-inline-flex items-center justify-center rounded-full">
-                <HeartIcon />
-            </button>
+        <div className="product-card" onClick={handleClick}>
+            {/* <Heart /> */}
             <div className="product-img">
                 <img src={img}></img>
             </div>
