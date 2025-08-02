@@ -29,11 +29,15 @@ Text-level semantics
 h1,
 h2,
 h3,
-h4,
+h4 {
+    line-height: 1.1;
+}
+
 button,
 input,
-label {
-    line-height: 1.1;
+label,
+a {
+    line-height: 1;
 }
 
 /**
