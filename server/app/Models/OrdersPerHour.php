@@ -8,4 +8,29 @@ use Illuminate\Database\Eloquent\Model;
 class OrdersPerHour extends Model
 {
     use HasFactory;
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'orders_per_hour';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'hour',
+        'order_count',
+        'revenue',
+    ];
 }
