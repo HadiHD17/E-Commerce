@@ -90,4 +90,29 @@ class OrderService
 
         return $order->load(['user', 'orderItems.product']);
     }
+
+    /**
+     * Cancel order
+     */
+    public static function cancelOrder($orderId)
+    {
+        $order = Order::find($orderId);
+
+        if (!$order) {
+            return null;
+        }
+
+        if ($order->status === 'cancelled') {
+            return $order->load(['user', 'orderItems.product']);
+        }
+
+        if ($order->status === 'shipped') {
+            return null;
+        }
+
+        $order->status = 'cancelled';
+        $order->save();
+
+        return $order->load(['user', 'orderItems.product']);
+    }
 }
