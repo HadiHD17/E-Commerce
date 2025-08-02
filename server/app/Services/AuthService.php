@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordResetMail;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthService
@@ -85,6 +87,9 @@ class AuthService
                     'created_at' => now()
                 ]
             );
+
+            Mail::to($user->email)->send(new PasswordResetMail($user, $token));
+
 
             // Here the mail function will be implemented, for now leaving it like this and returning true
             // It will be like that: Mail::to($user->email)->send(new PasswordResetMail($user, $token));
