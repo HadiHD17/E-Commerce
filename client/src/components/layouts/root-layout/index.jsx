@@ -1,4 +1,5 @@
 import Navbar from "@/components/shared/navbar";
+import Footer from "@/components/shared/footer";
 import React, { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import "./root-layout.css";
@@ -18,7 +19,7 @@ export default function RootLayout() {
                 <Navbar isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
             )}
             <Outlet />
-            {/* TODO: <Footer /> */}
+            {!isAuthPage && <Footer />}
         </div>
     );
 }
