@@ -7,6 +7,7 @@ import ForgotPasswordPage from "@/pages/forgot-password";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
 import ProductsSearchPage from "./pages/products-search";
+import ProductDetails from "./pages/view-product";
 
 export default function Router() {
     return (
@@ -21,6 +22,8 @@ export default function Router() {
                         path="/products-search"
                         element={<ProductsSearchPage />}
                     />
+
+                    <Route path="/products/:id" element={<ProductDetails />} />
                     {/* Add other routes here */}
 
                     <Route element={<AuthLayout />}>
