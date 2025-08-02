@@ -11,6 +11,7 @@ import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
 import AdminOrders from "./pages/admin-orders";
 import AdminAllProducts from "./pages/admin-all-products";
+import NotFound from "./pages/error";
 
 export default function Router() {
     return (
@@ -26,6 +27,7 @@ export default function Router() {
                         element={<ProductsSearchPage />}
                     />
                     <Route path="/products/:id" element={<ProductDetails />} />
+                    <Route path="/not-found" element={<NotFound />} />
 
                     <Route path="/admin/orders" element={<AdminOrders />} />
                     <Route
