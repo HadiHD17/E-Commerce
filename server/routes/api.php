@@ -73,19 +73,3 @@ Route::group(["prefix" => "v0.1"], function () {
 
     Route::middleware('auth:api')->post('logout', [AuthController::class, 'logout']);
 });
-
-use Illuminate\Support\Facades\Mail;
-use App\Mail\PasswordResetMail;
-
-Route::get('/test-mail', function () {
-    $user = (object)[
-        'name' => 'Test User',
-        'email' => 'eldandachi.nour@gmail.com'
-    ];
-
-    $token = 'testtoken123';
-
-    Mail::to($user->email)->send(new PasswordResetMail($user, $token));
-
-    return 'Mail sent!';
-});
