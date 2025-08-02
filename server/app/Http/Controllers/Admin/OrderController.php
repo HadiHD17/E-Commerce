@@ -57,4 +57,32 @@ class OrderController extends Controller
             return $this->responseJSON(null, "Failed to update order status", 500);
         }
     }
+
+    public function cancelOrder($orderId)
+    {
+        try {
+            $result = OrderService::cancelOrder($orderId);
+
+            if ($result) {
+                if ($result->status === 'cancelled' && $result->getOriginal('status') === 'cancelled') {
+                    return $this->responseJSON($result, "Order is already cancelled");
+                }
+                
+                return $this->responseJSON($result, "Order cancelled successfully");
+            }
+
+            $order = \App\Models\Order::find($orderId);
+            if (!$order) {
+                return $this->responseJSON(null, "Order not found", 404);
+            }
+
+            if ($order->status === 'shipped') {
+                return $this->responseJSON(null, "Cannot cancel shipped orders", 400);
+            }
+
+            return $this->responseJSON(null, "Failed to cancel order", 500);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to cancel order", 500);
+        }
+    }
 }

@@ -59,6 +59,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("todays_revenue", [AdminOrderController::class, "getTodaysRevenue"]);
             Route::get("revenue", [AdminOrderController::class, "getRevenue"]);
             Route::post("set_order_status/{order_id}", [AdminOrderController::class, "setOrderStatus"]);
+            Route::post("cancel_order/{order_id}", [AdminOrderController::class, "cancelOrder"]);
         });
     });
 
