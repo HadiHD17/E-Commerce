@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ShoppingCartSimpleIcon, UserIcon } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
+import {
+    BellIcon,
+    ShoppingCartSimpleIcon,
+    UserIcon,
+} from "@phosphor-icons/react";
 import Button from "../button";
-import Input from "../input";
 import "./navbar.css";
+import NavbarSearch from "./navbar-search";
 
 export default function Navbar() {
     const [isSignedIn, setIsSignedIn] = useState(false);
-    const [search, setSearch] = useState("");
-    const navigate = useNavigate();
 
     const handleLogin = () => {
         // Add your login logic here
@@ -20,68 +22,49 @@ export default function Navbar() {
         setIsSignedIn(true);
     };
 
-    const handleSearch = e => {
-        e.preventDefault();
-        // Add your search logic here
-        // Example: navigate(`/search?query=${search}`);
-    };
-
     return (
         <nav className="navbar">
-            <div className="left">
-                <img src="/logo.png" alt="Logo" />
-                <span>MyStore</span>
-            </div>
+            <div className="container">
+                <div className="left">
+                    <Link to="/" className="navbar__logo">
+                        <img src="/logo-brand.svg" alt="Logo" height={30} />
+                    </Link>
+                </div>
 
-            <form onSubmit={handleSearch}>
-                <Input
-                    type="text"
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
-                    placeholder="Search products..."
-                    aria-label="Search products"
-                />
-                <button type="submit" variant="filled" color="brand">
-                    Search
-                </button>
-            </form>
+                <NavbarSearch />
 
-            <div className="right">
-                {isSignedIn ? (
-                    <>
-                        <Button
-                            variant="filled"
-                            color="brand"
-                            onClick={() => navigate("/cart")}
-                        >
-                            <ShoppingCartSimpleIcon size={20} />
-                        </Button>
-                        <Button
-                            variant="filled"
-                            color="brand"
-                            onClick={() => navigate("/profile")}
-                        >
-                            <UserIcon size={20} />
-                        </Button>
-                    </>
-                ) : (
-                    <>
-                        <Button
-                            variant="filled"
-                            color="brand"
-                            onClick={handleLogin}
-                        >
-                            Login
-                        </Button>
-                        <Button
-                            variant="filled"
-                            color="brand"
-                            onClick={handleRegister}
-                        >
-                            Register
-                        </Button>
-                    </>
-                )}
+                <div className="right">
+                    {isSignedIn ? (
+                        <>
+                            <button className="text-gray-700">
+                                <BellIcon size={32} />
+                            </button>
+                            <Link to="/cart" className="text-gray-700">
+                                <ShoppingCartSimpleIcon size={32} />
+                            </Link>
+                            <Link to="/profile" className="text-gray-700">
+                                <UserIcon size={32} />
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Button
+                                variant="filled"
+                                color="brand"
+                                onClick={handleRegister}
+                            >
+                                Register
+                            </Button>
+                            <Button
+                                variant="faded"
+                                color="gray"
+                                onClick={handleLogin}
+                            >
+                                Login
+                            </Button>
+                        </>
+                    )}
+                </div>
             </div>
         </nav>
     );
