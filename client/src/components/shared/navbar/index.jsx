@@ -9,9 +9,7 @@ import Button from "../button";
 import "./navbar.css";
 import NavbarSearch from "./navbar-search";
 
-export default function Navbar() {
-    const [isSignedIn, setIsSignedIn] = useState(false);
-
+export default function Navbar({ isSignedIn, setIsSignedIn }) {
     const handleLogin = () => {
         // Add your login logic here
         setIsSignedIn(true);

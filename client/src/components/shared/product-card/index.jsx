@@ -2,7 +2,7 @@ import React from "react";
 import "./product-card.css";
 // import {Heart } from "@phosphor-icons/react";
 
-const ProductCard = ({ name, img, price, stock, category, newPrice }) => {
+const ProductCard = ({ id, name, img, price, stock, category, newPrice }) => {
     return (
         <div className="product-card">
             {/* <Heart /> */}
@@ -14,7 +14,6 @@ const ProductCard = ({ name, img, price, stock, category, newPrice }) => {
             <div className="product-price">
                 {newPrice ? (
                     <>
-                        
                         <div className="original-price">{price}$</div>
                         <div className="current-price">{newPrice}$</div>
                     </>

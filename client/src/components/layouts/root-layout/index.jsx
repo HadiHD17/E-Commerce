@@ -1,5 +1,5 @@
 import Navbar from "@/components/shared/navbar";
-import React from "react";
+import React, { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import "./root-layout.css";
 
@@ -10,9 +10,13 @@ export default function RootLayout() {
 
     const isAuthPage = NO_NAVBAR_PAGES.includes(pathname);
 
+    const [isSignedIn, setIsSignedIn] = useState(true);
+
     return (
         <div className="root-layout">
-            {!isAuthPage && <Navbar />}
+            {!isAuthPage && (
+                <Navbar isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />
+            )}
             <Outlet />
             {/* TODO: <Footer /> */}
         </div>

@@ -6,6 +6,7 @@ import RegisterPage from "@/pages/register";
 import ForgotPasswordPage from "@/pages/forgot-password";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
+import ProductsSearchPage from "./pages/products-search";
 
 export default function Router() {
     return (
@@ -13,7 +14,14 @@ export default function Router() {
             <Routes>
                 <Route element={<RootLayout />}>
                     <Route path="/" element={<HomePage />} />
+
                     <Route path="/cart" element={<CartPage />} />
+
+                    <Route
+                        path="/products-search"
+                        element={<ProductsSearchPage />}
+                    />
+                    {/* Add other routes here */}
 
                     <Route element={<AuthLayout />}>
                         <Route path="login" element={<LoginPage />} />
