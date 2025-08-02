@@ -2,6 +2,7 @@ import React from "react";
 import "./cart.css";
 import Button from "@/components/shared/button";
 import CartItem from "@/components/cart-item";
+import { useNavigate } from "react-router-dom";
 
 const cartItems = [
     {
@@ -35,6 +36,8 @@ const cartItems = [
 ];
 
 export default function CartPage() {
+    const navigate = useNavigate();
+
     const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
     const discount = 19;
     const shipping = 10;
@@ -76,7 +79,9 @@ export default function CartPage() {
                         <span>Total</span> <span>${total}</span>
                     </p>
 
-                    <Button color="brand">Proceed to Checkout</Button>
+                    <Button color="brand" onClick={() => navigate("/checkout")}>
+                        Proceed to Checkout
+                    </Button>
                 </div>
             </div>
         </div>

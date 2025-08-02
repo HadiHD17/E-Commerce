@@ -1,16 +1,21 @@
 .input {
-    display: flex;
-    flex-direction: column;
 }
 
 .input__label {
+    display: block;
     margin-bottom: var(--spacing-1\.5);
 }
 
 .input__control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     padding: var(--spacing-3);
-    border: 2px solid var(--color-gray-300);
+
     box-shadow: var(--shadow-2xs);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
 }
 .input__control:has(:focus) {
     border-color: var(--color-brand-700);
@@ -26,6 +31,7 @@
 
 .input__field {
     outline: none;
+    width: 100%;
 }
 
 .input__password-toggle {

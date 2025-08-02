@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CartPage from "@/pages/cart";
+import CheckoutPage from "@/pages/checkout";
 import HomePage from "@/pages/home";
 import LoginPage from "@/pages/login";
 import RegisterPage from "@/pages/register";
 import ForgotPasswordPage from "@/pages/forgot-password";
+import ProductsSearchPage from "@/pages/products-search";
+import ProductDetails from "@/pages/view-product";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
-import ProductsSearchPage from "./pages/products-search";
-import ProductDetails from "./pages/view-product";
 import AdminOrders from "./pages/admin-orders";
 
 export default function Router() {
@@ -16,14 +17,13 @@ export default function Router() {
             <Routes>
                 <Route element={<RootLayout />}>
                     <Route path="/" element={<HomePage />} />
-
                     <Route path="/cart" element={<CartPage />} />
-
+                    <Route path="/search" element={<ProductsSearchPage />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
                     <Route
                         path="/products-search"
                         element={<ProductsSearchPage />}
                     />
-
                     <Route path="/products/:id" element={<ProductDetails />} />
 
                     <Route path="/admin/orders" element={<AdminOrders />} />

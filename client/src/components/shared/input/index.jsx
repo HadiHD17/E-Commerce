@@ -11,7 +11,9 @@ export default function Input({
     label,
     id,
     readOnly,
-    className,
+    disabled,
+    rootClassname,
+    inputClassname,
     ...props
 }) {
     const [showPassword, setShowPassword] = useState(false);
@@ -31,8 +33,8 @@ export default function Input({
             className={cls(
                 styles.input,
                 error && styles["input--error"],
-                readOnly && styles["input--readonly"],
-                className,
+                (disabled || readOnly) && styles["input--readonly"],
+                rootClassname,
             )}
         >
             {label && (
@@ -44,17 +46,13 @@ export default function Input({
                 </label>
             )}
 
-            <div
-                className={cls(
-                    styles.input__control,
-                    "rounded-md d-flex justify-between items-center",
-                )}
-            >
+            <div className={styles.input__control}>
                 <input
-                    className={cls(styles.input__field, "flex-grow", className)}
+                    className={cls(styles.input__field, inputClassname)}
                     id={inputId}
                     type={type === "password" ? passwordType : type}
                     readOnly={readOnly}
+                    disabled={disabled}
                     {...props}
                 />
                 {type === "password" && withPasswordToggle && (
