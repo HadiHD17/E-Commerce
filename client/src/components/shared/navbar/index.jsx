@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCartSimpleIcon, UserIcon } from "@phosphor-icons/react";
+// import { ShoppingCartSimpleIcon, UserIcon } from "@phosphor-icons/react";
 import Button from "../button";
 import Input from "../input";
 import "./navbar.css";
@@ -54,14 +54,14 @@ export default function Navbar() {
                             color="brand"
                             onClick={() => navigate("/cart")}
                         >
-                            <ShoppingCartSimpleIcon size={20} />
+                            {/* <ShoppingCartSimpleIcon size={20} /> */}
                         </Button>
                         <Button
                             variant="filled"
                             color="brand"
                             onClick={() => navigate("/profile")}
                         >
-                            <UserIcon size={20} />
+                            {/* <UserIcon size={20} /> */}
                         </Button>
                     </>
                 ) : (
