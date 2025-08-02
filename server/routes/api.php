@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\Common\FeatureController;
+use App\Http\Controllers\Common\WebhookController;
 use App\Http\Controllers\User\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +70,9 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::post('forgot_password', [AuthController::class, 'forgotPassword']);
         Route::post('reset_password', [AuthController::class, 'resetPassword']);
     });
+
+    // Webhook Routes (no auth required)
+    Route::post('webhook/order', [WebhookController::class, 'handleOrderWebhook']);
 
 
     Route::middleware('auth:api')->post('logout', [AuthController::class, 'logout']);

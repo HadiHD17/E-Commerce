@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Events\OrderCreated;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -22,12 +23,10 @@ class CheckoutService
 
             $total = 0;
 
-
             $order = new Order();
             $order->user_id = $userId;
             $order->total_price = 0;
             $order->save();
-
 
             foreach ($cartItems as $cartItem) {
                 $product = Product::find($cartItem->product_id);
@@ -44,16 +43,16 @@ class CheckoutService
                 $orderItem->price_at_time = $product->price;
                 $orderItem->save();
 
-
                 $product->decrement('stock', $cartItem->quantity);
             }
-
 
             $order->total_price = $total;
             $order->save();
 
-
             CartItem::where('user_id', $userId)->delete();
+
+            // Fire the OrderCreated event
+            event(new OrderCreated($order));
 
             return $order;
         });

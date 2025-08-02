@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin;
 
+use App\Events\OrderStatusUpdated;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
@@ -85,8 +86,12 @@ class OrderService
         }
 
         $nextStatus = $statuses[$currentIndex + 1];
+        $previousStatus = $order->status;
         $order->status = $nextStatus;
         $order->save();
+
+        // Fire the OrderStatusUpdated event
+        event(new OrderStatusUpdated($order, $previousStatus));
 
         return $order->load(['user', 'orderItems.product']);
     }
@@ -110,8 +115,12 @@ class OrderService
             return null;
         }
 
+        $previousStatus = $order->status;
         $order->status = 'cancelled';
         $order->save();
+
+        // Fire the OrderStatusUpdated event
+        event(new OrderStatusUpdated($order, $previousStatus));
 
         return $order->load(['user', 'orderItems.product']);
     }
