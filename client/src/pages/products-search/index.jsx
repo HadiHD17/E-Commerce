@@ -1,6 +1,6 @@
 import Pagination from "@/components/shared/pagination";
 import ProductCard from "@/components/shared/product-card";
-import FilterSidebar from "@/components/shared/sidebar";
+import FilterSidebar from "@/components/shared/filtersidebar";
 import React, { useEffect, useState } from "react";
 import "./products-search.css";
 

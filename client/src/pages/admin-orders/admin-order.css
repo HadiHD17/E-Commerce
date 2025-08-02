@@ -1,0 +1,64 @@
+.admin-container {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.admin-main {
+    flex: 1;
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.topbar input[type="text"] {
+    width: 300px;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.topbar-icons span {
+    margin-left: 1.2rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.orders-content {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.order-search {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.orders-table thead {
+    background-color: #e9ecef;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.95rem;
+}
