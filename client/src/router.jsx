@@ -10,6 +10,7 @@ import ProductDetails from "@/pages/view-product";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
 import AdminOrders from "./pages/admin-orders";
+import AdminAllProducts from "./pages/admin-all-products";
 
 export default function Router() {
     return (
@@ -27,6 +28,10 @@ export default function Router() {
                     <Route path="/products/:id" element={<ProductDetails />} />
 
                     <Route path="/admin/orders" element={<AdminOrders />} />
+                    <Route
+                        path="/admin/all-products"
+                        element={<AdminAllProducts />}
+                    />
                     {/* Add other routes here */}
 
                     <Route element={<AuthLayout />}>
