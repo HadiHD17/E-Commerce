@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./notfound.css";
+import Button from "@/components/shared/button";
+import "./not-found.css";
 
 export default function NotFoundPage() {
     const navigate = useNavigate();
@@ -15,9 +16,9 @@ export default function NotFoundPage() {
                 The page you're looking for seems to have wandered off. Don't
                 worry, our best products are still here waiting for you!
             </p>
-            <button className="back-button" onClick={() => navigate("/")}>
+            <Button color="brand" onClick={() => navigate("/")}>
                 Back To Home
-            </button>
+            </Button>
         </div>
     );
 }

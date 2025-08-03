@@ -6,13 +6,13 @@ import LoginPage from "@/pages/login";
 import RegisterPage from "@/pages/register";
 import ForgotPasswordPage from "@/pages/forgot-password";
 import ProductsSearchPage from "@/pages/products-search";
+import ProductDetailsPage from "@/pages/view-product";
+import MyOrdersPage from "@/pages/account-my-orders";
+import AdminOrdersPage from "@/pages/admin-orders";
+import AdminAllProductsPage from "@/pages/admin-all-products";
+import NotFoundPage from "@/pages/not-found";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
-import NotFoundPage from "./pages/error";
-import ProductDetailsPage from "@/pages/view-product";
-import MyOrdersPage from "./pages/account-my-orders";
-import AdminOrdersPage from "./pages/admin-orders";
-import AdminAllProductsPage from "./pages/admin-all-products";
 
 export default function Router() {
     return (
@@ -24,14 +24,9 @@ export default function Router() {
                     <Route path="/search" element={<ProductsSearchPage />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
                     <Route
-                        path="/products-search"
-                        element={<ProductsSearchPage />}
-                    />
-                    <Route
                         path="/products/:id"
                         element={<ProductDetailsPage />}
                     />
-                    <Route path="/not-found" element={<NotFoundPage />} />
                     <Route path="/my-orders" element={<MyOrdersPage />} />
 
                     <Route path="/admin/orders" element={<AdminOrdersPage />} />
@@ -49,6 +44,8 @@ export default function Router() {
                             element={<ForgotPasswordPage />}
                         />
                     </Route>
+
+                    <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
