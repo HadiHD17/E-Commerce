@@ -10,6 +10,14 @@ services:
       - ./server:/var/www/html
     depends_on:
       - db
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - QUEUE_CONNECTION=redis
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - BROADCAST_DRIVER=redis
 
   frontend:
     build:
@@ -30,19 +38,28 @@ services:
     image: mysql:8.0
     container_name: mysql-db
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: ecommercedb
     volumes:
       - db-data:/var/lib/mysql
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+
   pma:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     restart: always
     ports:
-      - "8080:80"
+      - "8081:80"
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
@@ -53,3 +70,4 @@ services:
 
 volumes:
   db-data:
+  redis-data:
