@@ -13,6 +13,8 @@ import AdminAllProductsPage from "@/pages/admin-all-products";
 import NotFoundPage from "@/pages/not-found";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
+import AccountLayout from "@/components/layouts/account-layout";
+import AccountSettingsPage from "@/pages/account/settings";
 
 export default function Router() {
     return (
@@ -34,6 +36,17 @@ export default function Router() {
                         path="/admin/all-products"
                         element={<AdminAllProductsPage />}
                     />
+
+                    <Route element={<AccountLayout />}>
+                        <Route
+                            path="/account/settings"
+                            element={<AccountSettingsPage />}
+                        />
+                        <Route
+                            path="/account/my-orders"
+                            element={<div>orders page</div>}
+                        />
+                    </Route>
                     {/* Add other routes here */}
 
                     <Route element={<AuthLayout />}>
