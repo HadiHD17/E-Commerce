@@ -1,4 +1,4 @@
-# E-commerce Client
+# E-commerce (Volta) Client
 
 > Powered by React + Vite.
 

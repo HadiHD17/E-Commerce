@@ -6,12 +6,12 @@ export default function Footer() {
         <footer className="footer">
             <div className="container d-flex flex-col items-center text-center gap-5">
                 <Link to="/" className="footer__logo">
-                    <img src="/logo-brand.svg" alt="Logo" height={36} />
+                    <img src="/logo-black.svg" alt="Logo" height={36} />
                 </Link>
 
                 <p className="text-gray-400">
-                    {new Date().getUTCFullYear()} &copy; Volta. All rights
-                    reserved.
+                    {new Date().getUTCFullYear()} &copy; <strong>Volta</strong>.
+                    All rights reserved.
                 </p>
 
                 <div className="footer__divider" />

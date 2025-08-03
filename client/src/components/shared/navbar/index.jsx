@@ -31,7 +31,7 @@ export default function Navbar({ isSignedIn }) {
             <div className="container">
                 <div className="left">
                     <Link to="/" className="navbar__logo">
-                        <img src="/logo-brand.svg" alt="Logo" height={30} />
+                        <img src="/logo-brand.svg" alt="Logo" height={28} />
                     </Link>
                 </div>
 
