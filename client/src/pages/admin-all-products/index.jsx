@@ -1,7 +1,7 @@
 import React from "react";
 import "./admin-all-products.css";
 import Pagination from "@/components/shared/pagination";
-import Sidebar from "@/components/shared/sidebar";
+import AdminSidebar from "@/components/shared/admin-sidebar";
 import ProductCard from "@/components/shared/product-card";
 import FiltersPanel from "@/components/shared/filterspanel";
 
@@ -15,7 +15,7 @@ export default function AdminAllProducts() {
     });
     return (
         <div className="admin-container">
-            <Sidebar />
+            <AdminSidebar />
             <div className="admin-main">
                 <div className="admin-products">
                     <div className="products-header">

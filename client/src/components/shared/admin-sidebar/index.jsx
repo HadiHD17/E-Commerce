@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./sidebar.css";
+import "./admin-sidebar.css";
 
-export default function Sidebar() {
+export default function AdminSidebar() {
     const location = useLocation();
 
     return (

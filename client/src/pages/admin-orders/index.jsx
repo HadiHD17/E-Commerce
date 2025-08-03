@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./admin-order.css";
-import Sidebar from "@/components/shared/sidebar";
+import AdminSidebar from "@/components/shared/admin-sidebar";
 import OrderRow from "@/components/shared/order-row";
 
 const orders = Array(15).fill({
@@ -15,7 +15,7 @@ const orders = Array(15).fill({
 export default function AdminOrders() {
     return (
         <div className="admin-container">
-            <Sidebar />
+            <AdminSidebar />
             <div className="admin-main">
                 <div className="orders-content">
                     <input
