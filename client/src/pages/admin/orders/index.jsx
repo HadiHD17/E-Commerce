@@ -1,8 +1,7 @@
 import React from "react";
-
-import "./admin-order.css";
 import AdminSidebar from "@/components/admin-sidebar";
 import OrderRow from "@/components/shared/order-row";
+import "./admin-orders.css";
 
 export default function AdminOrdersPage() {
     const orders = Array(15).fill({

@@ -1,11 +1,11 @@
 import React from "react";
-import "./admin-all-products.css";
 import Pagination from "@/components/shared/pagination";
 import AdminSidebar from "@/components/admin-sidebar";
 import ProductCard from "@/components/shared/product-card";
 import FiltersPanel from "@/components/filters-panel";
+import "./admin-products.css";
 
-export default function AdminAllProductsPage() {
+export default function AdminProductsPage() {
     const dummyProducts = Array(8).fill({
         id: 1,
         name: "Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey",

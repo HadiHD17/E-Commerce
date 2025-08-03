@@ -7,9 +7,9 @@ import RegisterPage from "@/pages/register";
 import ForgotPasswordPage from "@/pages/forgot-password";
 import ProductsSearchPage from "@/pages/products-search";
 import ProductDetailsPage from "@/pages/view-product";
-import MyOrdersPage from "@/pages/account/my-orders";
-import AdminOrdersPage from "@/pages/admin-orders";
-import AdminAllProductsPage from "@/pages/admin-all-products";
+import AccountMyOrdersPage from "@/pages/account/my-orders";
+import AdminOrdersPage from "@/pages/admin/orders";
+import AdminProductsPage from "@/pages/admin/products";
 import NotFoundPage from "@/pages/not-found";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
@@ -31,28 +31,38 @@ export default function Router() {
                     />
                     <Route path="/chat" element={<ChatPage />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
+
                     <Route
                         path="/products/:id"
                         element={<ProductDetailsPage />}
                     />
 
-                    <Route path="/admin/orders" element={<AdminOrdersPage />} />
-                    <Route
-                        path="/admin/all-products"
-                        element={<AdminAllProductsPage />}
-                    />
+                    <Route>
+                        <Route
+                            path="/admin/orders"
+                            element={<AdminOrdersPage />}
+                        />
+                        <Route
+                            path="/admin/products"
+                            element={<AdminProductsPage />}
+                        />
+                    </Route>
 
-                    <Route element={<AccountLayout />}>
+                    <Route path="/account" element={<AccountLayout />}>
+                        <Route index element={<Navigate to="settings" />} />
                         <Route
                             path="/account/settings"
                             element={<AccountSettingsPage />}
                         />
                         <Route
                             path="/account/my-orders"
-                            element={<MyOrdersPage />}
+                            element={<AccountMyOrdersPage />}
+                        />
+                        <Route
+                            path="/account/orders"
+                            element={<Navigate to="/account/my-orders" />}
                         />
                     </Route>
-                    {/* Add other routes here */}
 
                     <Route element={<AuthLayout />}>
                         <Route path="login" element={<LoginPage />} />
@@ -62,6 +72,8 @@ export default function Router() {
                             element={<ForgotPasswordPage />}
                         />
                     </Route>
+
+                    {/* Add other routes here */}
 
                     <Route path="*" element={<NotFoundPage />} />
                 </Route>
