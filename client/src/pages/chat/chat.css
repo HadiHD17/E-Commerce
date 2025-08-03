@@ -1,0 +1,24 @@
+.chat-page {
+}
+
+.chat-page__header {
+    color: var(--color-white);
+    background-color: var(--color-brand-500);
+
+    padding-block: var(--spacing-4);
+    margin-top: calc(-1 * var(--spacing-12));
+}
+
+.chat-page__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: var(--spacing-16);
+
+    max-width: 640px;
+    min-height: 75vh;
+
+    padding-block: var(--spacing-4);
+    padding-inline: var(--spacing-4);
+    margin-inline: auto;
+}

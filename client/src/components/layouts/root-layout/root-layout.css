@@ -7,3 +7,7 @@
 
     accent-color: var(--color-brand-500);
 }
+
+.root-layout__body {
+    padding-block: var(--spacing-12);
+}

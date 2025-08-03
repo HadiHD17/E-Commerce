@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import CartPage from "@/pages/cart";
 import CheckoutPage from "@/pages/checkout";
 import HomePage from "@/pages/home";
@@ -15,6 +15,7 @@ import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
 import AccountLayout from "@/components/layouts/account-layout";
 import AccountSettingsPage from "@/pages/account/settings";
+import ChatPage from "@/pages/chat";
 
 export default function Router() {
     return (
@@ -24,6 +25,11 @@ export default function Router() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/search" element={<ProductsSearchPage />} />
+                    <Route
+                        path="/ai-search"
+                        element={<Navigate to="/chat" replace />}
+                    />
+                    <Route path="/chat" element={<ChatPage />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
                     <Route
                         path="/products/:id"
