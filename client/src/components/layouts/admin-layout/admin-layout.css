@@ -1,0 +1,10 @@
+.admin-layout {
+}
+
+.admin-layout__main {
+    flex: 1;
+    max-width: calc(1440px - var(--spacing-8));
+
+    padding-block: var(--spacing-12);
+    padding-inline: var(--spacing-8) var(--spacing-4);
+}

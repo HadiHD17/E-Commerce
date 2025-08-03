@@ -6,7 +6,6 @@
     background-color: var(--color-brand-500);
 
     padding-block: var(--spacing-4);
-    margin-top: calc(-1 * var(--spacing-12));
 }
 
 .chat-page__body {

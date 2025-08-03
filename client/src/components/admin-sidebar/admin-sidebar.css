@@ -1,14 +1,17 @@
 /* Sidebar container */
 .sidebar {
-    width: 220px;
-    height: 100vh;
-    background-color: #f7f7f7;
-    padding: 20px;
-    box-sizing: border-box;
-    border-right: 1px solid #e0e0e0;
+    flex: 1;
+    max-width: 24rem;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    background-color: var(--color-gray-100);
+
+    padding-inline: var(--spacing-5);
+    padding-block: var(--spacing-12);
+    border-right: 1px solid #e0e0e0;
 }
 
 /* Sidebar list */

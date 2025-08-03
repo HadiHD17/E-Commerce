@@ -1,77 +1,37 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./admin-sidebar.css";
+import Button from "@/components/shared/button";
 
 export default function AdminSidebar() {
-    const location = useLocation();
-
     return (
         <div className="sidebar">
             <ul>
                 <li>
-                    <Link
-                        to="/admin/dashboard"
-                        className={
-                            location.pathname.includes("dashboard")
-                                ? "active"
-                                : ""
-                        }
-                    >
-                        Dashboard
-                    </Link>
+                    <NavLink to="/admin">Dashboard</NavLink>
                 </li>
 
                 <li className="has-submenu">
-                    <span
-                        className={
-                            location.pathname.includes("/admin/products")
-                                ? "active"
-                                : ""
-                        }
-                    >
-                        Products
-                    </span>
+                    <span>Products</span>
                     <ul className="submenu">
                         <li>
-                            <Link
-                                to="/admin/all-products"
-                                className={
-                                    location.pathname === "/admin/all-products"
-                                        ? "active"
-                                        : ""
-                                }
-                            >
+                            <NavLink to="/admin/all-products">
                                 All Products
-                            </Link>
+                            </NavLink>
                         </li>
                         <li>
-                            <Link
-                                to="/admin/new-products"
-                                className={
-                                    location.pathname === "/admin/new-products"
-                                        ? "active"
-                                        : ""
-                                }
-                            >
+                            <NavLink to="/admin/new-products">
                                 New Product
-                            </Link>
+                            </NavLink>
                         </li>
                     </ul>
                 </li>
 
                 <li>
-                    <Link
-                        to="/admin/orders"
-                        className={
-                            location.pathname.includes("orders") ? "active" : ""
-                        }
-                    >
-                        Orders
-                    </Link>
+                    <NavLink to="/admin/orders">Orders</NavLink>
                 </li>
             </ul>
 
-            <button className="logout">Log out</button>
+            <Button className="logout">Log out</Button>
         </div>
     );
 }

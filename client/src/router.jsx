@@ -16,6 +16,8 @@ import RootLayout from "@/components/layouts/root-layout";
 import AccountLayout from "@/components/layouts/account-layout";
 import AccountSettingsPage from "@/pages/account/settings";
 import ChatPage from "@/pages/chat";
+import AdminHomePage from "@/pages/admin";
+import AdminLayout from "@/components/layouts/admin-layout";
 
 export default function Router() {
     return (
@@ -37,30 +39,39 @@ export default function Router() {
                         element={<ProductDetailsPage />}
                     />
 
-                    <Route>
+                    <Route path="/admin" element={<AdminLayout />}>
+                        <Route index element={<AdminHomePage />} />
+                        <Route path="orders" element={<AdminOrdersPage />} />
                         <Route
-                            path="/admin/orders"
-                            element={<AdminOrdersPage />}
+                            path="products"
+                            element={<AdminProductsPage />}
                         />
                         <Route
-                            path="/admin/products"
-                            element={<AdminProductsPage />}
+                            path="all-products"
+                            element={<Navigate to="/admin/products" replace />}
                         />
                     </Route>
 
                     <Route path="/account" element={<AccountLayout />}>
-                        <Route index element={<Navigate to="settings" />} />
                         <Route
-                            path="/account/settings"
+                            index
+                            element={
+                                <Navigate to="/account/settings" replace />
+                            }
+                        />
+                        <Route
+                            path="settings"
                             element={<AccountSettingsPage />}
                         />
                         <Route
-                            path="/account/my-orders"
+                            path="my-orders"
                             element={<AccountMyOrdersPage />}
                         />
                         <Route
-                            path="/account/orders"
-                            element={<Navigate to="/account/my-orders" />}
+                            path="orders"
+                            element={
+                                <Navigate to="/account/my-orders" replace />
+                            }
                         />
                     </Route>
 
