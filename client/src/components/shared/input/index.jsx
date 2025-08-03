@@ -1,7 +1,6 @@
 import { useId, useState } from "react";
+import { EyeClosedIcon, EyeIcon } from "@phosphor-icons/react";
 import cls from "@/utils/classnames";
-import EyeClosedIcon from "@/icons/eye-closed";
-import EyeIcon from "@/icons/eye";
 import styles from "./input.module.css";
 
 export default function Input({
@@ -55,15 +54,18 @@ export default function Input({
                     disabled={disabled}
                     {...props}
                 />
-                {type === "password" && withPasswordToggle && (
-                    <button
-                        type="button"
-                        className={styles["input__password-toggle"]}
-                        onClick={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
-                    </button>
-                )}
+                {type === "password" &&
+                    withPasswordToggle &&
+                    !readOnly &&
+                    !disabled && (
+                        <button
+                            type="button"
+                            className={styles["input__password-toggle"]}
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
+                        </button>
+                    )}
             </div>
             {error && (
                 <p className={cls(styles.input__error, "fs-caption")}>
