@@ -1,5 +1,4 @@
 import React from "react";
-import AccountSidebar from "@/components/account-sidebar";
 import OrderCard from "@/components/shared/order-card";
 import "./my-orders.css";
 
@@ -39,7 +38,6 @@ export default function MyOrdersPage() {
 
     return (
         <div className="orders-container">
-            <AccountSidebar />
             <div className="orders-main">
                 <div className="tabs">
                     <button className="tab active">All Orders</button>

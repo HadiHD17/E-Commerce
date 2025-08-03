@@ -7,7 +7,7 @@ import RegisterPage from "@/pages/register";
 import ForgotPasswordPage from "@/pages/forgot-password";
 import ProductsSearchPage from "@/pages/products-search";
 import ProductDetailsPage from "@/pages/view-product";
-import MyOrdersPage from "@/pages/account-my-orders";
+import MyOrdersPage from "@/pages/account/my-orders";
 import AdminOrdersPage from "@/pages/admin-orders";
 import AdminAllProductsPage from "@/pages/admin-all-products";
 import NotFoundPage from "@/pages/not-found";
@@ -29,7 +29,6 @@ export default function Router() {
                         path="/products/:id"
                         element={<ProductDetailsPage />}
                     />
-                    <Route path="/my-orders" element={<MyOrdersPage />} />
 
                     <Route path="/admin/orders" element={<AdminOrdersPage />} />
                     <Route
@@ -44,7 +43,7 @@ export default function Router() {
                         />
                         <Route
                             path="/account/my-orders"
-                            element={<div>orders page</div>}
+                            element={<MyOrdersPage />}
                         />
                     </Route>
                     {/* Add other routes here */}
