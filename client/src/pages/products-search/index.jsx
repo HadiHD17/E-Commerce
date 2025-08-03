@@ -1,6 +1,6 @@
 import Pagination from "@/components/shared/pagination";
 import ProductCard from "@/components/shared/product-card";
-import FilterSidebar from "@/components/shared/filtersidebar";
+import FilterSidebar from "@/components/filter-sidebar";
 import React, { useEffect, useState } from "react";
 import "./products-search.css";
 
@@ -39,20 +39,10 @@ export default function ProductsSearchPage() {
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearch = () => {
-        // Implement search functionality here
-        // This could involve fetching products based on the searchQuery and filters
         console.log("Searching for:", searchQuery, "with filters:", filters);
     };
     useEffect(() => {
-        // Fetch products based on filters and searchQuery
-        // This is a placeholder for actual data fetching logic
-        console.log(
-            "Fetching products with filters:",
-            filters,
-            "and search query:",
-            searchQuery,
-        );
-        // Example: setProducts(fetchedProducts);
+        handleSearch();
     }, [filters, searchQuery, currentPage]);
     return (
         <div>

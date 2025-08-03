@@ -2,22 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./productdetails.css";
 
-const mockProduct = {
-    id: 1,
-    title: "Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey",
-    price: 1300,
-    category: "Laptop",
-    delivery: "2 days delivery",
-    images: [
-        "/test-images/688a90f995ca1_test_photo.jpg",
-        "/test-images/688a90f995ca1_test_photo.jpg",
-        "/test-images/688a90f995ca1_test_photo.jpg",
-        "/logo-brand.svg",
-    ],
-    description: `The Apple MacBook Air 15” (2023) in Space Grey features a powerful M2 chip, combining strong performance with energy efficiency...`,
-};
-
-export default function ProductDetails() {
+export default function ProductDetailsPage() {
+    const mockProduct = {
+        id: 1,
+        title: "Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey",
+        price: 1300,
+        category: "Laptop",
+        delivery: "2 days delivery",
+        images: [
+            "/test-images/688a90f995ca1_test_photo.jpg",
+            "/test-images/688a90f995ca1_test_photo.jpg",
+            "/test-images/688a90f995ca1_test_photo.jpg",
+            "/logo-brand.svg",
+        ],
+        description: `The Apple MacBook Air 15” (2023) in Space Grey features a powerful M2 chip, combining strong performance with energy efficiency...`,
+    };
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [mainImage, setMainImage] = useState("");

@@ -1,18 +1,18 @@
 import React from "react";
 
 import "./admin-order.css";
-import AdminSidebar from "@/components/shared/admin-sidebar";
+import AdminSidebar from "@/components/admin-sidebar";
 import OrderRow from "@/components/shared/order-row";
 
-const orders = Array(15).fill({
-    id: "#123638",
-    customer: "John M. Doe",
-    status: "Pending",
-    total: "$4500",
-    date: "2025-12-08",
-});
+export default function AdminOrdersPage() {
+    const orders = Array(15).fill({
+        id: "#123638",
+        customer: "John M. Doe",
+        status: "Pending",
+        total: "$4500",
+        date: "2025-12-08",
+    });
 
-export default function AdminOrders() {
     return (
         <div className="admin-container">
             <AdminSidebar />

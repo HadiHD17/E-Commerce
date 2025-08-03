@@ -6,13 +6,13 @@ import LoginPage from "@/pages/login";
 import RegisterPage from "@/pages/register";
 import ForgotPasswordPage from "@/pages/forgot-password";
 import ProductsSearchPage from "@/pages/products-search";
-import ProductDetails from "@/pages/view-product";
 import AuthLayout from "@/components/layouts/auth-layout";
 import RootLayout from "@/components/layouts/root-layout";
-import AdminOrders from "./pages/admin-orders";
-import AdminAllProducts from "./pages/admin-all-products";
-import NotFound from "./pages/error";
-import MyOrders from "./pages/account-my-orders";
+import NotFoundPage from "./pages/error";
+import ProductDetailsPage from "@/pages/view-product";
+import MyOrdersPage from "./pages/account-my-orders";
+import AdminOrdersPage from "./pages/admin-orders";
+import AdminAllProductsPage from "./pages/admin-all-products";
 
 export default function Router() {
     return (
@@ -27,14 +27,17 @@ export default function Router() {
                         path="/products-search"
                         element={<ProductsSearchPage />}
                     />
-                    <Route path="/products/:id" element={<ProductDetails />} />
-                    <Route path="/not-found" element={<NotFound />} />
-                    <Route path="/my-orders" element={<MyOrders />} />
+                    <Route
+                        path="/products/:id"
+                        element={<ProductDetailsPage />}
+                    />
+                    <Route path="/not-found" element={<NotFoundPage />} />
+                    <Route path="/my-orders" element={<MyOrdersPage />} />
 
-                    <Route path="/admin/orders" element={<AdminOrders />} />
+                    <Route path="/admin/orders" element={<AdminOrdersPage />} />
                     <Route
                         path="/admin/all-products"
-                        element={<AdminAllProducts />}
+                        element={<AdminAllProductsPage />}
                     />
                     {/* Add other routes here */}
 
