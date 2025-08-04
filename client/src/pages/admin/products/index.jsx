@@ -1,21 +1,21 @@
 import React from "react";
-import "./admin-all-products.css";
 import Pagination from "@/components/shared/pagination";
-import AdminSidebar from "@/components/admin-sidebar";
+import AdminSidebar from "@/components/layouts/admin-layout/sidebar";
 import ProductCard from "@/components/shared/product-card";
 import FiltersPanel from "@/components/filters-panel";
+import "./admin-products.css";
 
-export default function AdminAllProductsPage() {
-    const dummyProducts = Array(8).fill({
-        id: 1,
-        name: "Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey",
-        price: "$1500",
-        category: "Laptop",
-        stock: 5,
-    });
+const dummyProducts = Array(8).fill({
+    id: 1,
+    name: "Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey",
+    price: "$1500",
+    category: "Laptop",
+    stock: 5,
+});
+
+export default function AdminProductsPage() {
     return (
         <div className="admin-container">
-            <AdminSidebar />
             <div className="admin-main">
                 <div className="admin-products">
                     <div className="products-header">

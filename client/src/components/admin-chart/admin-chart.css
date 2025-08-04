@@ -1,0 +1,30 @@
+.admin-chart {
+    background-color: var(--color-gray-100);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-2xs);
+
+    padding: var(--spacing-8);
+}
+
+.admin-chart__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    flex-wrap: wrap;
+
+    margin-bottom: var(--spacing-8);
+}
+
+.admin-chart__header span {
+    margin-inline-end: var(--spacing-3);
+    color: var(--color-gray-500);
+}
+
+.admin-chart__header select {
+    border: 1px solid var(--color-gray-500);
+    border-radius: var(--radius-md);
+    padding-inline: var(--spacing-1\.5);
+    padding-block: var(--spacing-1);
+}

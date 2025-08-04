@@ -1,0 +1,74 @@
+/* Sidebar container */
+.admin-sidebar {
+    flex: 1;
+    max-width: 24rem;
+
+    position: sticky;
+    top: 0;
+    align-self: stretch;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background-color: var(--color-gray-100);
+
+    padding-inline: var(--spacing-5);
+    padding-block: var(--spacing-12);
+    border-right: 1px solid #e0e0e0;
+}
+
+/* Sidebar list */
+.admin-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Sidebar items */
+.admin-sidebar li {
+    margin-bottom: 15px;
+}
+
+/* Sidebar links */
+.admin-sidebar a,
+.admin-sidebar span {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.admin-sidebar a:hover {
+    color: var(--color-brand-500);
+}
+
+/* Active link */
+.admin-sidebar .active {
+    color: var(--color-brand-500);
+    font-weight: var(--fw-bold);
+}
+
+/* Submenu styling */
+.admin-sidebar .has-submenu > span {
+    font-weight: var(--fw-medium);
+    margin-bottom: var(--spacing-3);
+}
+
+.admin-sidebar .submenu {
+    margin-inline-start: var(--spacing-4);
+    margin-top: var(--spacing-1\.5);
+}
+
+.admin-sidebar .submenu li {
+    margin-bottom: var(--spacing-3);
+}
+
+.admin-sidebar__logout {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-top: auto;
+}
