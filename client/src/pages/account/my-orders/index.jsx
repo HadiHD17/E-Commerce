@@ -7,6 +7,15 @@ import api from "@/api";
 
 const { setOrders, setFilter } = orderSlice.actions;
 
+const statusClassMap = {
+    pending: "status-pending",
+    shipped: "status-shipped",
+    delivered: "status-delivered",
+    paid: "status-paid",
+    cancelled: "status-cancelled",
+    packed: "status-packed",
+};
+
 export default function MyOrdersPage() {
     const dispatch = useDispatch();
     const { list, filter } = useSelector(state => state.orders);
@@ -14,49 +23,31 @@ export default function MyOrdersPage() {
     const [error, setError] = useState(null);
     const token = localStorage.getItem("auth-token");
 
-    const getStatusClass = status => {
-        switch (status.toLowerCase()) {
-            case "pending":
-                return "status-pending";
-            case "shipped":
-                return "status-shipped";
-            case "delivered":
-                return "status-delivered";
-            case "paid":
-                return "status-paid";
-            case "cancelled":
-                return "status-cancelled";
-            case "packed":
-                return "status-packed";
-            default:
-                return "status-default";
-        }
-    };
-
     const fetchOrders = async () => {
         try {
+            setLoading(true);
+            setError(null);
             const res = await api.get("customer/account/orders", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
-            // Transform orders: flatten each product in order_items
-            const transformed = res.data.payload.flatMap(order => {
-                return order.order_items.map(item => ({
+            const transformed = res.data.payload.flatMap(order =>
+                order.order_items.map(item => ({
                     orderId: order.id,
                     statusText: order.status.toUpperCase(),
-                    statusClass: getStatusClass(order.status),
+                    statusClass:
+                        statusClassMap[order.status.toLowerCase()] ||
+                        "status-default",
                     productName: item.product.name,
                     quantity: item.quantity,
                     price: item.price_at_time,
-                    // image: "/images/products/default.jpg",
+                    // image: item.product.image || "/images/products/default.jpg", // if image exists
                     status: order.status,
-                }));
-            });
+                })),
+            );
 
             dispatch(setOrders(transformed));
-        } catch (err) {
+        } catch {
             setError("Failed to load orders.");
         } finally {
             setLoading(false);
@@ -67,10 +58,10 @@ export default function MyOrdersPage() {
         fetchOrders();
     }, [dispatch]);
 
-    const filteredOrders = list.filter(order => {
-        if (filter === "all") return true;
-        return order.status.toLowerCase() === filter;
-    });
+    const filteredOrders =
+        filter === "all"
+            ? list
+            : list.filter(order => order.status.toLowerCase() === filter);
 
     return (
         <div className="orders-container">
