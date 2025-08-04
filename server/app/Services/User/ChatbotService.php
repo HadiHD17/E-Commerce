@@ -19,7 +19,7 @@ class ChatbotService
 
     public function ask($userMessage)
     {
-        
+
         $products = Product::query()
             ->where(function ($query) use ($userMessage) {
                 $keywords = explode(' ', strtolower($userMessage));
@@ -29,7 +29,7 @@ class ChatbotService
             })
             ->get();
 
-     
+
         if ($products->isEmpty()) {
             return "Sorry, we couldn’t find any product matching your request.";
         }
