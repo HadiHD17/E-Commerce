@@ -18,6 +18,7 @@ import AccountSettingsPage from "@/pages/account/settings";
 import ChatPage from "@/pages/chat";
 import AdminHomePage from "@/pages/admin";
 import AdminLayout from "@/components/layouts/admin-layout";
+import AdminNewProductPage from "@/pages/admin/new-product";
 
 export default function Router() {
     return (
@@ -43,12 +44,18 @@ export default function Router() {
                         <Route index element={<AdminHomePage />} />
                         <Route path="orders" element={<AdminOrdersPage />} />
                         <Route
-                            path="products"
+                            path="all-products"
                             element={<AdminProductsPage />}
                         />
                         <Route
-                            path="all-products"
-                            element={<Navigate to="/admin/products" replace />}
+                            path="new-product"
+                            element={<AdminNewProductPage />}
+                        />
+                        <Route
+                            path="products"
+                            element={
+                                <Navigate to="/admin/all-products" replace />
+                            }
                         />
                     </Route>
 
