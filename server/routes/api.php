@@ -6,11 +6,14 @@ use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController as AdminProductImageControler;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\User\ChatbotController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\Common\FeatureController;
 use App\Http\Controllers\Common\WebhookController;
 use App\Http\Controllers\User\CheckoutController;
+// use App\Http\Controllers\User\ChatbotController;
+// use app\Http\Controllers\User\ChatbotController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -74,6 +77,10 @@ Route::group(["prefix" => "v0.1"], function () {
     // Webhook Routes (no auth required)
     Route::post('webhook/order', [WebhookController::class, 'handleOrderWebhook']);
 
+    
+// Route::post('/chatbot', [ChatbotController::class, 'ask']);
+
+Route::post ('/chatbot', [ChatbotController::class, 'ask']);
 
     Route::middleware('auth:api')->post('logout', [AuthController::class, 'logout']);
 });
