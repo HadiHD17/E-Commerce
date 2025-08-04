@@ -1,6 +1,25 @@
 @import "./resets.css";
+@import "./fonts.css";
 @import "./spacing.css";
 @import "./colors.css";
 @import "./display.css";
 @import "./radii.css";
+@import "./shadows.css";
 @import "./typography.css";
+
+body {
+    color: var(--color-gray-900);
+
+    font-size: var(--fs-body);
+
+    min-height: 100vh; /* for browsers that don't support `dvh` yet */
+    min-height: 100dvh;
+}
+
+.container {
+    max-width: 1440px;
+    width: 100%;
+
+    padding-inline: var(--spacing-4);
+    margin-inline: auto;
+}

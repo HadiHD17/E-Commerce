@@ -1,0 +1,76 @@
+/* Main container that holds sidebar and content */
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9fafb;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main section (right of sidebar) */
+.admin-main {
+    flex: 1;
+    padding: 20px 30px;
+    overflow-y: auto;
+}
+
+/* Products container */
+.admin-products {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header section with title and search */
+.products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.products-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    color: #1f2937;
+}
+
+.product-search {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 250px;
+    transition: border-color 0.3s ease;
+}
+
+.product-search:focus {
+    outline: none;
+    border-color: #4f46e5;
+}
+
+/* Content section with grid + filters */
+.products-content {
+    display: flex;
+    gap: 30px;
+}
+
+/* Grid of product cards */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    flex: 1;
+}
+
+/* Filters panel assumed to take fixed width */
+.filters-panel {
+    width: 250px;
+}
+
+/* Pagination wrapper (assumes Pagination component inside) */
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}

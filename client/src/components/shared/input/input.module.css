@@ -1,0 +1,48 @@
+.input {
+}
+
+.input__label {
+    display: block;
+    margin-bottom: var(--spacing-1\.5);
+}
+
+.input__control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: var(--spacing-3);
+
+    box-shadow: var(--shadow-2xs);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+}
+.input__control:has(:focus) {
+    border-color: var(--color-brand-700);
+}
+.input--error .input__control {
+    border-color: var(--color-danger-700);
+    color: var(--color-danger-700);
+}
+.input--readonly .input__control {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.input__field {
+    outline: none;
+    width: 100%;
+}
+
+.input__password-toggle {
+    font-size: 1.25rem;
+    height: 1.25rem;
+
+    margin-inline-start: var(--spacing-2);
+}
+
+.input__error {
+    margin-top: var(--spacing-1);
+    text-align: start;
+    color: var(--color-danger-700);
+}

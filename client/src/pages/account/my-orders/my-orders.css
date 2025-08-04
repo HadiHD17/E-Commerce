@@ -1,0 +1,93 @@
+.orders-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f9fafb;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Make sure sidebar is fixed or set according to your sidebar styles */
+
+.orders-main {
+    padding: 2rem 3rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab {
+    background: transparent;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition:
+        color 0.3s ease,
+        border-bottom-color 0.3s ease;
+}
+
+.tab:hover {
+    color: #111;
+}
+
+.tab.active {
+    color: #0a74da;
+    border-bottom-color: #0a74da;
+    font-weight: 700;
+}
+
+/* Orders list container */
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Load more button */
+.load-more {
+    align-self: center;
+    margin: 2rem 0 1rem 0;
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background-color: #0a74da;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.load-more:hover {
+    background-color: #084d9e;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .orders-main {
+        margin-left: 0;
+        padding: 1rem 1rem;
+    }
+
+    .tabs {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}

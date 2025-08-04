@@ -14,21 +14,11 @@
 html {
     /* Improve consistency of default fonts in all browsers. */
     font-family:
-        system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+        "Inter", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji";
 
     line-height: 1.5; /* Correct the line height in all browsers. */
     -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS. */
-}
-
-/*
-Sections
-========
-*/
-
-body {
-    min-height: 100vh; /* for browsers that don't support `dvh` yet */
-    min-height: 100dvh;
 }
 
 /*
@@ -39,11 +29,15 @@ Text-level semantics
 h1,
 h2,
 h3,
-h4,
+h4 {
+    line-height: 1.1;
+}
+
 button,
 input,
-label {
-    line-height: 1.1;
+label,
+a {
+    line-height: 1;
 }
 
 /**
@@ -121,6 +115,8 @@ button,
 [type="reset"],
 [type="submit"] {
     -webkit-appearance: button;
+}
+:is(button, [type="button"], [type="reset"], [type="submit"]):enabled {
     cursor: pointer;
 }
 

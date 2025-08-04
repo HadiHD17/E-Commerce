@@ -1,4 +1,4 @@
-# E-commerce Client
+# E-commerce (Volta) Client
 
 > Powered by React + Vite.
 
@@ -8,15 +8,10 @@
   `example-component.jsx`, `user-slice.js`, `use-foo.js`).
 - **Components**: Each component folder must contain three files:
     - `index.jsx` → component entry point
-    - `<component-name>.module.css` → styles scoped to the component
-    - `<component-name>.test.jsx` → unit/component tests
+    - `<component-name>.css` → styles scoped to the component
 
 ### Structure Rules
 
-- **Tests**: Unit/component tests are colocated with the file being tested
-  (e.g., `Component.test.jsx`).
-    - Otherwise if implementing e2e or broader, non-component-specific tests,
-      write them in `tests/`
 - **Assets**: Assets that you'll **IMPORT in your JS code** (e.g. images and
   fonts) should be located in `src/assets/`.
     - Otherwise, add them to the `public/` folder

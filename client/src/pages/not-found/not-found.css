@@ -1,0 +1,76 @@
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    min-height: 85vh;
+    padding-inline: var(--spacing-5);
+}
+
+/* Circular 404 */
+.circle {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--color-brand-100);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--spacing-5);
+
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.animated-404 {
+    color: var(--color-brand-900);
+    font-size: 3rem;
+    font-weight: var(--fw-bold);
+}
+
+.oops-text {
+    margin-bottom: var(--spacing-4);
+}
+
+.not-found-message {
+    max-width: 55ch;
+    margin-bottom: var(--spacing-8);
+}
+
+/* Pulse animation for the 404 circle */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(60, 79, 245, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(60, 79, 245, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(60, 79, 245, 0);
+    }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .animated-404 {
+        font-size: 36px;
+    }
+
+    .oops-text {
+        font-size: var(--fs-h2);
+    }
+
+    .not-found-message {
+        font-size: 1rem;
+    }
+}

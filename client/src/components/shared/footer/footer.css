@@ -1,0 +1,24 @@
+.footer {
+    padding-block: var(--spacing-10);
+    background-color: var(--color-gray-100);
+
+    border-top: 1px solid var(--color-border-subtle);
+}
+
+.footer__logo {
+    margin-bottom: var(--spacing-4);
+}
+
+.footer__divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-gray-200);
+}
+
+.footer__link {
+    color: var(--color-gray-700);
+    text-decoration: none;
+}
+.footer__link:hover {
+    text-decoration: underline;
+}
