@@ -1,11 +1,16 @@
 import React from "react";
 import "./pagination.css";
+import { useDispatch, useSelector } from "react-redux";
+import { productsSlice } from "@/store/slices/productslice";
 
-export default function Pagination({ currentPage, setCurrentPage }) {
-    const pages = Array.from({ length: 10 }, (_, i) => i + 1); // Example: 10 pages
-
+export default function Pagination({ totalPages }) {
+    const currentPage = useSelector(state => state.products.currentPage);
+    const dispatch = useDispatch();
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
     const handlePageChange = page => {
-        setCurrentPage(page);
+        if (page >= 1 && page <= totalPages && page !== currentPage) {
+            dispatch(productsSlice.actions.setCurrentPage(page));
+        }
     };
     return (
         <div className="pagination">
