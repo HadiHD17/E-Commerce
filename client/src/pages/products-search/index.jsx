@@ -3,62 +3,109 @@ import ProductCard from "@/components/shared/product-card";
 import FilterSidebar from "@/components/filter-sidebar";
 import React, { useEffect, useState } from "react";
 import "./products-search.css";
+import { useDispatch, useSelector } from "react-redux";
+import { productsSlice } from "@/store/slices/productslice";
+import axios from "axios";
+import api from "@/api";
 
 export default function ProductsSearchPage() {
-    const [filters, setFilters] = useState({ categories: [], sort: "asc" });
-    const [currentPage, setCurrentPage] = useState(1);
-    const [products, setProducts] = useState([
-        {
-            id: 1,
-            name: "Wireless Headphones",
-            img: "https://via.placeholder.com/150x150?text=Headphones",
-            price: 120,
-            newPrice: 99,
-            stock: 15,
-            category: "Electronics",
-        },
-        {
-            id: 2,
-            name: "Running Shoes",
-            img: "https://via.placeholder.com/150x150?text=Shoes",
-            price: 80,
-            newPrice: null,
-            stock: 5,
-            category: "Fashion",
-        },
-        {
-            id: 3,
-            name: "Smart Watch",
-            img: "https://via.placeholder.com/150x150?text=Watch",
-            price: 200,
-            newPrice: 150,
-            stock: 0,
-            category: "Gadgets",
-        },
-    ]);
-    const [searchQuery, setSearchQuery] = useState("");
+    const productsState = useSelector(global => global.products);
+    const dispatch = useDispatch();
+    const {
+        list: products,
+        loading,
+        error,
+        filters,
+        searchQuery,
+        currentPage,
+    } = productsState;
 
-    const handleSearch = () => {
-        console.log("Searching for:", searchQuery, "with filters:", filters);
+    const PRODUCTS_PER_PAGE = 8;
+
+    const fetchProducts = async () => {
+        dispatch(productsSlice.actions.setLoading(true));
+        dispatch(productsSlice.actions.setError(null));
+
+        const token = localStorage.getItem("auth-token");
+        console.log(token);
+        try {
+            let url = `customer/products`;
+
+            if (searchQuery) {
+                url = `customer/products_by_search?searchTerm=${searchQuery}`;
+            } else if (filters.categories && filters.categories.length > 0) {
+                const category = filters.categories[0];
+                url = `customer/products_by_category/${encodeURIComponent(category)}`;
+            }
+
+            const res = await api.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/json",
+                },
+            });
+
+            const products = res.data.payload;
+
+            const uniqueCategories = [
+                ...new Set(products.map(p => p.category)),
+            ];
+            dispatch(productsSlice.actions.setCategories(uniqueCategories));
+
+            if (filters.sort === "asc") {
+                products.sort((a, b) => a.price - b.price);
+            } else if (filters.sort === "desc") {
+                products.sort((a, b) => b.price - a.price);
+            }
+            dispatch(productsSlice.actions.loadProducts(products));
+        } catch (error) {
+            dispatch(productsSlice.actions.setError("failed to load products"));
+        } finally {
+            dispatch(productsSlice.actions.setLoading(false));
+        }
     };
+
     useEffect(() => {
-        handleSearch();
+        fetchProducts();
     }, [filters, searchQuery, currentPage]);
+
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    const paginatedProducts = products.slice(
+        startIndex,
+        startIndex + PRODUCTS_PER_PAGE,
+    );
+    const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
     return (
         <div>
             <div className="products-search-container">
                 <div className="products-sidebar">
-                    <FilterSidebar filters={filters} setFilters={setFilters} />
+                    <FilterSidebar
+                        filters={filters}
+                        setFilters={newFilters =>
+                            dispatch(
+                                productsSlice.actions.setFilters(newFilters),
+                            )
+                        }
+                        searchQuery={searchQuery}
+                        setSearchQuery={query =>
+                            dispatch(
+                                productsSlice.actions.setSearchQuery(query),
+                            )
+                        }
+                    />
                 </div>
                 <div className="products-list">
-                    {products.map(product => (
+                    {paginatedProducts.map(product => (
                         <ProductCard key={product.id} {...product} />
                     ))}
                 </div>
             </div>
             <Pagination
                 currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                setCurrentPage={page =>
+                    dispatch(productsSlice.actions.setCurrentPage(page))
+                }
+                totalPages={totalPages}
             />
         </div>
     );

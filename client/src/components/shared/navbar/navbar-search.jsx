@@ -1,23 +1,25 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { productsSlice } from "@/store/slices/productslice";
 
 export default function NavbarSearch() {
     const [search, setSearch] = useState("");
+    const dispatch = useDispatch();
 
-    const handleSearch = e => {
-        e.preventDefault();
-        // Add your search logic here
-        // Example: navigate(`/search?query=${search}`);
+    const handleSearchChange = e => {
+        setSearch(e.target.value);
+        dispatch(productsSlice.actions.setSearchQuery(e.target.value));
     };
 
     return (
-        <form className="navbar-search" onSubmit={handleSearch}>
+        <form className="navbar-search" onSubmit={e => e.preventDefault()}>
             <input
                 id="search"
                 name="search"
                 type="search"
                 value={search}
-                onChange={e => setSearch(e.target.value)}
+                onChange={handleSearchChange}
                 placeholder="Search products..."
                 className="navbar-search__input"
             />
