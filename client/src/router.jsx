@@ -83,10 +83,10 @@ export default function Router() {
                     </Route>
 
                     <Route element={<AuthLayout />}>
-                        <Route path="login" element={<LoginPage />} />
-                        <Route path="register" element={<RegisterPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
                         <Route
-                            path="forgot-password"
+                            path="/forgot-password"
                             element={<ForgotPasswordPage />}
                         />
                     </Route>

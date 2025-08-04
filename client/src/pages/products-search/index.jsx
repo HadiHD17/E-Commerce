@@ -6,6 +6,7 @@ import "./products-search.css";
 import { useDispatch, useSelector } from "react-redux";
 import { productsSlice } from "@/store/slices/productslice";
 import axios from "axios";
+import api from "@/api";
 
 export default function ProductsSearchPage() {
     const productsState = useSelector(global => global.products);
@@ -19,27 +20,37 @@ export default function ProductsSearchPage() {
         currentPage,
     } = productsState;
 
-    const PRODUCTS_PER_PAGE = 6;
+    const PRODUCTS_PER_PAGE = 8;
 
     const fetchProducts = async () => {
         dispatch(productsSlice.actions.setLoading(true));
         dispatch(productsSlice.actions.setError(null));
+
+        const token = localStorage.getItem("auth-token");
+        console.log(token);
         try {
-            let url = `http://localhost:8000/api/v0.1/customer/products`;
+            let url = `customer/products`;
 
             if (searchQuery) {
-                url = `http://localhost:8000/api/v0.1/customer/products_by_search?searchTerm=${searchQuery}`;
-            } else if (filters.category) {
-                url = `http://localhost:8000/api/v0.1/customer/products_by_category?category=${filters.category}`;
+                url = `customer/products_by_search?searchTerm=${searchQuery}`;
+            } else if (filters.categories && filters.categories.length > 0) {
+                const category = filters.categories[0];
+                url = `customer/products_by_category/${encodeURIComponent(category)}`;
             }
 
-            const res = await axios.get(url, {
+            const res = await api.get(url, {
                 headers: {
-                    Authorization: `Beaer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/json",
                 },
             });
 
             const products = res.data.payload;
+
+            const uniqueCategories = [
+                ...new Set(products.map(p => p.category)),
+            ];
+            dispatch(productsSlice.actions.setCategories(uniqueCategories));
 
             if (filters.sort === "asc") {
                 products.sort((a, b) => a.price - b.price);

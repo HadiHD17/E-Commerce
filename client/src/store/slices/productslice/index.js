@@ -9,6 +9,7 @@ const initialState = {
         categories: [],
         sort: "asc",
     },
+    allCategories: [],
     searchQuery: "",
     currentPage: 1,
 };
@@ -21,7 +22,7 @@ export const productsSlice = createSlice({
             return {
                 ...state,
                 list: action.payload,
-                filtered: action.payload, // optional for filtered use
+                filtered: action.payload,
                 loading: false,
                 error: null,
             };
@@ -75,8 +76,8 @@ export const productsSlice = createSlice({
         setSortOrder: (state, action) => {
             state.filters.sort = action.payload;
         },
-        setAvailableCategories: (state, action) => {
-            state.categories = action.payload;
+        setCategories: (state, action) => {
+            state.allCategories = action.payload;
         },
     },
 });

@@ -5,8 +5,10 @@ import { productsSlice } from "@/store/slices/productslice";
 
 export default function FilterSidebar() {
     const dispatch = useDispatch();
-    const filters = useSelector(state => state.products.filters);
-    const categories = useSelector(state => state.products.filters.categories);
+    const filters = useSelector(state => state.products.filters || {});
+    const categories = useSelector(state => state.products.allCategories || []);
+    const selectedCategories = filters.categories || [];
+
     const handleCategoryChange = category => {
         dispatch(productsSlice.actions.toggleCategory(category));
     };
@@ -21,7 +23,7 @@ export default function FilterSidebar() {
                     <label key={cat}>
                         <input
                             type="checkbox"
-                            checked={filters.categories.includes(cat)}
+                            checked={selectedCategories.includes(cat)}
                             onChange={() => handleCategoryChange(cat)}
                         />
                         {cat}
