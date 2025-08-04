@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
-import "./admin-sidebar.css";
 import Button from "@/components/shared/button";
+import "./admin-sidebar.css";
+import { SignOutIcon } from "@phosphor-icons/react";
 
 export default function AdminSidebar() {
     return (
-        <div className="sidebar">
+        <div className="admin-sidebar">
             <ul>
                 <li>
                     <NavLink to="/admin">Dashboard</NavLink>
@@ -12,6 +13,7 @@ export default function AdminSidebar() {
 
                 <li className="has-submenu">
                     <span>Products</span>
+
                     <ul className="submenu">
                         <li>
                             <NavLink to="/admin/all-products">
@@ -31,7 +33,13 @@ export default function AdminSidebar() {
                 </li>
             </ul>
 
-            <Button className="logout">Log out</Button>
+            <Button
+                variant="ghost"
+                color="danger"
+                className="admin-sidebar__logout "
+            >
+                <SignOutIcon /> Log out
+            </Button>
         </div>
     );
 }

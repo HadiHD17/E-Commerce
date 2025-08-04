@@ -1,5 +1,4 @@
 import React from "react";
-import AdminSidebar from "@/components/admin-sidebar";
 import OrderRow from "@/components/shared/order-row";
 import "./admin-orders.css";
 
@@ -14,7 +13,6 @@ export default function AdminOrdersPage() {
 
     return (
         <div className="admin-container">
-            <AdminSidebar />
             <div className="admin-main">
                 <div className="orders-content">
                     <input

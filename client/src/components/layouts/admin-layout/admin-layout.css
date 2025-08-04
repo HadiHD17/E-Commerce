@@ -1,4 +1,6 @@
 .admin-layout {
+    /* flex: 1; */
+    display: flex;
 }
 
 .admin-layout__main {
