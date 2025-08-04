@@ -58,7 +58,10 @@ export default function Navbar({ isSignedIn }) {
                 <div className="right">
                     {isSignedIn ? (
                         <>
-                            <Link to="/account/orders" className="navbar__link">
+                            <Link
+                                to="/account/my-orders"
+                                className="navbar__link"
+                            >
                                 My Orders
                             </Link>
                             <button className="text-gray-700">
@@ -106,7 +109,7 @@ export default function Navbar({ isSignedIn }) {
                     {isSignedIn ? (
                         <>
                             <Link
-                                to="/account/orders"
+                                to="/account/my-orders"
                                 className="navbar__link"
                                 onClick={() => setIsMobileNavOpen(false)}
                             >
