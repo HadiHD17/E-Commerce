@@ -21,7 +21,7 @@ export default function AdminSidebar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/admin/new-products">
+                            <NavLink to="/admin/new-product">
                                 New Product
                             </NavLink>
                         </li>
