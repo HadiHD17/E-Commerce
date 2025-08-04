@@ -6,12 +6,15 @@ import AuthLayoutHeader from "@/components/layouts/auth-layout/auth-layout-heade
 import Button from "@/components/shared/button";
 import ErrorAlert from "@/components/shared/error-alert";
 import Input from "@/components/shared/input";
-import Auth from "@/utils/auth";
+import useAuth from "@/hooks/use-auth";
 
 export default function LoginPage() {
     const navigate = useNavigate();
+    const { signIn } = useAuth();
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -27,7 +30,7 @@ export default function LoginPage() {
                 password,
             });
 
-            Auth.saveSession(data.payload);
+            signIn(data.payload);
             navigate("/");
         } catch (err) {
             if (err instanceof AxiosError) {

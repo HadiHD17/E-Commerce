@@ -1,11 +1,10 @@
 import Pagination from "@/components/shared/pagination";
 import ProductCard from "@/components/shared/product-card";
 import FilterSidebar from "@/components/filter-sidebar";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./products-search.css";
 import { useDispatch, useSelector } from "react-redux";
 import { productsSlice } from "@/store/slices/productslice";
-import axios from "axios";
 import api from "@/api";
 
 export default function ProductsSearchPage() {

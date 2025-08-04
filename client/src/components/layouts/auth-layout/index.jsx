@@ -1,16 +1,17 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import Auth from "@/utils/auth";
 import cls from "@/utils/classnames";
 import "./auth-layout.css";
+import useAuth from "@/hooks/use-auth";
 
 export default function AuthLayout() {
+    const { isLoggedIn } = useAuth();
     const { pathname } = useLocation();
 
-    const isReversedLayout = pathname.startsWith("/forgot-password");
-
-    if (Auth.isLoggedIn()) {
+    if (isLoggedIn) {
         return <Navigate to="/" replace />;
     }
+
+    const isReversedLayout = pathname.startsWith("/forgot-password");
 
     return (
         <main
