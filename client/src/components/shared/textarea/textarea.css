@@ -31,8 +31,8 @@
     resize: vertical;
     outline: none;
 
-    min-height: 1.5em;
-    max-height: 50rem;
+    min-height: 4rem;
+    max-height: 36rem;
     width: 100%;
 
     scroll-padding-block: 1em;
