@@ -1,24 +1,17 @@
 import React from "react";
 import "./filtersidebar.css";
+import { useDispatch, useSelector } from "react-redux";
+import { productsSlice } from "@/store/slices/productslice";
 
-export default function FilterSidebar({ filters, setFilters }) {
-    const categories = [
-        "Laptop",
-        "Accessories",
-        "Smart Phone",
-        "Camera",
-        "Smart Watch",
-        "Gaming",
-    ];
+export default function FilterSidebar() {
+    const dispatch = useDispatch();
+    const filters = useSelector(state => state.products.filters);
+    const categories = useSelector(state => state.products.filters.categories);
     const handleCategoryChange = category => {
-        const isSelected = filters.categories.includes(category);
-        const newCategories = isSelected
-            ? filters.categories.filter(cat => cat !== category)
-            : [...filters.categories, category];
-        setFilters({ ...filters, categories: newCategories });
+        dispatch(productsSlice.actions.toggleCategory(category));
     };
     const handleSortChange = sortOrder => {
-        setFilters({ ...filters, sort: sortOrder });
+        dispatch(productsSlice.actions.setSortOrder(sortOrder));
     };
     return (
         <aside className="filter-sidebar">
