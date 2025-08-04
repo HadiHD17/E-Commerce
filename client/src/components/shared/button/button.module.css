@@ -25,6 +25,10 @@
     background-color: var(--btn-bg-faded);
     color: var(--btn-text-faded);
 }
+.button--var-ghost {
+    background-color: transparent;
+    color: var(--btn-text-faded);
+}
 
 .button--clr-brand {
     --btn-bg-filled: var(--color-brand-500);
