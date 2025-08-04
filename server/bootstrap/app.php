@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'rate.limit' => \App\Http\Middleware\RateLimitMiddleware::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'broadcasting' => \App\Http\Middleware\BroadcastingMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

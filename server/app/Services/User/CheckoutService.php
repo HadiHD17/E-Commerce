@@ -51,8 +51,8 @@ class CheckoutService
 
             CartItem::where('user_id', $userId)->delete();
 
-            // Fire the OrderCreated event
-            event(new OrderCreated($order));
+            // Fire the OrderCreated event and broadcast
+            \App\Services\BroadcastingService::broadcastOrderCreated($order);
 
             return $order;
         });
