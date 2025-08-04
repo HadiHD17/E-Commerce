@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\Admin\OrderService;
+use App\Services\Admin\AuditLogService;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -45,10 +46,22 @@ class OrderController extends Controller
     public function setOrderStatus($orderId)
     {
         try {
+            $order = \App\Models\Order::find($orderId);
+            $oldStatus = $order ? $order->status : null;
 
             $result = OrderService::setOrderStatus($orderId);
 
             if ($result) {
+                // Log the audit action
+                AuditLogService::logAction(
+                    auth()->id(),
+                    'order_status_changed',
+                    'Order',
+                    $orderId,
+                    $oldStatus,
+                    $result->status
+                );
+
                 return $this->responseJSON($result, "Order status updated successfully");
             }
 
@@ -61,9 +74,22 @@ class OrderController extends Controller
     public function cancelOrder($orderId)
     {
         try {
+            $order = \App\Models\Order::find($orderId);
+            $oldStatus = $order ? $order->status : null;
+
             $result = OrderService::cancelOrder($orderId);
 
             if ($result) {
+                // Log the audit action
+                AuditLogService::logAction(
+                    auth()->id(),
+                    'order_cancelled',
+                    'Order',
+                    $orderId,
+                    $oldStatus,
+                    $result->status
+                );
+
                 if ($result->status === 'cancelled' && $result->getOriginal('status') === 'cancelled') {
                     return $this->responseJSON($result, "Order is already cancelled");
                 }
@@ -71,7 +97,6 @@ class OrderController extends Controller
                 return $this->responseJSON($result, "Order cancelled successfully");
             }
 
-            $order = \App\Models\Order::find($orderId);
             if (!$order) {
                 return $this->responseJSON(null, "Order not found", 404);
             }

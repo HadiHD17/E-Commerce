@@ -13,6 +13,7 @@ use App\Http\Controllers\Common\FeatureController;
 use App\Http\Controllers\Common\WebhookController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\Admin\FailedJobsController;
+use App\Http\Controllers\Admin\AuditLogController;
 // use App\Http\Controllers\User\ChatbotController;
 // use app\Http\Controllers\User\ChatbotController;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +73,9 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::delete("failed_jobs/{id}", [FailedJobsController::class, "deleteFailedJob"]);
             Route::post("failed_jobs/retry_all", [FailedJobsController::class, "retryAllFailedJobs"]);
             Route::delete("failed_jobs/clear_all", [FailedJobsController::class, "clearAllFailedJobs"]);
+
+            // Admin Audit Log Routes
+            Route::get("audit_logs", [AuditLogController::class, "getAuditLogs"]);
         });
     });
 

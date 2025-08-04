@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Services\Admin\ProductService;
+use App\Services\Admin\AuditLogService;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -24,9 +25,13 @@ class ProductController extends Controller
     {
         try {
             $product = new Product();
+            $isUpdate = false;
+            $oldData = null;
 
             if ($id) {
                 $product = ProductService::getAllProducts($id);
+                $isUpdate = true;
+                $oldData = $product ? $product->toArray() : null;
 
                 if (!$product) {
                     return $this->responseJSON(null, "Product not found", 404);
@@ -37,6 +42,17 @@ class ProductController extends Controller
             $product = ProductService::addOrUpdateProduct($data, $product);
 
             if ($product) {
+                // Log the audit action
+                $action = $isUpdate ? 'product_updated' : 'product_created';
+                AuditLogService::logAction(
+                    auth()->id(),
+                    $action,
+                    'Product',
+                    $product->id,
+                    $oldData ? 'old' : 'new',
+                    'updated'
+                );
+
                 return $this->responseJSON($product);
             }
 
@@ -49,11 +65,23 @@ class ProductController extends Controller
     public function deleteProduct($id)
     {
         try {
-
             if ($id) {
+                $product = Product::find($id);
+                $oldData = $product ? $product->toArray() : null;
+
                 $deleted = ProductService::deleteProduct($id);
 
                 if ($deleted) {
+                                    // Log the audit action
+                AuditLogService::logAction(
+                    auth()->id(),
+                    'product_deleted',
+                    'Product',
+                    $id,
+                    'active',
+                    'deleted'
+                );
+
                     return $this->responseJSON(null);
                 } else {
                     return $this->responseJSON(null, "Product not found", 400);
