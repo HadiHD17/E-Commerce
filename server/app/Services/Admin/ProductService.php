@@ -3,6 +3,8 @@
 namespace App\Services\Admin;
 
 use App\Models\Product;
+use App\Services\User\ProductService as UserProductService;
+use Illuminate\Support\Facades\Cache;
 
 class ProductService
 {
@@ -24,6 +26,10 @@ class ProductService
         $product->stock = $data["stock"] ?? $product->stock;
 
         $product->save();
+        
+        // Clear product cache after update
+        UserProductService::clearProductCache();
+        
         return $product;
     }
 
@@ -36,6 +42,8 @@ class ProductService
         }
 
         if ($product->delete()) {
+            // Clear product cache after deletion
+            UserProductService::clearProductCache();
             return true;
         } else {
             return false;

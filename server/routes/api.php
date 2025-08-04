@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(["prefix" => "v0.1"], function () {
 
     Route::group(["middleware" => "auth:api"], function () {
-        Route::group(["prefix" => "customer"], function () {
+        Route::group(["prefix" => "customer", "middleware" => "rate.limit:60,1"], function () {
 
             Route::get("products/{id?}", [ProductController::class, "getAllProducts"]);
             Route::get("products_by_category/{category}", [ProductController::class, "getProductsByCategory"]);
@@ -45,11 +45,11 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post("notifications/mark_all_as_read", [NotificationController::class, "markAllAsRead"]);
         });
 
-        Route::group(["prefix" => "common"], function () {
+        Route::group(["prefix" => "common", "middleware" => "rate.limit:60,1"], function () {
             Route::get("featured_products", [FeatureController::class, "getFeaturedProducts"]);
         });
 
-        Route::group(["prefix" => "admin"], function () {
+        Route::group(["prefix" => "admin", "middleware" => "admin"], function () {
 
             Route::get("products/{id?}", [AdminProductController::class, "getAllProducts"]);
             Route::post("add_update_product/{id?}", [AdminProductController::class, "addOrUpdateProduct"]);
@@ -67,7 +67,7 @@ Route::group(["prefix" => "v0.1"], function () {
         });
     });
 
-    Route::group(["prefix" => "guest"], function () {
+    Route::group(["prefix" => "guest", "middleware" => "rate.limit:30,1"], function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login',    [AuthController::class, 'login']);
         Route::post('forgot_password', [AuthController::class, 'forgotPassword']);
@@ -75,12 +75,12 @@ Route::group(["prefix" => "v0.1"], function () {
     });
 
     // Webhook Routes (no auth required)
-    Route::post('webhook/order', [WebhookController::class, 'handleOrderWebhook']);
+    Route::post('webhook/order', [WebhookController::class, 'handleOrderWebhook'])->middleware('rate.limit:100,1');
 
     
 // Route::post('/chatbot', [ChatbotController::class, 'ask']);
 
-Route::post ('/chatbot', [ChatbotController::class, 'ask']);
+Route::post ('/chatbot', [ChatbotController::class, 'ask'])->middleware('rate.limit:20,1');
 
     Route::middleware('auth:api')->post('logout', [AuthController::class, 'logout']);
 });
