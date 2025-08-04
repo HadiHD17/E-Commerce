@@ -12,6 +12,7 @@ const initialState = {
     allCategories: [],
     searchQuery: "",
     currentPage: 1,
+    selectedProduct: null,
 };
 
 export const productsSlice = createSlice({
@@ -34,34 +35,19 @@ export const productsSlice = createSlice({
             };
         },
         setFilters: (state, action) => {
-            return {
-                ...state,
-                filters: action.payload,
-            };
+            state.filters = action.payload;
         },
         setSearchQuery: (state, action) => {
-            return {
-                ...state,
-                searchQuery: action.payload,
-            };
+            state.searchQuery = action.payload;
         },
         setCurrentPage: (state, action) => {
-            return {
-                ...state,
-                currentPage: action.payload,
-            };
+            state.currentPage = action.payload;
         },
         setLoading: (state, action) => {
-            return {
-                ...state,
-                loading: action.payload,
-            };
+            state.loading = action.payload;
         },
         setError: (state, action) => {
-            return {
-                ...state,
-                error: action.payload,
-            };
+            state.error = action.payload;
         },
         toggleCategory: (state, action) => {
             const category = action.payload;
@@ -78,6 +64,9 @@ export const productsSlice = createSlice({
         },
         setCategories: (state, action) => {
             state.allCategories = action.payload;
+        },
+        setSelectedProduct: (state, action) => {
+            state.selectedProduct = action.payload;
         },
     },
 });
