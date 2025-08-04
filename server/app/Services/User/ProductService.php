@@ -12,11 +12,11 @@ class ProductService
     {
         if (!$id) {
             return Cache::remember('products.all', 3600, function () {
-                return Product::all();
+                return Product::with('image')->get();
             });
         }
         return Cache::remember("products.{$id}", 3600, function () use ($id) {
-            return Product::find($id);
+            return Product::with('image')->find($id);
         });
     }
 
@@ -24,28 +24,28 @@ class ProductService
     static function getProductsByCategory($category)
     {
         return Cache::remember("products.category.{$category}", 3600, function () use ($category) {
-            return Product::where("category", $category)->get();
+            return Product::with('image')->where("category", $category)->get();
         });
     }
 
     static function getProductsHighToLow()
     {
         return Cache::remember('products.high-to-low', 3600, function () {
-            return Product::orderBy('price', 'desc')->get();
+            return Product::with('image')->orderBy('price', 'desc')->get();
         });
     }
 
     static function getProductsLowToHigh()
     {
         return Cache::remember('products.low-to-high', 3600, function () {
-            return Product::orderBy('price', 'asc')->get();
+            return Product::with('image')->orderBy('price', 'asc')->get();
         });
     }
 
     static function searchProducts($searchTerm)
     {
         return Cache::remember("products.search.{$searchTerm}", 1800, function () use ($searchTerm) {
-            return Product::where('name', 'like', '%' . $searchTerm . '%')
+            return Product::with('image')->where('name', 'like', '%' . $searchTerm . '%')
                 ->get();
         });
     }

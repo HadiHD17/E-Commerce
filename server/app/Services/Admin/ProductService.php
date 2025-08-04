@@ -11,9 +11,9 @@ class ProductService
     static function getAllProducts($id = null)
     {
         if (!$id) {
-            return Product::all();
+            return Product::with('image')->get();
         }
-        return Product::find($id);
+        return Product::with('image')->find($id);
     }
 
     static function addOrUpdateProduct($data, $product)
