@@ -13,7 +13,7 @@ const ProductCard = ({ id, name, img, price, stock, category, newPrice }) => {
         <div className="product-card" onClick={handleClick}>
             {/* <Heart /> */}
             <div className="product-img">
-                <img src={img}></img>
+                <img src={img} alt="" />
             </div>
             <div className="product-category">{category}</div>
             <div className="product-name">{name}</div>

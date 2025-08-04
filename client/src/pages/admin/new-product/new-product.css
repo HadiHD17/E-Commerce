@@ -17,3 +17,7 @@
 .new-product__create-btn {
     margin-top: var(--spacing-16);
 }
+
+.product-page-heading {
+    margin-bottom: var(--spacing-8);
+}

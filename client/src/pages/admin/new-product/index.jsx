@@ -61,10 +61,6 @@ export default function AdminNewProductPage() {
                                     type="checkbox"
                                     name="on-sale"
                                     id="on-sale"
-                                    style={{
-                                        height: "1em",
-                                        aspectRatio: "1 / 1",
-                                    }}
                                 />
                             </label>
                             <Input
@@ -88,12 +84,5 @@ export default function AdminNewProductPage() {
 }
 
 function ProductPageHeading({ children }) {
-    return (
-        <h1
-            className="product-page-heading fs-h2"
-            style={{ marginBottom: "var(--spacing-8)" }}
-        >
-            {children}
-        </h1>
-    );
+    return <h1 className="product-page-heading fs-h2">{children}</h1>;
 }

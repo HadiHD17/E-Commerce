@@ -3,13 +3,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "@/components/shared/input";
 import Button from "@/components/shared/button";
-import Auth from "@/utils/auth";
 import api from "@/api";
 import AuthLayoutHeader from "@/components/layouts/auth-layout/auth-layout-header";
 import ErrorAlert from "@/components/shared/error-alert";
+import useAuth from "@/hooks/use-auth";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
+    const { signIn } = useAuth();
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
 
@@ -37,7 +39,7 @@ export default function RegisterPage() {
                 password,
             });
 
-            Auth.saveSession(data.payload);
+            signIn(data.payload);
             navigate("/");
         } catch (err) {
             if (err instanceof AxiosError) {

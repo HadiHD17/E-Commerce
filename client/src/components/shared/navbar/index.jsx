@@ -9,22 +9,18 @@ import {
 } from "@phosphor-icons/react";
 import Button from "../button";
 import NavbarSearch from "./navbar-search";
-import "./navbar.css";
 import cls from "@/utils/classnames";
+import "./navbar.css";
+import useAuth from "@/hooks/use-auth";
+import UserDropdown from "@/components/user-dropdown";
 
-export default function Navbar({ isSignedIn }) {
+export default function Navbar() {
+    const { isLoggedIn, signOut } = useAuth();
     const navigate = useNavigate();
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
-    const handleLogin = () => {
-        // Add your login logic here
-        navigate("/login");
-    };
-
-    const handleRegister = () => {
-        // Add your register logic here
-        navigate("/register");
-    };
+    const goToLogin = () => navigate("/login");
+    const goToRegister = () => navigate("/register");
 
     return (
         <nav className="navbar">
@@ -56,7 +52,7 @@ export default function Navbar({ isSignedIn }) {
                 </div>
 
                 <div className="right">
-                    {isSignedIn ? (
+                    {isLoggedIn ? (
                         <>
                             <Link
                                 to="/account/my-orders"
@@ -70,23 +66,21 @@ export default function Navbar({ isSignedIn }) {
                             <Link to="/cart" className="text-gray-700">
                                 <ShoppingCartSimpleIcon size={32} />
                             </Link>
-                            <Link to="/profile" className="text-gray-700">
-                                <UserIcon size={32} />
-                            </Link>
+                            <UserDropdown />
                         </>
                     ) : (
                         <div className="d-flex items-center gap-4">
                             <Button
                                 variant="filled"
                                 color="brand"
-                                onClick={handleRegister}
+                                onClick={goToRegister}
                             >
                                 Register
                             </Button>
                             <Button
                                 variant="faded"
                                 color="gray"
-                                onClick={handleLogin}
+                                onClick={goToLogin}
                             >
                                 Login
                             </Button>
@@ -105,8 +99,8 @@ export default function Navbar({ isSignedIn }) {
                     <NavbarSearch />
                 </div>
 
-                <div className="d-flex flex-col gap-y-4">
-                    {isSignedIn ? (
+                <div className="d-flex flex-col gap-y-6">
+                    {isLoggedIn ? (
                         <>
                             <Link
                                 to="/account/my-orders"
@@ -124,27 +118,36 @@ export default function Navbar({ isSignedIn }) {
                                 Cart
                             </Link>
                             <Link
-                                to="/profile"
+                                to="/account"
                                 className="navbar__link d-inline-flex items-center gap-2"
                                 onClick={() => setIsMobileNavOpen(false)}
                             >
                                 <UserIcon size={24} />
                                 My Account
                             </Link>
+                            <button
+                                onClick={() => {
+                                    setIsMobileNavOpen();
+                                    signOut();
+                                }}
+                                className="navbar__link self-start"
+                            >
+                                Log out
+                            </button>
                         </>
                     ) : (
                         <>
                             <Button
                                 variant="filled"
                                 color="brand"
-                                onClick={handleRegister}
+                                onClick={goToRegister}
                             >
                                 Register
                             </Button>
                             <Button
                                 variant="faded"
                                 color="gray"
-                                onClick={handleLogin}
+                                onClick={goToLogin}
                             >
                                 Login
                             </Button>
