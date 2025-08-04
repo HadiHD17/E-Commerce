@@ -2,8 +2,18 @@
 
 use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController as AdminProductImageControler;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\User\ChatbotController;
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\NotificationController;
+use App\Http\Controllers\Common\FeatureController;
+use App\Http\Controllers\Common\WebhookController;
+use App\Http\Controllers\User\CheckoutController;
+// use App\Http\Controllers\User\ChatbotController;
+// use app\Http\Controllers\User\ChatbotController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,26 +23,64 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::group(["prefix" => "customer"], function () {
 
             Route::get("products/{id?}", [ProductController::class, "getAllProducts"]);
+            Route::get("products_by_category/{category}", [ProductController::class, "getProductsByCategory"]);
+            Route::get("products_by_price/{filter}", [ProductController::class, "getProductsByPrice"]);
+            Route::get("products_by_search", [ProductController::class, "searchProducts"]);
 
+            // Checkout Routes
+            Route::post("checkout", [CheckoutController::class, "processCheckout"]);
+
+            // Account Routes
+            Route::put("account/edit", [AccountController::class, "editAccount"]);
+            Route::get("account/orders", [AccountController::class, "getUserOrders"]);
+
+            // Cart Routes
+            Route::get("cart_items", [CartController::class, "getCartItems"]);
+            Route::post("add_to_cart", [CartController::class, "addToCart"]);
+
+            // Notification Routes
+            Route::get("notifications", [NotificationController::class, "getNotifications"]);
+            Route::get("notifications/unread", [NotificationController::class, "getUnreadNotifications"]);
+            Route::post("notifications/mark_as_read", [NotificationController::class, "markAsRead"]);
+            Route::post("notifications/mark_all_as_read", [NotificationController::class, "markAllAsRead"]);
+        });
+
+        Route::group(["prefix" => "common"], function () {
+            Route::get("featured_products", [FeatureController::class, "getFeaturedProducts"]);
         });
 
         Route::group(["prefix" => "admin"], function () {
-            
+
             Route::get("products/{id?}", [AdminProductController::class, "getAllProducts"]);
             Route::post("add_update_product/{id?}", [AdminProductController::class, "addOrUpdateProduct"]);
             Route::get("delete_product/{id}", [AdminProductController::class, "deleteProduct"]);
             Route::get("product_images/{id?}", [AdminProductImageControler::class, "getAllProductImages"]);
             Route::get("product_images_by_product_id/{product_id}", [AdminProductImageControler::class, "getAllImagesByProductId"]);
             Route::post("add_update_product_image/{id?}", [AdminProductImageControler::class, "addOrUpdateProductImage"]);
-            
+
+            // Admin Order Routes
+            Route::get("todays_orders", [AdminOrderController::class, "getTodaysOrders"]);
+            Route::get("todays_revenue", [AdminOrderController::class, "getTodaysRevenue"]);
+            Route::get("revenue", [AdminOrderController::class, "getRevenue"]);
+            Route::post("set_order_status/{order_id}", [AdminOrderController::class, "setOrderStatus"]);
+            Route::post("cancel_order/{order_id}", [AdminOrderController::class, "cancelOrder"]);
         });
     });
-    
+
     Route::group(["prefix" => "guest"], function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login',    [AuthController::class, 'login']);
+        Route::post('forgot_password', [AuthController::class, 'forgotPassword']);
+        Route::post('reset_password', [AuthController::class, 'resetPassword']);
     });
 
+    // Webhook Routes (no auth required)
+    Route::post('webhook/order', [WebhookController::class, 'handleOrderWebhook']);
+
+    
+// Route::post('/chatbot', [ChatbotController::class, 'ask']);
+
+Route::post ('/chatbot', [ChatbotController::class, 'ask']);
 
     Route::middleware('auth:api')->post('logout', [AuthController::class, 'logout']);
 });

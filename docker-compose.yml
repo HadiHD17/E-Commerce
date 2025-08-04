@@ -10,6 +10,14 @@ services:
       - ./server:/var/www/html
     depends_on:
       - db
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - QUEUE_CONNECTION=redis
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - BROADCAST_DRIVER=redis
 
   frontend:
     build:
@@ -40,6 +48,15 @@ services:
     volumes:
       - db-data:/var/lib/mysql
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+
   pma:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -56,3 +73,4 @@ services:
 
 volumes:
   db-data:
+  redis-data:
