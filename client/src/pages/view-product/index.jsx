@@ -1,34 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import "./productdetails.css";
+import { productsSlice } from "@/store/slices/productslice";
+import api from "@/api";
 
 export default function ProductDetailsPage() {
-    const mockProduct = {
-        id: 1,
-        title: "Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey",
-        price: 1300,
-        category: "Laptop",
-        delivery: "2 days delivery",
-        images: [
-            "/test-images/688a90f995ca1_test_photo.jpg",
-            "/test-images/688a90f995ca1_test_photo.jpg",
-            "/test-images/688a90f995ca1_test_photo.jpg",
-            "/logo-brand.svg",
-        ],
-        description: `The Apple MacBook Air 15” (2023) in Space Grey features a powerful M2 chip, combining strong performance with energy efficiency...`,
-    };
     const { id } = useParams();
-    const [product, setProduct] = useState(null);
+    const dispatch = useDispatch();
+    const product = useSelector(state => state.products.selectedProduct);
     const [mainImage, setMainImage] = useState("");
     const [quantity, setQuantity] = useState(1);
 
-    const increment = () => setQuantity(quantity + 1);
-    const decrement = () => setQuantity(quantity - 1);
+    const token = localStorage.getItem("auth-token");
+
+    const fetchProduct = async () => {
+        try {
+            const res = await api.get(`customer/products/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/json",
+                },
+            });
+            dispatch(
+                productsSlice.actions.setSelectedProduct(res.data.payload),
+            );
+            setMainImage(res.data.images?.[0]);
+        } catch (error) {
+            console.error("Failed to fetch product", error);
+        }
+    };
 
     useEffect(() => {
-        setProduct(mockProduct);
-        setMainImage(mockProduct.images[0]);
-    }, [id]);
+        fetchProduct();
+    }, [id, dispatch]);
+
+    const increment = () => setQuantity(prev => prev + 1);
+    const decrement = () => setQuantity(prev => Math.max(1, prev - 1));
 
     if (!product) return <div>Loading...</div>;
 
@@ -38,7 +47,7 @@ export default function ProductDetailsPage() {
                 <div className="product-images">
                     <img src={mainImage} alt="Main" className="main-image" />
                     <div className="thumbnail-row">
-                        {product.images.map((img, i) => (
+                        {product.images?.map((img, i) => (
                             <img
                                 key={i}
                                 src={img}
@@ -51,7 +60,7 @@ export default function ProductDetailsPage() {
                 </div>
 
                 <div className="product-info">
-                    <h2 className="product-title">{product.title}</h2>
+                    <h2 className="product-title">{product.name}</h2>
                     <p className="product-category">{product.category}</p>
                     <p className="product-delivery">{product.delivery}</p>
 
