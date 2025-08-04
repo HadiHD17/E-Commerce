@@ -90,8 +90,8 @@ class OrderService
         $order->status = $nextStatus;
         $order->save();
 
-        // Fire the OrderStatusUpdated event
-        event(new OrderStatusUpdated($order, $previousStatus));
+        // Fire the OrderStatusUpdated event and broadcast
+        \App\Services\BroadcastingService::broadcastOrderStatusUpdated($order, $previousStatus);
 
         return $order->load(['user', 'orderItems.product']);
     }
@@ -119,8 +119,8 @@ class OrderService
         $order->status = 'cancelled';
         $order->save();
 
-        // Fire the OrderStatusUpdated event
-        event(new OrderStatusUpdated($order, $previousStatus));
+        // Fire the OrderStatusUpdated event and broadcast
+        \App\Services\BroadcastingService::broadcastOrderStatusUpdated($order, $previousStatus);
 
         return $order->load(['user', 'orderItems.product']);
     }

@@ -14,6 +14,7 @@ use App\Http\Controllers\Common\WebhookController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\Admin\FailedJobsController;
 use App\Http\Controllers\Admin\AuditLogController;
+use App\Http\Controllers\Common\BroadcastingController;
 // use App\Http\Controllers\User\ChatbotController;
 // use app\Http\Controllers\User\ChatbotController;
 use Illuminate\Support\Facades\Route;
@@ -77,6 +78,12 @@ Route::group(["prefix" => "v0.1"], function () {
             // Admin Audit Log Routes
             Route::get("audit_logs", [AuditLogController::class, "getAuditLogs"]);
         });
+    });
+
+    // Broadcasting Routes
+    Route::group(["prefix" => "broadcasting", "middleware" => "auth:api"], function () {
+        Route::get("channels", [BroadcastingController::class, "getUserChannels"]);
+        Route::get("config", [BroadcastingController::class, "getBroadcastingConfig"]);
     });
 
     Route::group(["prefix" => "guest", "middleware" => "rate.limit:30,1"], function () {
