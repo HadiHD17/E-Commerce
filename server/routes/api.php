@@ -12,6 +12,7 @@ use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\Common\FeatureController;
 use App\Http\Controllers\Common\WebhookController;
 use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\Admin\FailedJobsController;
 // use App\Http\Controllers\User\ChatbotController;
 // use app\Http\Controllers\User\ChatbotController;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,13 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("revenue", [AdminOrderController::class, "getRevenue"]);
             Route::post("set_order_status/{order_id}", [AdminOrderController::class, "setOrderStatus"]);
             Route::post("cancel_order/{order_id}", [AdminOrderController::class, "cancelOrder"]);
+
+            // Admin Failed Jobs Routes
+            Route::get("failed_jobs", [FailedJobsController::class, "getFailedJobs"]);
+            Route::post("failed_jobs/retry/{id}", [FailedJobsController::class, "retryFailedJob"]);
+            Route::delete("failed_jobs/{id}", [FailedJobsController::class, "deleteFailedJob"]);
+            Route::post("failed_jobs/retry_all", [FailedJobsController::class, "retryAllFailedJobs"]);
+            Route::delete("failed_jobs/clear_all", [FailedJobsController::class, "clearAllFailedJobs"]);
         });
     });
 
