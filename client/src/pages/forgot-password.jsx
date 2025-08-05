@@ -4,7 +4,7 @@ import AuthLayoutHeader from "@/components/layouts/auth-layout/auth-layout-heade
 import Button from "@/components/shared/button";
 import ErrorAlert from "@/components/shared/error-alert";
 import Input from "@/components/shared/input";
-import { AxiosError } from "axios";
+// import { AxiosError } from "axios";
 
 export default function ForgotPasswordPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);

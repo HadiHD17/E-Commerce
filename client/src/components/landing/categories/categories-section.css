@@ -1,0 +1,15 @@
+.categories-section {
+  margin: 2rem 4rem;
+  padding-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.categories-cards{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}

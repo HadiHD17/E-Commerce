@@ -1,0 +1,38 @@
+.hero-section {
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.box {
+  background-color: #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.box.half {
+  width: 290px;
+  height: 290px;
+}
+
+.box.full {
+  width: 600px;
+  height: 290px;
+}
