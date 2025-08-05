@@ -13,6 +13,7 @@ import cls from "@/utils/classnames";
 import "./navbar.css";
 import useAuth from "@/hooks/use-auth";
 import UserDropdown from "@/components/user-dropdown";
+import NotificationDropdown from "@/components/notification-dropdown";
 
 export default function Navbar() {
     const { isLoggedIn, signOut } = useAuth();
@@ -60,12 +61,11 @@ export default function Navbar() {
                             >
                                 My Orders
                             </Link>
-                            <button className="text-gray-700">
-                                <BellIcon size={32} />
-                            </button>
+                            
                             <Link to="/cart" className="text-gray-700">
                                 <ShoppingCartSimpleIcon size={32} />
                             </Link>
+                            <NotificationDropdown />
                             <UserDropdown />
                         </>
                     ) : (

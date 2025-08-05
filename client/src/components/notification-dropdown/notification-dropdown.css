@@ -1,0 +1,129 @@
+
+.notif-dropdown {
+    position: relative;
+    line-height: 1;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  padding: 8px 12px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 350px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 8px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dropdown-header button {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #007bff;
+  background-color: white;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.dropdown-header button:hover {
+  background-color: #f0f8ff;
+}
+
+.notification-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+  font-size: 0.95rem;
+}
+
+.notification-dot {
+  color: red;
+  font-size: 1.2rem;
+  margin-right: 6px;
+}
+
+.notification-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.notification-message {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.mark-read-btn {
+  font-size: 0.8rem;
+  color: #007bff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+}
+
+.mark-read-btn:hover {
+  text-decoration: underline;
+}
+
+
+.notification-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.notification-dot {
+  color: red;
+  font-size: 1.4rem;
+  line-height: 1.2rem;
+  padding-top: 3px;
+}
+
+.notification-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+
+.notification-list {
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
