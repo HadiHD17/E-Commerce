@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { AxiosError } from "axios";
+import axios from "axios";
 import AuthLayoutHeader from "@/components/layouts/auth-layout/auth-layout-header";
 import Button from "@/components/shared/button";
 import ErrorAlert from "@/components/shared/error-alert";
@@ -9,7 +9,6 @@ import Input from "@/components/shared/input";
 export default function ForgotPasswordPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
-
     const [email, setEmail] = useState("");
 
     async function handleSubmit(e) {
@@ -18,11 +17,19 @@ export default function ForgotPasswordPage() {
         try {
             setError(null);
             setIsSubmitting(true);
-            // const { data } = await api.post("/guest/register", { email });
+
+            const response = await axios.post("http://localhost:8000/api/v0.1/guest/forgot_password", {
+                email,
+            });
+
+            console.log("Reset link sent:", response.data.payload);
+            setEmail("Email sent!")
         } catch (err) {
-            if (err instanceof AxiosError) {
-                setError(err.response.data.status);
+            if (err.response) {
+                setError(err.response.data?.status || "Something went wrong.");
                 console.warn(err.response.data);
+            } else {
+                setError("Network error or server not responding.");
             }
         } finally {
             setIsSubmitting(false);
