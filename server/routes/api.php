@@ -86,6 +86,7 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::get("config", [BroadcastingController::class, "getBroadcastingConfig"]);
     });
 
+    // Guest Routes (no auth required)
     Route::group(["prefix" => "guest", "middleware" => "rate.limit:30,1"], function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login',    [AuthController::class, 'login']);
@@ -93,13 +94,17 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::post('reset_password', [AuthController::class, 'resetPassword']);
     });
 
+    // Customer Logout Route
+    Route::group(["prefix" => "customer", "middleware" => "auth:api"], function () {
+        Route::post('logout', [AuthController::class, 'logout']);
+    });
+
     // Webhook Routes (no auth required)
     Route::post('webhook/order', [WebhookController::class, 'handleOrderWebhook'])->middleware('rate.limit:100,1');
 
-    
-// Route::post('/chatbot', [ChatbotController::class, 'ask']);
+    // Chatbot Routes
+    Route::group(["prefix" => "chatbot", "middleware" => "auth:api"], function () {
+        Route::post('ask', [ChatbotController::class, 'ask'])->middleware('rate.limit:20,1');
+    });
 
-Route::post ('/chatbot', [ChatbotController::class, 'ask'])->middleware('rate.limit:20,1');
-
-    Route::middleware('auth:api')->post('logout', [AuthController::class, 'logout']);
 });

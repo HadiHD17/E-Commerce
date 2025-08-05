@@ -61,9 +61,9 @@ class AuthController extends Controller
             ]);
 
             $result = $this->authService->forgotPassword($data['email']);
-            return $this->responseJSON($result);
+            return ResponseTrait::responseJSON($result, 'Password reset link sent to your email');
         } catch (Exception $e) {
-            return $this->responseJSON(null, "Failed to send reset email");
+            return ResponseTrait::responseJSON(null, "Failed to send reset email");
         }
     }
 
@@ -77,9 +77,9 @@ class AuthController extends Controller
             ]);
 
             $result = $this->authService->resetPassword($data);
-            return $this->responseJSON($result);
+            return ResponseTrait::responseJSON($result, 'Password reset successfully');
         } catch (Exception $e) {
-            return $this->responseJSON(null, "Failed to reset password");
+            return ResponseTrait::responseJSON(null, "Failed to reset password");
         }
     }
 }
