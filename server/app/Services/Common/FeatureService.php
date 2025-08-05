@@ -16,7 +16,7 @@ class FeatureService
             ->take($limit)
             ->pluck('product_id');
 
-        return Product::whereIn('id', $topProductIds)
+        return Product::with('image')->whereIn('id', $topProductIds)
             ->orderByRaw('FIELD(id, ' . $topProductIds->implode(',') . ')')
             ->get();
     }

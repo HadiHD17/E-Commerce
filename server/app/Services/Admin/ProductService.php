@@ -35,7 +35,7 @@ class ProductService
 
     static function deleteProduct($id)
     {
-        $product = Product::find($id);
+        $product = Product::with('image')->find($id);
 
         if (!$product) {
             return null;
