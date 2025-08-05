@@ -13,6 +13,10 @@ export default function ProductDetailsPage() {
     const [mainImage, setMainImage] = useState("");
     const [quantity, setQuantity] = useState(1);
 
+    const [adding, setAdding] = useState(false);
+    const [addError, setAddError] = useState(null);
+    const [addSuccess, setAddSuccess] = useState(null);
+
     const fetchProduct = async () => {
         try {
             const token = localStorage.getItem("auth-token");
@@ -42,6 +46,57 @@ export default function ProductDetailsPage() {
     const increment = () => setQuantity(p => p + 1);
     const decrement = () => setQuantity(p => Math.max(1, p - 1));
 
+    async function handleAddToCart() {
+        setAddError(null);
+        setAddSuccess(null);
+
+        const token = localStorage.getItem("auth-token");
+        if (!token) {
+            setAddError("You must be logged in.");
+            return;
+        }
+
+        if (!product?.id) {
+            setAddError("Invalid product.");
+            return;
+        }
+
+        if (quantity <= 0) {
+            setAddError("Quantity must be at least 1.");
+            return;
+        }
+
+        try {
+            setAdding(true);
+
+            const url = "customer/manage_cart_item";
+
+            const payload = {
+                product_id: product.id,
+                quantity,
+                action: "add",
+            };
+
+            await api.post(url, payload, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/json",
+                },
+            });
+
+            setAddSuccess("Added to cart!");
+        } catch (err) {
+            const msg =
+                err?.response?.data?.message ||
+                err?.response?.data?.error ||
+                "Failed to add to cart";
+            setAddError(msg);
+            console.error("Add to cart error:", err?.response?.data || err);
+        } finally {
+            setAdding(false);
+        }
+    }
+
     if (!product) return <div>Loading...</div>;
 
     const images = (product.image || [])
@@ -69,7 +124,9 @@ export default function ProductDetailsPage() {
                                 src={src}
                                 alt={`${product.name} ${i + 1}`}
                                 onClick={() => setMainImage(src)}
-                                className={`thumbnail ${src === mainImage ? "active" : ""}`}
+                                className={`thumbnail ${
+                                    src === mainImage ? "active" : ""
+                                }`}
                             />
                         ))}
                     </div>
@@ -99,7 +156,17 @@ export default function ProductDetailsPage() {
                     </div>
 
                     <h3 className="product-price">${product.price}</h3>
-                    <button className="add-to-cart">Add to cart</button>
+                    <button
+                        className="add-to-cart"
+                        onClick={handleAddToCart}
+                        disabled={adding}
+                    >
+                        {adding ? "Adding..." : "Add to cart"}
+                    </button>
+                    {addError && <div className="error mt-2">{addError}</div>}
+                    {addSuccess && (
+                        <div className="success mt-2">{addSuccess}</div>
+                    )}
                 </div>
             </div>
 
