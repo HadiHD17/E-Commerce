@@ -4,13 +4,30 @@ import { UserIcon } from "@phosphor-icons/react";
 import useAuth from "@/hooks/use-auth";
 import "./user-dropdown.css";
 
+const links = {
+    customer: [
+        { text: "My Account", href: "/account" },
+        { text: "My Orders", href: "/account/my-orders" },
+    ],
+    admin: [
+        { text: "My Account", href: "/account" },
+        { text: "Admin Dashboard", href: "/admin" },
+    ],
+};
+
 export default function UserDropdown() {
-    const { signOut } = useAuth();
+    const { isAdmin, signOut } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
 
-    function handleClick() {
-        setIsOpen(prev => !prev);
-    }
+    const userLinks = isAdmin ? links.admin : links.customer;
+
+    const handleClick = () => setIsOpen(prev => !prev);
+    const closeDropdown = () => setIsOpen(false);
+
+    const handleLogout = () => {
+        setIsOpen(false);
+        signOut();
+    };
 
     return (
         <div className="user-dropdown">
@@ -23,18 +40,18 @@ export default function UserDropdown() {
             </button>
             {isOpen && (
                 <div className="user-dropdown__menu border-subtle bg-gray-100 rounded-md shadow-lg">
-                    <Link
-                        to="/account"
-                        onClick={() => setIsOpen(false)}
-                        className="user-dropdown__menu-item fs-button"
-                    >
-                        My Account
-                    </Link>
+                    {userLinks.map(({ text, href }) => (
+                        <Link
+                            key={text}
+                            to={href}
+                            onClick={closeDropdown}
+                            className="user-dropdown__menu-item fs-button"
+                        >
+                            {text}
+                        </Link>
+                    ))}
                     <button
-                        onClick={() => {
-                            setIsOpen(false);
-                            signOut();
-                        }}
+                        onClick={handleLogout}
                         className="fs-button text-danger-700"
                     >
                         Log out

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "@/store/slices/auth-slice";
 
@@ -11,6 +11,11 @@ export default function useAuth() {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const user = useSelector(state => state.auth.user);
     const token = useSelector(state => state.auth.token);
+
+    const isAdmin = useMemo(
+        () => isLoggedIn && user.role === "admin",
+        [isLoggedIn, user],
+    );
 
     // Init state
     useEffect(() => {
@@ -37,5 +42,5 @@ export default function useAuth() {
     const signIn = payload => dispatch(login(payload));
     const signOut = () => dispatch(logout());
 
-    return { isLoggedIn, user, token, signIn, signOut };
+    return { isLoggedIn, isAdmin, user, token, signIn, signOut };
 }
