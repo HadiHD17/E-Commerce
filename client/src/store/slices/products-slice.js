@@ -70,3 +70,20 @@ export const productsSlice = createSlice({
         },
     },
 });
+
+export const {
+    loadProducts,
+    emptyProducts,
+    setFilters,
+    setSearchQuery,
+    setCurrentPage,
+    setLoading,
+    setError,
+    toggleCategory,
+    setSortOrder,
+    setCategories,
+    setSelectedProduct,
+} = productsSlice.actions;
+
+const productsReducer = productsSlice.reducer;
+export default productsReducer;

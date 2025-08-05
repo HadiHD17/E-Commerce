@@ -1,7 +1,7 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { productsSlice } from "@/store/slices/productslice";
+import { productsSlice } from "@/store/slices/products-slice";
 import { useNavigate } from "react-router-dom";
 
 export default function NavbarSearch() {

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import "./productdetails.css";
-import { productsSlice } from "@/store/slices/productslice";
+import { productsSlice } from "@/store/slices/products-slice";
 import api from "@/api";
 
 export default function ProductDetailsPage() {

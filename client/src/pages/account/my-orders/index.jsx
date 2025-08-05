@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ordersSlice } from "@/store/slices/orderslice";
+import { ordersSlice } from "@/store/slices/orders-slice";
 import OrderCard from "@/components/shared/order-card";
 import api from "@/api";
 import "./my-orders.css";
