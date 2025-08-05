@@ -1,13 +1,10 @@
 .orders-container {
     display: flex;
-    min-height: 100vh;
-    background-color: #f9fafb;
 }
 
 /* Make sure sidebar is fixed or set according to your sidebar styles */
 
 .orders-main {
-    padding: 2rem 3rem;
     box-sizing: border-box;
     overflow-y: auto;
     flex: 1;
@@ -16,14 +13,14 @@
 /* Tabs */
 .tabs {
     display: flex;
-    gap: 1rem;
+    gap: var(--spacing-5);
     margin-bottom: 2rem;
 }
 
 .tab {
     background: transparent;
     border: none;
-    padding: 0.6rem 1.2rem;
+    padding: var(--spacing-2);
     font-size: 1rem;
     font-weight: 600;
     color: #666;
@@ -39,8 +36,8 @@
 }
 
 .tab.active {
-    color: #0a74da;
-    border-bottom-color: #0a74da;
+    color: var(--color-brand-500);
+    border-bottom-color: var(--color-brand-500);
     font-weight: 700;
 }
 
@@ -62,7 +59,7 @@
     font-size: 1rem;
     font-weight: 600;
     color: white;
-    background-color: #0a74da;
+    background-color: var(--color-brand-500);
     border: none;
     border-radius: 25px;
     cursor: pointer;

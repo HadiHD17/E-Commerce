@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const orderSlice = createSlice({
+export const ordersSlice = createSlice({
     name: "orders",
     initialState: {
         list: [],
@@ -18,3 +18,8 @@ export const orderSlice = createSlice({
         },
     },
 });
+
+export const { setOrders, setFilter, clearOrders } = ordersSlice.actions;
+
+const ordersReducer = ordersSlice.reducer;
+export default ordersReducer;

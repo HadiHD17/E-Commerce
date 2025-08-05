@@ -4,7 +4,7 @@ import FilterSidebar from "@/components/filter-sidebar";
 import { useEffect } from "react";
 import "./products-search.css";
 import { useDispatch, useSelector } from "react-redux";
-import { productsSlice } from "@/store/slices/productslice";
+import { productsSlice } from "@/store/slices/products-slice";
 import api from "@/api";
 
 export default function ProductsSearchPage() {

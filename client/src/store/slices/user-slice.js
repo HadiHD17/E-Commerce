@@ -35,3 +35,14 @@ export const userSlice = createSlice({
         },
     },
 });
+
+export const {
+    setUser,
+    setLoading,
+    setError,
+    setSuccessMessage,
+    clearMessages,
+} = userSlice.actions;
+
+const userReducer = userSlice.reducer;
+export default userReducer;

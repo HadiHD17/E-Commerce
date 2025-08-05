@@ -1,7 +1,7 @@
 import React from "react";
 import "./filtersidebar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { productsSlice } from "@/store/slices/productslice";
+import { productsSlice } from "@/store/slices/products-slice";
 
 export default function FilterSidebar() {
     const dispatch = useDispatch();

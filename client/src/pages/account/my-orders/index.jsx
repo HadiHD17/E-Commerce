@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { orderSlice } from "@/store/slices/orderslice";
+import { ordersSlice } from "@/store/slices/orders-slice";
 import OrderCard from "@/components/shared/order-card";
-import "./my-orders.css";
 import api from "@/api";
+import "./my-orders.css";
 
-const { setOrders, setFilter } = orderSlice.actions;
+const { setOrders, setFilter } = ordersSlice.actions;
 
 const statusClassMap = {
     pending: "status-pending",

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CheckIcon, PencilSimpleLineIcon } from "@phosphor-icons/react";
 import Button from "@/components/shared/button";
 import Input from "@/components/shared/input";
-import { userSlice } from "@/store/slices/userslice";
+import { userSlice } from "@/store/slices/user-slice";
 import api from "@/api";
 import "./account-settings.css";
 
@@ -37,10 +37,10 @@ function getInitialForm() {
 
 export default function AccountSettingsPage() {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.users.data);
-    const globalLoading = useSelector(state => state.users.loading);
-    const error = useSelector(state => state.users.error);
-    const successMessage = useSelector(state => state.users.successMessage);
+    const user = useSelector(state => state.user.data);
+    const globalLoading = useSelector(state => state.user.loading);
+    const error = useSelector(state => state.user.error);
+    const successMessage = useSelector(state => state.user.successMessage);
 
     const [isEditingAccount, setIsEditingAccount] = useState(false);
     const [isChangingPassword, setIsChangingPassword] = useState(false);

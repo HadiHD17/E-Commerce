@@ -1,20 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { productsSlice } from "./slices/productslice";
-
+import productsReducer from "./slices/products-slice";
 import authReducer from "./slices/auth-slice";
-
-import { orderSlice } from "./slices/orderslice";
-import { userSlice } from "./slices/userslice";
-
+import ordersReducer from "./slices/orders-slice";
+import userReducer from "./slices/user-slice";
 
 export default configureStore({
     reducer: {
-        products: productsSlice.reducer,
-
+        products: productsReducer,
+        orders: ordersReducer,
         auth: authReducer,
-
-        orders: orderSlice.reducer,
-        users: userSlice.reducer,
-
+        user: userReducer,
     },
 });
