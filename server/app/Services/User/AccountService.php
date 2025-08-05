@@ -16,16 +16,38 @@ class AccountService
         $authUser = Auth::user();
         $user = User::find($authUser->id);
 
-        $validatedData = $request->validate([
-            'name' => 'sometimes|string|max:255',
+
+        // Check if password change is requested
+        $wantsPasswordChange = $request->filled('current_password') ||
+            $request->filled('new_password') ||
+            $request->filled('new_password_confirmation');
+
+        // Validation rules
+        $rules = [
+            'name'  => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:users,email,' . $user->id,
             'phone' => 'sometimes|string|max:20',
-            'password' => 'sometimes|string|min:6',
-        ]);
+        ];
+
+        if ($wantsPasswordChange) {
+            $rules = array_merge($rules, [
+                'current_password'          => 'required|string',
+                'new_password'              => 'required|string|min:6|confirmed',
+                // 'confirmed' expects new_password_confirmation
+            ]);
+        }
+
+        $validatedData = $request->validate($rules);
 
         // Hash password if provided
-        if (isset($validatedData['password'])) {
-            $validatedData['password'] = Hash::make($validatedData['password']);
+        if ($wantsPasswordChange) {
+            if (!Hash::check($validatedData['current_password'], $user->password)) {
+                return response()->json([
+                    'message' => 'Current password is incorrect.',
+                ], 422);
+            }
+            $validatedData['password'] = Hash::make($validatedData['new_password']);
+            unset($validatedData['current_password'], $validatedData['new_password'], $validatedData['new_password_confirmation']);
         }
 
         $user->update($validatedData);

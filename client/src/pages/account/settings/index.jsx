@@ -31,7 +31,6 @@ export default function AccountSettingsPage() {
 
     const token = localStorage.getItem("auth-token");
 
-    // Load user from localStorage on mount
     useEffect(() => {
         const storedUser = localStorage.getItem("auth-user");
         if (storedUser) {
@@ -43,7 +42,6 @@ export default function AccountSettingsPage() {
         }
     }, []);
 
-    // Update form when user is loaded or updated
     useEffect(() => {
         if (user) {
             setForm(prev => ({
