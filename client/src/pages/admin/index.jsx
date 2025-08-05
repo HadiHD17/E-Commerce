@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import ProductCard from "@/components/shared/product-card";
 import AdminMetric from "@/components/admin-metric";
 import AdminChart from "@/components/admin-chart";
+import AdminFeaturedProductsGrid from "@/components/admin-featured-products-grid";
 import "./admin.css";
 
 export default function AdminHomePage() {
@@ -33,31 +33,7 @@ export default function AdminHomePage() {
                     <Link to="/admin/products">View all →</Link>
                 </hgroup>
 
-                <div className="admin-home-page__products-grid">
-                    {Array(8)
-                        .fill(null)
-                        .map((_, i) =>
-                            i % 3 === 1 ? (
-                                <ProductCard
-                                    id={i}
-                                    category="iPhones"
-                                    img=""
-                                    name="iPhone 15 Pro Max - Midnight"
-                                    price={1300}
-                                    stock={0}
-                                />
-                            ) : (
-                                <ProductCard
-                                    id={i}
-                                    category="Laptop"
-                                    img=""
-                                    name="Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey"
-                                    price={1500}
-                                    stock={4}
-                                />
-                            ),
-                        )}
-                </div>
+                <AdminFeaturedProductsGrid />
             </section>
         </div>
     );

@@ -4,10 +4,10 @@ import "./auth-layout.css";
 import useAuth from "@/hooks/use-auth";
 
 export default function AuthLayout() {
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, isLoading } = useAuth();
     const { pathname } = useLocation();
 
-    if (isLoggedIn) {
+    if (!isLoading && isLoggedIn) {
         return <Navigate to="/" replace />;
     }
 

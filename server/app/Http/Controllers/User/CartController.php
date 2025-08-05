@@ -8,13 +8,14 @@ use App\Services\User\CartService;
 use App\Services\User\UserService;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function getCartItems(Request $request)
     {
         try {
-            $userId = auth()->id();
+            $userId = Auth::id();
             $cartItems = CartService::getCartItems($userId);
             return $this->responseJSON($cartItems);
         } catch (Exception $e) {
@@ -31,11 +32,11 @@ class CartController extends Controller
                 'action' => 'sometimes|string|in:add,update,delete',
             ]);
 
-            $data['user_id'] = auth()->id();
+            $data['user_id'] = Auth::id();
             $data['action'] = $data['action'] ?? 'add';
-            
+
             $result = CartService::manageCartItem($data);
-            
+
             if ($result['success']) {
                 return $this->responseJSON($result['data'], $result['message']);
             } else {
@@ -49,9 +50,9 @@ class CartController extends Controller
     public function clearCart()
     {
         try {
-            $userId = auth()->id();
+            $userId = Auth::id();
             $deleted = CartService::clearCart($userId);
-            
+
             return $this->responseJSON(null, "Cart cleared successfully");
         } catch (Exception $e) {
             return $this->responseJSON(null, "Failed to clear cart");

@@ -33,7 +33,11 @@ export default function FeaturedProducts() {
 
             <div className="featured-products-cards">
                 {featuredProducts.map(product => (
-                    <ProductCard key={product.id} {...product} />
+                    <ProductCard
+                        key={product.id}
+                        img={product.image?.[0]?.image_url}
+                        {...product}
+                    />
                 ))}
             </div>
         </div>
