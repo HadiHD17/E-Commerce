@@ -1,14 +1,13 @@
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Pagination from "@/components/shared/pagination";
 import ProductCard from "@/components/shared/product-card";
 import FilterSidebar from "@/components/filter-sidebar";
-import { useEffect } from "react";
 import "./products-search.css";
-import { useDispatch, useSelector } from "react-redux";
-import { productsSlice } from "@/store/slices/products-slice";
 import api from "@/api";
+import { productsSlice } from "@/store/slices/products-slice";
 
 export default function ProductsSearchPage() {
-    const productsState = useSelector(global => global.products);
     const dispatch = useDispatch();
     const {
         list: products,
@@ -17,24 +16,56 @@ export default function ProductsSearchPage() {
         filters,
         searchQuery,
         currentPage,
-    } = productsState;
+        allCategories,
+    } = useSelector(s => s.products);
 
     const PRODUCTS_PER_PAGE = 8;
+
+    const getCategories = async () => {
+        try {
+            const res = await api.get("/common/categories", {
+                headers: { Accept: "application/json" },
+            });
+            const list = res.data?.payload ?? [];
+            dispatch(productsSlice.actions.setCategories(list));
+            return list;
+        } catch (err) {
+            console.error(
+                "Error fetching categories:",
+                err?.response?.data || err,
+            );
+            dispatch(productsSlice.actions.setCategories([]));
+            return [];
+        }
+    };
 
     const fetchProducts = async () => {
         dispatch(productsSlice.actions.setLoading(true));
         dispatch(productsSlice.actions.setError(null));
 
-        const token = localStorage.getItem("auth-token");
-        console.log(token);
-        try {
-            let url = `customer/products`;
+        // Ensure categories are available first
+        await getCategories();
 
-            if (searchQuery) {
-                url = `customer/products_by_search?searchTerm=${searchQuery}`;
+        const token = localStorage.getItem("auth-token");
+        if (!token) {
+            // No token → treat as unauthenticated (backend requires auth)
+            dispatch(
+                productsSlice.actions.setError(
+                    "You must be logged in to view products.",
+                ),
+            );
+            dispatch(productsSlice.actions.setLoading(false));
+            return;
+        }
+
+        try {
+            let url = "customer/products";
+
+            if (searchQuery?.trim()) {
+                url = `customer/products_by_search?searchTerm=${encodeURIComponent(searchQuery.trim())}`;
             } else if (filters.categories && filters.categories.length > 0) {
-                const category = filters.categories[0];
-                url = `customer/products_by_category/${encodeURIComponent(category)}`;
+                const selectedCat = filters.categories[0];
+                url = `customer/products_by_category/${encodeURIComponent(selectedCat)}`;
             }
 
             const res = await api.get(url, {
@@ -44,21 +75,24 @@ export default function ProductsSearchPage() {
                 },
             });
 
-            const products = res.data.payload;
+            const items = Array.isArray(res.data?.payload)
+                ? res.data.payload
+                : [];
 
-            const uniqueCategories = [
-                ...new Set(products.map(p => p.category)),
-            ];
-            dispatch(productsSlice.actions.setCategories(uniqueCategories));
-
+            // Sort numerically by price (in case price is a string)
             if (filters.sort === "asc") {
-                products.sort((a, b) => a.price - b.price);
+                items.sort((a, b) => Number(a.price) - Number(b.price));
             } else if (filters.sort === "desc") {
-                products.sort((a, b) => b.price - a.price);
+                items.sort((a, b) => Number(b.price) - Number(a.price));
             }
-            dispatch(productsSlice.actions.loadProducts(products));
-        } catch (error) {
-            dispatch(productsSlice.actions.setError("failed to load products"));
+
+            dispatch(productsSlice.actions.loadProducts(items));
+        } catch (err) {
+            console.error(
+                "Error fetching products:",
+                err?.response?.data || err,
+            );
+            dispatch(productsSlice.actions.setError("Failed to load products"));
         } finally {
             dispatch(productsSlice.actions.setLoading(false));
         }
@@ -66,39 +100,62 @@ export default function ProductsSearchPage() {
 
     useEffect(() => {
         fetchProducts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filters, searchQuery, currentPage]);
 
-    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-    const paginatedProducts = products.slice(
-        startIndex,
-        startIndex + PRODUCTS_PER_PAGE,
+    const totalPages = useMemo(
+        () => Math.max(1, Math.ceil(products.length / PRODUCTS_PER_PAGE)),
+        [products.length],
     );
-    const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    const paginatedProducts = useMemo(
+        () => products.slice(startIndex, startIndex + PRODUCTS_PER_PAGE),
+        [products, startIndex],
+    );
+
     return (
         <div>
             <div className="products-search-container">
                 <div className="products-sidebar">
                     <FilterSidebar
+                        categories={allCategories} // <-- now provided
                         filters={filters}
                         setFilters={newFilters =>
                             dispatch(
-                                productsSlice.actions.setFilters(newFilters),
+                                productsSlice.actions.setFilters({
+                                    ...filters,
+                                    ...newFilters,
+                                }),
                             )
                         }
                         searchQuery={searchQuery}
-                        setSearchQuery={query =>
-                            dispatch(
-                                productsSlice.actions.setSearchQuery(query),
-                            )
+                        setSearchQuery={q =>
+                            dispatch(productsSlice.actions.setSearchQuery(q))
                         }
                     />
                 </div>
+
                 <div className="products-list">
-                    {paginatedProducts.map(product => (
-                        <ProductCard key={product.id} {...product} />
-                    ))}
+                    {loading && <div className="info">Loading products…</div>}
+                    {error && !loading && <div className="error">{error}</div>}
+                    {!loading && !error && paginatedProducts.length === 0 && (
+                        <div className="info">No products found.</div>
+                    )}
+
+                    {!loading &&
+                        !error &&
+                        paginatedProducts.map(product => (
+                            <ProductCard
+                                key={product.id}
+                                // first image url if present
+                                img={product.image?.[0]?.image_url}
+                                {...product}
+                            />
+                        ))}
                 </div>
             </div>
+
             <Pagination
                 currentPage={currentPage}
                 setCurrentPage={page =>
