@@ -19,13 +19,14 @@ import ChatPage from "@/pages/chat";
 import AdminHomePage from "@/pages/admin";
 import AdminLayout from "@/components/layouts/admin-layout";
 import AdminNewProductPage from "@/pages/admin/new-product";
+import LandingPage from "@/pages/landing";
 
 export default function Router() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<RootLayout />}>
-                    <Route path="/" element={<HomePage />} />
+                    <Route path="/" element={<LandingPage />} />
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/search" element={<ProductsSearchPage />} />
                     <Route
