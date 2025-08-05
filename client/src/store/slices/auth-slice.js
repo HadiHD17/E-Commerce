@@ -11,10 +11,10 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            const { id, name, email, token } = action.payload || {};
-            if (id && name && email && token) {
+            const { id, name, email, phone, token } = action.payload || {};
+            if (id && name && email && phone && token) {
                 state.isLoggedIn = true;
-                state.user = { id, name, email };
+                state.user = { id, name, email, phone };
                 state.token = token;
             }
         },

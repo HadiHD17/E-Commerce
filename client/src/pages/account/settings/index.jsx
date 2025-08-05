@@ -10,48 +10,59 @@ import "./account-settings.css";
 const { setUser, setLoading, setError, setSuccessMessage, clearMessages } =
     userSlice.actions;
 
-export default function AccountSettingsPage() {
-    const dispatch = useDispatch();
-    const user = useSelector(state => state.users.data);
-    const loading = useSelector(state => state.users.loading);
-    const error = useSelector(state => state.users.error);
-    const successMessage = useSelector(state => state.users.successMessage);
-
-    const [isEditingAccount, setIsEditingAccount] = useState(false);
-    const [isChangingPassword, setIsChangingPassword] = useState(false);
-
-    const [form, setForm] = useState({
+function getInitialForm() {
+    try {
+        const storedUser = localStorage.getItem("auth-user");
+        if (storedUser) {
+            const parsed = JSON.parse(storedUser);
+            return {
+                name: parsed.name || "",
+                email: parsed.email || "",
+                phone: parsed.phone || "",
+                currentPassword: "",
+                newPassword: "",
+                repeatNewPassword: "",
+            };
+        }
+    } catch {}
+    return {
         name: "",
         email: "",
         phone: "",
         currentPassword: "",
         newPassword: "",
         repeatNewPassword: "",
-    });
+    };
+}
 
-    const token = localStorage.getItem("auth-token");
+export default function AccountSettingsPage() {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.users.data);
+    const globalLoading = useSelector(state => state.users.loading);
+    const error = useSelector(state => state.users.error);
+    const successMessage = useSelector(state => state.users.successMessage);
+
+    const [isEditingAccount, setIsEditingAccount] = useState(false);
+    const [isChangingPassword, setIsChangingPassword] = useState(false);
+
+    const [savingAccount, setSavingAccount] = useState(false);
+    const [savingPassword, setSavingPassword] = useState(false);
+
+    const [form, setForm] = useState(getInitialForm);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("auth-user");
-        if (storedUser) {
-            try {
-                dispatch(setUser(JSON.parse(storedUser)));
-            } catch (err) {
-                console.error("Invalid user data in localStorage:", err);
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        if (user) {
-            setForm(prev => ({
-                ...prev,
-                name: user.name || "",
-                email: user.email || "",
-                phone: user.phone || "",
-            }));
-        }
+        if (!user) return;
+        setForm(prev => ({
+            ...prev,
+            name: user.name || "",
+            email: user.email || "",
+            phone: user.phone || "",
+        }));
     }, [user]);
+
+    useEffect(() => {
+        return () => dispatch(clearMessages());
+    }, [dispatch]);
 
     const handleChange = e => {
         const { id, value } = e.target;
@@ -61,59 +72,7 @@ export default function AccountSettingsPage() {
             "repeat-new-password": "repeatNewPassword",
         };
         const key = keyMap[id] || id;
-
-        setForm(prev => ({
-            ...prev,
-            [key]: value,
-        }));
-    };
-
-    const handleSave = async () => {
-        dispatch(clearMessages());
-
-        if (isChangingPassword) {
-            if (form.newPassword !== form.repeatNewPassword) {
-                dispatch(setError("New passwords do not match."));
-                return;
-            }
-            if (!form.currentPassword) {
-                dispatch(setError("Current password is required."));
-                return;
-            }
-        }
-
-        dispatch(setLoading(true));
-
-        const payload = {
-            name: form.name,
-            email: form.email,
-            phone: form.phone,
-            ...(isChangingPassword && {
-                current_password: form.currentPassword,
-                new_password: form.newPassword,
-                new_password_confirmation: form.repeatNewPassword,
-            }),
-        };
-
-        try {
-            const res = await api.put("customer/account/edit", payload, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-
-            dispatch(setUser(res.data.payload));
-            dispatch(setSuccessMessage("Account updated successfully."));
-            setIsEditingAccount(false);
-            setIsChangingPassword(false);
-            resetPasswordFields();
-        } catch (err) {
-            dispatch(
-                setError(
-                    err.response?.data?.message || "Failed to update account.",
-                ),
-            );
-        } finally {
-            dispatch(setLoading(false));
-        }
+        setForm(prev => ({ ...prev, [key]: value }));
     };
 
     const resetPasswordFields = () => {
@@ -128,7 +87,6 @@ export default function AccountSettingsPage() {
     const handleCancelAccountEdit = () => {
         setIsEditingAccount(false);
         dispatch(clearMessages());
-
         if (user) {
             setForm(prev => ({
                 ...prev,
@@ -143,6 +101,96 @@ export default function AccountSettingsPage() {
         setIsChangingPassword(false);
         dispatch(clearMessages());
         resetPasswordFields();
+    };
+
+    const accountUnchanged =
+        !!user &&
+        form.name === (user.name || "") &&
+        form.email === (user.email || "") &&
+        form.phone === (user.phone || "");
+
+    const saveAccount = async () => {
+        if (!isEditingAccount) return;
+        dispatch(clearMessages());
+        setSavingAccount(true);
+        dispatch(setLoading(true));
+        try {
+            const token = localStorage.getItem("auth-token");
+            const payload = {
+                name: form.name,
+                email: form.email,
+                phone: form.phone,
+            };
+            const res = await api.put("customer/account/edit", payload, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res?.data?.payload) {
+                const fresh = res.data.payload;
+                dispatch(setUser(fresh));
+                localStorage.setItem("auth-user", JSON.stringify(fresh));
+            }
+            dispatch(setSuccessMessage("Account updated successfully."));
+            setIsEditingAccount(false);
+        } catch (err) {
+            dispatch(
+                setError(
+                    err?.response?.data?.message || "Failed to update account.",
+                ),
+            );
+        } finally {
+            setSavingAccount(false);
+            dispatch(setLoading(false));
+        }
+    };
+
+    const changePassword = async () => {
+        if (!isChangingPassword) return;
+        dispatch(clearMessages());
+
+        if (!form.currentPassword) {
+            dispatch(setError("Current password is required."));
+            return;
+        }
+        if (!form.newPassword || !form.repeatNewPassword) {
+            dispatch(setError("Please enter and confirm your new password."));
+            return;
+        }
+        if (form.newPassword !== form.repeatNewPassword) {
+            dispatch(setError("New passwords do not match."));
+            return;
+        }
+
+        setSavingPassword(true);
+        dispatch(setLoading(true));
+        try {
+            const token = localStorage.getItem("auth-token");
+            const payload = {
+                current_password: form.currentPassword,
+                new_password: form.newPassword,
+                new_password_confirmation: form.repeatNewPassword,
+            };
+            const res = await api.put("customer/account/edit", payload, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res?.data?.payload) {
+                const fresh = res.data.payload;
+                dispatch(setUser(fresh));
+                localStorage.setItem("auth-user", JSON.stringify(fresh));
+            }
+            dispatch(setSuccessMessage("Password changed successfully."));
+            setIsChangingPassword(false);
+            resetPasswordFields();
+        } catch (err) {
+            dispatch(
+                setError(
+                    err?.response?.data?.message ||
+                        "Failed to change password.",
+                ),
+            );
+        } finally {
+            setSavingPassword(false);
+            dispatch(setLoading(false));
+        }
     };
 
     return (
@@ -162,6 +210,7 @@ export default function AccountSettingsPage() {
                             Edit account info
                         </button>
                     )}
+
                     <Input
                         label="Full Name"
                         id="name"
@@ -186,20 +235,24 @@ export default function AccountSettingsPage() {
                         onChange={handleChange}
                         disabled={!isEditingAccount}
                     />
+
                     {isEditingAccount && (
                         <div className="d-flex items-center gap-3 self-end">
                             <Button
                                 variant="outlined"
                                 color="gray"
                                 onClick={handleCancelAccountEdit}
+                                disabled={savingAccount}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 color="brand"
                                 className="d-inline-flex item-center gap-2"
-                                onClick={handleSave}
-                                loading={loading}
+                                onClick={
+                                    savingAccount ? undefined : saveAccount
+                                }
+                                loading={savingAccount || globalLoading}
                             >
                                 Save Changes
                                 <CheckIcon size={18} />
@@ -223,6 +276,7 @@ export default function AccountSettingsPage() {
                             Change password
                         </button>
                     )}
+
                     <Input
                         label="Current Password"
                         id="current-password"
@@ -232,6 +286,7 @@ export default function AccountSettingsPage() {
                         withPasswordToggle
                         disabled={!isChangingPassword}
                     />
+
                     {isChangingPassword && (
                         <>
                             <Input
@@ -261,8 +316,18 @@ export default function AccountSettingsPage() {
                                 <Button
                                     color="brand"
                                     className="d-inline-flex item-center gap-2"
-                                    onClick={handleSave}
-                                    loading={loading}
+                                    onClick={
+                                        savingPassword
+                                            ? undefined
+                                            : changePassword
+                                    }
+                                    loading={savingPassword || globalLoading}
+                                    disabled={
+                                        savingPassword ||
+                                        !form.currentPassword ||
+                                        !form.newPassword ||
+                                        !form.repeatNewPassword
+                                    }
                                 >
                                     Change Password
                                     <CheckIcon size={18} />
