@@ -11,7 +11,7 @@ class CartService
 {
     static function getCartItems($userId)
     {
-        return CartItem::with('product')->where('user_id', $userId)->get();
+        return CartItem::with(['product.image'])->where('user_id', $userId)->get();
     }
 
     static function manageCartItem($data)
