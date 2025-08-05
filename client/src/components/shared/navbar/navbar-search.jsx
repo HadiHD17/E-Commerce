@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function NavbarSearch() {
     const [search, setSearch] = useState("");
-    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handleSearchChange = e => {
+    function handleSearchChange(e) {
         setSearch(e.target.value);
         dispatch(productsSlice.actions.setSearchQuery(e.target.value));
-    };
+    }
 
     function handleSubmit(e) {
         e.preventDefault();

@@ -5,7 +5,6 @@
 /* Make sure sidebar is fixed or set according to your sidebar styles */
 
 .orders-main {
-    padding: 2rem 3rem;
     box-sizing: border-box;
     overflow-y: auto;
     flex: 1;
@@ -14,14 +13,14 @@
 /* Tabs */
 .tabs {
     display: flex;
-    gap: 1rem;
+    gap: var(--spacing-5);
     margin-bottom: 2rem;
 }
 
 .tab {
     background: transparent;
     border: none;
-    padding: 0.6rem 1.2rem;
+    padding: var(--spacing-2);
     font-size: 1rem;
     font-weight: 600;
     color: #666;

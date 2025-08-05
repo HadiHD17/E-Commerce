@@ -28,7 +28,7 @@ export default function UserDropdown() {
                         onClick={() => setIsOpen(false)}
                         className="user-dropdown__menu-item fs-button"
                     >
-                        Account Settings
+                        My Account
                     </Link>
                     <button
                         onClick={() => {
