@@ -13,9 +13,3 @@
 .admin-home-page__products a:hover {
     text-decoration: underline;
 }
-
-.admin-home-page__products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: 1rem;
-}
