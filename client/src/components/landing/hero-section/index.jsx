@@ -5,14 +5,26 @@ export default function HeroSection() {
     return (
         <div className="hero-section">
             <div className="row">
-                <div className="box half"><img src="/img1.jpg" /></div>
-                <div className="box half"><img src="/img2.jpg" /></div>
-                <div className="box full"><img src="/img3.jpg" /></div>
+                <div className="box half">
+                    <img src="/offers/image1.jpeg" />
+                </div>
+                <div className="box half">
+                    <img src="/offers/image2.jpeg" />
+                </div>
+                <div className="box full">
+                    <img src="/offers/image3.jpeg" />
+                </div>
             </div>
             <div className="row">
-                <div className="box full"><img src="/img4.jpg" /></div>
-                <div className="box half"><img src="/img5.jpg" /></div>
-                <div className="box half"><img src="/img6.jpg" /></div>
+                <div className="box full">
+                    <img src="/offers/image4.jpeg" />
+                </div>
+                <div className="box half">
+                    <img src="/offers/image5.jpeg" />
+                </div>
+                <div className="box half">
+                    <img src="/offers/image6.jpeg" />
+                </div>
             </div>
         </div>
     );

@@ -1,69 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "@/components/shared/product-card";
 import "./featured-products.css";
+import api from "@/api";
+import { Link } from "react-router-dom";
 
 export default function FeaturedProducts() {
+    const [featuredProducts, setFeaturedProducts] = useState([]);
+    const loadFeaturedProducts = async () => {
+        try {
+            const res = await api.get("/common/featured_products", {
+                headers: {
+                    Accept: "application/json",
+                },
+            });
+            setFeaturedProducts(res.data.payload);
+            console.log("Featured products loaded:", res.data.payload);
+        } catch (error) {
+            console.error("Error fetching featured products:", error);
+        }
+    };
+    useEffect(() => {
+        loadFeaturedProducts();
+    }, []);
     return (
         <div className="featured-section">
             <div className="featured-products-header">
                 <h2>Featured Products</h2>
-                <h4>More Products</h4>
+                <Link to="/search">
+                    <h4>More Products</h4>
+                </Link>
             </div>
-            
-            <div className="featured-products-cards">
-                <ProductCard
-                    name={"Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey"}
-                    img={"/test-images/688a90f995ca1_test_photo.jpg"}
-                    price={1500}
-                    stock={6}
-                    category={"Laptop"}
-                />
-                <ProductCard
-                    name={"Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey"}
-                    img={"/test-images/688a90f995ca1_test_photo.jpg"}
-                    price={1500}
-                    stock={0}
-                    category={"Laptop"}
-                />
-                <ProductCard
-                    name={"Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey"}
-                    img={"/test-images/688a90f995ca1_test_photo.jpg"}
-                    price={1500}
-                    newPrice={1200}
-                    stock={6}
-                    category={"Laptop"}
-                />
-                <ProductCard
-                    name={"Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey"}
-                    img={"/test-images/688a90f995ca1_test_photo.jpg"}
-                    price={1500}
-                    stock={6}
-                    category={"Laptop"}
-                />
 
-                <ProductCard
-                    name={"Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey"}
-                    img={"/test-images/688a90f995ca1_test_photo.jpg"}
-                    price={1500}
-                    stock={6}
-                    category={"Laptop"}
-                />
-                <ProductCard
-                    name={"Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey"}
-                    img={"/test-images/688a90f995ca1_test_photo.jpg"}
-                    price={1500}
-                    stock={6}
-                    category={"Laptop"}
-                />
-                <ProductCard
-                    name={"Apple MacBook Air 15” w/ Touch ID (2023) - Space Grey"}
-                    img={"/test-images/688a90f995ca1_test_photo.jpg"}
-                    price={1500}
-                    stock={6}
-                    category={"Laptop"}
-                />
-                
-                
+            <div className="featured-products-cards">
+                {featuredProducts.map(product => (
+                    <ProductCard key={product.id} {...product} />
+                ))}
             </div>
         </div>
     );

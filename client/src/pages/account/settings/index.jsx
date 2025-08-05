@@ -103,12 +103,6 @@ export default function AccountSettingsPage() {
         resetPasswordFields();
     };
 
-    const accountUnchanged =
-        !!user &&
-        form.name === (user.name || "") &&
-        form.email === (user.email || "") &&
-        form.phone === (user.phone || "");
-
     const saveAccount = async () => {
         if (!isEditingAccount) return;
         dispatch(clearMessages());
