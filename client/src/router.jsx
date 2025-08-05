@@ -23,7 +23,9 @@ import LandingPage from "@/pages/landing";
 
 export default function Router() {
     return (
-        <BrowserRouter>
+        <BrowserRouter
+            future={{ v7_startTransition: false, v7_relativeSplatPath: false }}
+        >
             <Routes>
                 <Route element={<RootLayout />}>
                     <Route path="/" element={<LandingPage />} />
