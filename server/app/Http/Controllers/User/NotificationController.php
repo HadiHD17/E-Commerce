@@ -36,7 +36,7 @@ class NotificationController extends Controller
             $result = $this->notificationService->markAsRead($data['notification_id']);
             return $this->responseJSON($result);
         } catch (Exception $e) {
-            return $this->responseJSON(null, "Failed to mark notification as read");
+            return $this->responseJSON(null, $e->getMessage());
         }
     }
 
@@ -59,4 +59,4 @@ class NotificationController extends Controller
             return $this->responseJSON(null, "Failed to get unread notifications");
         }
     }
-} 
+}
