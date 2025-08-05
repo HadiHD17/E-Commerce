@@ -48,10 +48,6 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post("notifications/mark_all_as_read", [NotificationController::class, "markAllAsRead"]);
         });
 
-        Route::group(["prefix" => "common", "middleware" => "rate.limit:60,1"], function () {
-            Route::get("featured_products", [FeatureController::class, "getFeaturedProducts"]);
-        });
-
         Route::group(["prefix" => "admin", "middleware" => "admin"], function () {
 
             Route::get("products/{id?}", [AdminProductController::class, "getAllProducts"]);
@@ -80,6 +76,8 @@ Route::group(["prefix" => "v0.1"], function () {
         });
     });
 
+
+
     // Broadcasting Routes
     Route::group(["prefix" => "broadcasting", "middleware" => "auth:api"], function () {
         Route::get("channels", [BroadcastingController::class, "getUserChannels"]);
@@ -97,6 +95,7 @@ Route::group(["prefix" => "v0.1"], function () {
     // Public Routes (no auth required)
     Route::group(["prefix" => "common", "middleware" => "rate.limit:60,1"], function () {
         Route::get("categories", [ProductController::class, "getUniqueCategories"]);
+        Route::get("featured_products", [FeatureController::class, "getFeaturedProducts"]);
     });
 
     // Customer Logout Route
@@ -111,5 +110,4 @@ Route::group(["prefix" => "v0.1"], function () {
     Route::group(["prefix" => "chatbot", "middleware" => "auth:api"], function () {
         Route::post('ask', [ChatbotController::class, 'ask'])->middleware('rate.limit:20,1');
     });
-
 });
