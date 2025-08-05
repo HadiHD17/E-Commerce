@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Models\CartItem;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartService
 {
@@ -15,15 +16,15 @@ class CartService
 
     static function manageCartItem($data)
     {
-        $userId = $data['user_id'];
+        $userId = Auth::id();
         $productId = $data['product_id'];
         $quantity = $data['quantity'] ?? 0;
         $action = $data['action'] ?? 'add'; // 'add', 'update', 'delete'
 
         // Find existing cart item
         $cartItem = CartItem::where('user_id', $userId)
-                           ->where('product_id', $productId)
-                           ->first();
+            ->where('product_id', $productId)
+            ->first();
 
         switch ($action) {
             case 'delete':
@@ -37,12 +38,12 @@ class CartService
                 if (!$cartItem) {
                     return ['success' => false, 'message' => 'Item not found', 'data' => null];
                 }
-                
+
                 if ($quantity <= 0) {
                     $cartItem->delete();
                     return ['success' => true, 'message' => 'Item deleted (quantity 0)', 'data' => null];
                 }
-                
+
                 $cartItem->quantity = $quantity;
                 $cartItem->save();
                 return ['success' => true, 'message' => 'Item updated', 'data' => $cartItem];
