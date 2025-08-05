@@ -10,8 +10,8 @@
 
 .dropdown-toggle {
   padding: 8px 12px;
-  background-color: #6c757d;
-  color: white;
+  background-color: hsla(0, 0%, 45%, 1);
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -42,9 +42,9 @@
   font-size: 0.85rem;
   padding: 6px 10px;
   border-radius: 4px;
-  border: 1px solid #007bff;
+  border: 1px solid hsla(236, 80%, 57%, 1);
   background-color: white;
-  color: #007bff;
+  color: hsla(236, 80%, 57%, 1);
   cursor: pointer;
 }
 
@@ -59,7 +59,7 @@
 }
 
 .notification-dot {
-  color: red;
+  color: hsla(3, 82%, 48%, 1);
   font-size: 1.2rem;
   margin-right: 6px;
 }
@@ -76,12 +76,12 @@
 
 .notification-time {
   font-size: 0.75rem;
-  color: #888;
+  color: hsla(0, 0%, 28%, 1);
 }
 
 .mark-read-btn {
   font-size: 0.8rem;
-  color: #007bff;
+  color: hsla(236, 80%, 57%, 1);
   background: none;
   border: none;
   cursor: pointer;
@@ -101,7 +101,7 @@
 }
 
 .notification-dot {
-  color: red;
+  color: hsla(3, 82%, 48%, 1);
   font-size: 1.4rem;
   line-height: 1.2rem;
   padding-top: 3px;

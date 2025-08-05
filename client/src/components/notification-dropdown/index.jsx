@@ -37,7 +37,7 @@ export default function NotificationDropdown() {
         try {
             await axios.post(
                 "http://localhost:8000/api/v0.1/customer/notifications/mark_as_read",
-                { notifications_id: id },
+                { notification_id: id },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
