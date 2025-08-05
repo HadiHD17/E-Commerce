@@ -3,27 +3,75 @@
 namespace App\Services\User;
 
 use App\Models\CartItem;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CartService
 {
-    static function getCartItems(Request $request)
+    static function getCartItems($userId)
     {
-        $userId = $request->input('user_id');
-
-        $cartItems = CartItem::where('user_id', $userId)->get();
-
-        return $cartItems;
+        return CartItem::with('product')->where('user_id', $userId)->get();
     }
-    static function addToCart($data, $cartItem)
+
+    static function manageCartItem($data)
     {
-        if ($cartItem->exists) {
-            $cartItem->increment('quantity', $data['quantity']);
+        $userId = $data['user_id'];
+        $productId = $data['product_id'];
+        $quantity = $data['quantity'] ?? 0;
+        $action = $data['action'] ?? 'add'; // 'add', 'update', 'delete'
+
+        // Find existing cart item
+        $cartItem = CartItem::where('user_id', $userId)
+                           ->where('product_id', $productId)
+                           ->first();
+
+        switch ($action) {
+            case 'delete':
+                if ($cartItem) {
+                    $cartItem->delete();
+                    return ['success' => true, 'message' => 'Item deleted', 'data' => null];
+                }
+                return ['success' => false, 'message' => 'Item not found', 'data' => null];
+
+            case 'update':
+                if (!$cartItem) {
+                    return ['success' => false, 'message' => 'Item not found', 'data' => null];
+                }
+                
+                if ($quantity <= 0) {
+                    $cartItem->delete();
+                    return ['success' => true, 'message' => 'Item deleted (quantity 0)', 'data' => null];
+                }
+                
+                $cartItem->quantity = $quantity;
+                $cartItem->save();
+                return ['success' => true, 'message' => 'Item updated', 'data' => $cartItem];
+
+            case 'add':
+            default:
+                if ($cartItem) {
+                    // Update quantity if item exists
+                    $cartItem->quantity = $quantity;
+                    $cartItem->save();
+                    return ['success' => true, 'message' => 'Item updated', 'data' => $cartItem];
+                } else {
+                    // Create new cart item
+                    $newCartItem = CartItem::create($data);
+                    return ['success' => true, 'message' => 'Item added', 'data' => $newCartItem];
+                }
         }
-        $cartItem->user_id = $data['user_id'] ?? $cartItem->user_id;
-        $cartItem->product_id = $data['product_id'] ?? $cartItem->product_id;
-        $cartItem->quantity = $data['quantity'] ?? $cartItem->quantity;
-        $cartItem->save();
-        return $cartItem;
+    }
+
+    static function clearCart($userId)
+    {
+        return CartItem::where('user_id', $userId)->delete();
+    }
+}
+
+class UserService
+{
+    static function getUserById($userId)
+    {
+        return User::find($userId);
     }
 }
