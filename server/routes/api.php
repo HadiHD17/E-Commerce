@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\User\ChatbotController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\NotificationController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Common\FeatureController;
 use App\Http\Controllers\Common\WebhookController;
 use App\Http\Controllers\User\CheckoutController;
@@ -36,10 +37,12 @@ Route::group(["prefix" => "v0.1"], function () {
             // Account Routes
             Route::put("account/edit", [AccountController::class, "editAccount"]);
             Route::get("account/orders", [AccountController::class, "getUserOrders"]);
+            Route::get("user/{id}", [UserController::class, "getUserById"]);
 
             // Cart Routes
             Route::get("cart_items", [CartController::class, "getCartItems"]);
-            Route::post("add_to_cart", [CartController::class, "addToCart"]);
+            Route::post("manage_cart_item", [CartController::class, "manageCartItem"]);
+            Route::delete("clear_cart", [CartController::class, "clearCart"]);
 
             // Notification Routes
             Route::get("notifications", [NotificationController::class, "getNotifications"]);
@@ -95,6 +98,7 @@ Route::group(["prefix" => "v0.1"], function () {
     // Public Routes (no auth required)
     Route::group(["prefix" => "common", "middleware" => "rate.limit:60,1"], function () {
         Route::get("categories", [ProductController::class, "getUniqueCategories"]);
+        Route::get("featured_products", [FeatureController::class, "getFeaturedProducts"]);
         Route::get("featured_products", [FeatureController::class, "getFeaturedProducts"]);
     });
 

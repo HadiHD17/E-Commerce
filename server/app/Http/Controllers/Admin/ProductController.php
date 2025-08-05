@@ -66,7 +66,7 @@ class ProductController extends Controller
     {
         try {
             if ($id) {
-                $product = Product::find($id);
+                $product = Product::with('image')->find($id);
                 $oldData = $product ? $product->toArray() : null;
 
                 $deleted = ProductService::deleteProduct($id);
