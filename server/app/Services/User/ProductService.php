@@ -50,11 +50,19 @@ class ProductService
         });
     }
 
+    static function getUniqueCategories()
+    {
+        return Cache::remember('products.categories', 3600, function () {
+            return Product::distinct()->whereNotNull('category')->pluck('category');
+        });
+    }
+
     static function clearProductCache()
     {
         Cache::forget('products.all');
         Cache::forget('products.high-to-low');
         Cache::forget('products.low-to-high');
+        Cache::forget('products.categories');
         
         // Clear category caches
         $categories = Product::distinct()->pluck('category');

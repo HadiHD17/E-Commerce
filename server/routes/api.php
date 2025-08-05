@@ -94,6 +94,11 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::post('reset_password', [AuthController::class, 'resetPassword']);
     });
 
+    // Public Routes (no auth required)
+    Route::group(["prefix" => "common", "middleware" => "rate.limit:60,1"], function () {
+        Route::get("categories", [ProductController::class, "getUniqueCategories"]);
+    });
+
     // Customer Logout Route
     Route::group(["prefix" => "customer", "middleware" => "auth:api"], function () {
         Route::post('logout', [AuthController::class, 'logout']);

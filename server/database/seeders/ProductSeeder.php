@@ -12,6 +12,16 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Product::factory(20)->create();
+        // Create products with specific categories for testing
+        $categories = ['TV', 'Laptop', 'Mouse', 'Keyboard', 'Headphones', 'Monitor', 'Tablet', 'Smartphone'];
+        
+        foreach ($categories as $category) {
+            // Create 2-4 products for each category
+            $count = rand(2, 4);
+            \App\Models\Product::factory($count)->create(['category' => $category]);
+        }
+        
+        // Create some products without category (should be excluded)
+        \App\Models\Product::factory(3)->create(['category' => null]);
     }
 }

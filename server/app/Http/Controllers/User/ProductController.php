@@ -58,4 +58,14 @@ class ProductController extends Controller
             return $this->responseJSON(null, "Failed to retreive products", 400);
         }
     }
+
+    public function getUniqueCategories()
+    {
+        try {
+            $categories = ProductService::getUniqueCategories();
+            return $this->responseJSON($categories);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to retrieve categories");
+        }
+    }
 }
