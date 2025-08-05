@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const orderSlice = createSlice({
+export const ordersSlice = createSlice({
     name: "orders",
     initialState: {
         list: [],
@@ -18,3 +18,6 @@ export const orderSlice = createSlice({
         },
     },
 });
+
+const ordersReducer = ordersSlice.reducer;
+export default ordersReducer;
