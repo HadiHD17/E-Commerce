@@ -1,4 +1,4 @@
-.admin-featured-products {
+.admin-featured-products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: 1rem;

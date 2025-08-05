@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import AdminMetric from "@/components/admin-metric";
 import AdminChart from "@/components/admin-chart";
-import AdminFeaturedProducts from "@/components/admin-featured-products";
+import AdminFeaturedProductsGrid from "@/components/admin-featured-products-grid";
 import "./admin.css";
 
 export default function AdminHomePage() {
@@ -33,7 +33,7 @@ export default function AdminHomePage() {
                     <Link to="/admin/products">View all →</Link>
                 </hgroup>
 
-                <AdminFeaturedProducts />
+                <AdminFeaturedProductsGrid />
             </section>
         </div>
     );

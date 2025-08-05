@@ -4,9 +4,9 @@ import "./admin-layout.css";
 import useAuth from "@/hooks/use-auth";
 
 export default function AdminLayout() {
-    const { isAdmin } = useAuth();
+    const { isAdmin, isLoading } = useAuth();
 
-    if (!isAdmin) {
+    if (!isLoading && !isAdmin) {
         return <Navigate to="/login" replace />;
     }
 

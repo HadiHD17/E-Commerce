@@ -4,9 +4,9 @@ import api from "@/api";
 import ProductCard from "@/components/shared/product-card";
 import ErrorAlert from "@/components/shared/error-alert";
 import useAuth from "@/hooks/use-auth";
-import "./admin-featured-products.css";
+import "./admin-featured-products-grid.css";
 
-export default function AdminFeaturedProducts() {
+export default function AdminFeaturedProductsGrid() {
     const { token } = useAuth();
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +38,7 @@ export default function AdminFeaturedProducts() {
 
     if (isLoading) {
         return (
-            <div className="admin-featured-products">
+            <div className="admin-featured-products-grid">
                 <p>Loading products...</p>
             </div>
         );
@@ -46,14 +46,14 @@ export default function AdminFeaturedProducts() {
 
     if (error) {
         return (
-            <div className="admin-featured-products">
+            <div className="admin-featured-products-grid">
                 <ErrorAlert error={error} />
             </div>
         );
     }
 
     return (
-        <div className="admin-featured-products">
+        <div className="admin-featured-products-grid">
             {products.map(prod => (
                 <ProductCard
                     key={prod.id}

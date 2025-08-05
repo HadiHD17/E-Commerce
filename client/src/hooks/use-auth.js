@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "@/store/slices/auth-slice";
 
@@ -8,6 +8,7 @@ const USER_KEY = "auth-user";
 export default function useAuth() {
     const dispatch = useDispatch();
     // granular selectors are less prone to cause unnecessary re-renders
+    const [isLoading, setisLoading] = useState(true);
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const user = useSelector(state => state.auth.user);
     const token = useSelector(state => state.auth.token);
@@ -26,6 +27,7 @@ export default function useAuth() {
             const payload = { ...user, token };
             dispatch(login(payload));
         }
+        setisLoading(false);
     }, [dispatch]);
 
     useEffect(() => {
@@ -42,5 +44,5 @@ export default function useAuth() {
     const signIn = payload => dispatch(login(payload));
     const signOut = () => dispatch(logout());
 
-    return { isLoggedIn, isAdmin, user, token, signIn, signOut };
+    return { isLoggedIn, isLoading, isAdmin, user, token, signIn, signOut };
 }
