@@ -99,7 +99,6 @@ Route::group(["prefix" => "v0.1"], function () {
     Route::group(["prefix" => "common", "middleware" => "rate.limit:60,1"], function () {
         Route::get("categories", [ProductController::class, "getUniqueCategories"]);
         Route::get("featured_products", [FeatureController::class, "getFeaturedProducts"]);
-        Route::get("featured_products", [FeatureController::class, "getFeaturedProducts"]);
     });
 
     // Customer Logout Route
