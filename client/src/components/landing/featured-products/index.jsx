@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ProductCard from "@/components/shared/product-card";
 import api from "@/api";
-import { Link } from "react-router-dom";
 import "./featured-products.css";
 
 export default function FeaturedProducts() {
@@ -9,9 +9,7 @@ export default function FeaturedProducts() {
     const loadFeaturedProducts = async () => {
         try {
             const res = await api.get("/common/featured_products", {
-                headers: {
-                    Accept: "application/json",
-                },
+                headers: { Accept: "application/json" },
             });
             setFeaturedProducts(res.data.payload);
         } catch (error) {
@@ -31,14 +29,7 @@ export default function FeaturedProducts() {
                 </Link>
             </div>
 
-            <div className="featured-products-cards">
-                {featuredProducts.map(product => (
-                    <ProductCard
-                        key={product.id}
-                        img={product.image?.[0]?.image_url}
-                        {...product}
-                    />
-                ))}
+            <div className="products-grid">
                 {featuredProducts.map(product => (
                     <ProductCard
                         key={product.id}

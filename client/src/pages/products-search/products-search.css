@@ -9,11 +9,8 @@
     min-width: 220px;
 }
 
-.products-list {
+.products-search__list {
     flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
 }
 
 @media (max-width: 900px) {
@@ -25,8 +22,5 @@
     .products-sidebar {
         min-width: 0;
         width: 100%;
-    }
-    .products-list {
-        grid-template-columns: 1fr;
     }
 }

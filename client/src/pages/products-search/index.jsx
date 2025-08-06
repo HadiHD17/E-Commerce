@@ -132,7 +132,7 @@ export default function ProductsSearchPage() {
                     />
                 </div>
 
-                <div className="products-list">
+                <div className="products-search__list products-grid">
                     {loading && <div className="info">Loading products…</div>}
                     {error && !loading && <div className="error">{error}</div>}
                     {!loading && !error && paginatedProducts.length === 0 && (

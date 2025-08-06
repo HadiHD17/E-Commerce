@@ -6,7 +6,7 @@ import "./root-layout.css";
 
 const NO_NAVBAR_PAGES = ["/login", "/register", "/forgot-password"];
 const FOOTER_PAGES = ["/"];
-const CHAT_PAGES = ["/", "/search", "/admin"];
+const CHAT_PAGES = ["/", "/search"];
 
 export default function RootLayout() {
     const { pathname } = useLocation();

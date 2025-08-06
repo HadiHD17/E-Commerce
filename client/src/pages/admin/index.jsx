@@ -23,7 +23,7 @@ export default function AdminHomePage() {
                 />
             </section>
 
-            <section className="admin-chart">
+            <section>
                 <AdminChart title="Revenue Analysis" />
             </section>
 

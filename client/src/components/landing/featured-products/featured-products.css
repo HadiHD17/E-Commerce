@@ -17,10 +17,3 @@
 .featured-products-header a {
     color: inherit;
 }
-.featured-products-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    justify-content: start;
-    align-content: start;
-    gap: var(--spacing-4);
-}

@@ -32,7 +32,7 @@ export default function AdminEditProductPage() {
 
     return (
         <div className="new-product">
-            <ProductPageHeading>New Product</ProductPageHeading>
+            <ProductPageHeading>Edit Product</ProductPageHeading>
             <EditForm initialData={data} />
         </div>
     );
@@ -165,6 +165,7 @@ function EditForm({ initialData: init = {} }) {
                         id="price"
                         type="number"
                         min={0}
+                        step={0.01}
                         value={price}
                         onChange={e => setPrice(e.target.value)}
                         required

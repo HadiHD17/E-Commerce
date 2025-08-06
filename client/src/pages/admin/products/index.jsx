@@ -25,7 +25,7 @@ export default function AdminProductsPage() {
             products.length === 0 ? (
                 <p className="text-gray-700">No products found. 🤷‍♂️</p>
             ) : (
-                <div className="products-grid">
+                <div className="admin__products-grid products-grid">
                     {products.map(prod => (
                         <ProductCard
                             key={prod.id}
