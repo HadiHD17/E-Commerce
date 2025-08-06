@@ -1,46 +1,14 @@
-import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
-import api from "@/api";
 import ErrorAlert from "@/components/shared/error-alert";
-import useAuth from "@/hooks/use-auth";
 import OrderRow from "@/components/shared/order-row";
+import { useFetchDataWithAuth } from "@/hooks/use-fetch-data-with-auth";
 import "./admin-orders.css";
 
 export default function AdminOrdersPage() {
-    const { token, isLoading: isAuthLoading } = useAuth();
-    const [orders, setOrders] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        if (isAuthLoading) return;
-        const controller = new AbortController();
-
-        async function fetchOrders() {
-            try {
-                setIsLoading(true);
-
-                const { data } = await api.get("/admin/todays_orders", {
-                    headers: {
-                        Authorization: `bearer ${token}`,
-                        signal: controller.signal,
-                    },
-                });
-                setOrders(data.payload);
-            } catch (err) {
-                if (err instanceof AxiosError) {
-                    setError(err.response.data);
-                } else {
-                    setError("An unknown error occurred");
-                }
-            } finally {
-                setIsLoading(false);
-            }
-        }
-        fetchOrders();
-
-        return () => controller.abort(); // cancel on cleanup
-    }, [isAuthLoading, token]);
+    const {
+        data: orders,
+        isLoading,
+        error,
+    } = useFetchDataWithAuth("/admin/todays_orders", []);
 
     let ordersContent;
     if (isLoading) {

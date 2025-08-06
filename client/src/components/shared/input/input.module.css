@@ -24,7 +24,8 @@
     border-color: var(--color-danger-700);
     color: var(--color-danger-700);
 }
-.input--readonly .input__control {
+.input--readonly .input__control,
+.input__control:disabled {
     background-color: var(--color-gray-200);
     color: var(--color-gray-700);
 }
