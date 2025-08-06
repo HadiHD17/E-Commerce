@@ -9,7 +9,7 @@ import Textarea from "@/components/shared/textarea";
 import api from "@/api";
 import useAuth from "@/hooks/use-auth";
 import ErrorAlert from "@/components/shared/error-alert";
-import "./new-product.css";
+import ProductPageHeading from "../product-page-heading";
 
 export default function AdminNewProductPage() {
     const { token } = useAuth();
@@ -22,11 +22,10 @@ export default function AdminNewProductPage() {
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("Laptop");
     const [brandName, setBrandName] = useState("");
-    const [sku, setSku] = useState("");
-    const [price, setPrice] = useState(0);
-    const [onSale, setOnSale] = useState(false);
-    const [salesPrice, setSalesPrice] = useState(0);
     const [stock, setStock] = useState(0);
+    const [price, setPrice] = useState(0);
+    // const [onSale, setOnSale] = useState(false);
+    // const [salesPrice, setSalesPrice] = useState(0);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -88,17 +87,12 @@ export default function AdminNewProductPage() {
                             required
                         />
                         <div className="d-flex gap-4">
-                            <label className="d-block fs-label-text flex-1">
-                                <div style={{ marginBottom: 6 }}>Category</div>
+                            <div className="select-field d-block fs-label-text flex-1">
+                                <label htmlFor="category">Category</label>
                                 <select
                                     name="category"
                                     id="category"
                                     className="rounded-md shadow-2xs"
-                                    style={{
-                                        border: "2px solid var(--color-gray-300)",
-                                        padding: 11,
-                                        width: "100%",
-                                    }}
                                     value={category}
                                     onChange={e => setCategory(e.target.value)}
                                     required
@@ -119,7 +113,7 @@ export default function AdminNewProductPage() {
                                     <option value="Monitor">Monitor</option>
                                     <option value="TV">TV</option>
                                 </select>
-                            </label>
+                            </div>
                             <Input
                                 label="Brand Name"
                                 placeholder="Apple"
@@ -142,15 +136,6 @@ export default function AdminNewProductPage() {
                             required
                         />
                         <Input
-                            label="SKU / Product Code"
-                            id="sku"
-                            type="text"
-                            value={sku}
-                            onChange={e => setSku(e.target.value)}
-                            // required
-                            disabled
-                        />
-                        <Input
                             label="Price"
                             id="price"
                             type="number"
@@ -159,7 +144,7 @@ export default function AdminNewProductPage() {
                             onChange={e => setPrice(e.target.value)}
                             required
                         />
-                        <div className="d-flex gap-4">
+                        {/* <div className="d-flex gap-4">
                             <label className="d-block fs-label-text">
                                 <div>On-Sale</div>
                                 <input
@@ -182,26 +167,22 @@ export default function AdminNewProductPage() {
                                 // required={onSale}
                                 disabled
                             />
-                        </div>
+                        </div> */}
                         <ProductImagesInput />
                     </fieldset>
                 </section>
 
-                <div className="new-product__create-btn">
+                <div className="margin-top-some">
                     <Button
                         type="submit"
                         color="brand"
                         className="d-flex items-center gap-1"
                         disabled={isSubmitting}
                     >
-                        <PlusIcon weight="bold" /> Create and Publish
+                        <PlusIcon weight="bold" /> Save and Publish
                     </Button>
                 </div>
             </form>
         </div>
     );
-}
-
-function ProductPageHeading({ children }) {
-    return <h1 className="product-page-heading fs-h2">{children}</h1>;
 }

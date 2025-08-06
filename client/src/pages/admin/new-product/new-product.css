@@ -14,10 +14,20 @@
     }
 }
 
-.new-product__create-btn {
+.margin-top-some {
     margin-top: var(--spacing-16);
 }
 
 .product-page-heading {
     margin-bottom: var(--spacing-8);
+}
+
+.select-field select {
+    width: 100%;
+    padding: 11px;
+    border: 2px solid var(--color-gray-300);
+}
+.select-field label {
+    display: block;
+    margin-bottom: var(--spacing-1\.5);
 }

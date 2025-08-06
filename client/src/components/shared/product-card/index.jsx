@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HeartIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
-import Button from "../button";
 import "./product-card.css";
 import api from "@/api";
 import { AxiosError } from "axios";
 import useAuth from "@/hooks/use-auth";
+import DeleteProductPrompt from "@/components/delete-product-prompt";
 
 export default function ProductCard({
     id,
@@ -83,37 +83,13 @@ export default function ProductCard({
                         <PencilSimpleIcon size={24} />
                     </Link>
                     {showDeletePrompt && (
-                        <div
-                            className="border-subtle rounded-md bg-gray-100"
-                            style={{
-                                padding: 12,
-                                position: "absolute",
-                                zIndex: 40,
-                                bottom: 0,
-                                left: 0,
-                            }}
-                        >
-                            <p>you sure you wanna delete?</p>
-                            <div className="d-flex items-center gap-2">
-                                <Button color="danger" onClick={deleteProduct}>
-                                    yes
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    color="gray"
-                                    onClick={() => setShowDeletePrompt(false)}
-                                >
-                                    no
-                                </Button>
-                            </div>
-                        </div>
+                        <DeleteProductPrompt
+                            onConfirm={deleteProduct}
+                            onCancel={() => setShowDeletePrompt(false)}
+                        />
                     )}
                 </div>
             )}
         </div>
     );
-}
-
-function DeleteProductPrompt({ onConfirm }) {
-    return <></>;
 }
