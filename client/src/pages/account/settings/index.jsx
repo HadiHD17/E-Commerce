@@ -3,7 +3,6 @@ import { CheckIcon, PencilSimpleLineIcon } from "@phosphor-icons/react";
 import Button from "@/components/shared/button";
 import Input from "@/components/shared/input";
 import api from "@/api";
-
 import "./account-settings.css";
 import useAuth from "@/hooks/use-auth";
 
@@ -32,7 +31,6 @@ export default function AccountSettingsPage() {
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
 
-    // Reset form when user changes (from hook)
     useEffect(() => {
         setForm(getInitialForm(user));
     }, [user]);
@@ -45,9 +43,7 @@ export default function AccountSettingsPage() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (res?.data?.payload) {
-                // Update Redux store so global user is fresh
                 signIn({ ...res.data.payload, token });
-                // Update form locally
                 setForm(getInitialForm(res.data.payload));
                 setError("");
             } else {
@@ -118,7 +114,6 @@ export default function AccountSettingsPage() {
             });
 
             if (res?.data?.payload) {
-                // Update redux auth user with fresh data + token
                 signIn({ ...res.data.payload, token });
                 setForm(getInitialForm(res.data.payload));
                 setSuccessMessage("Account updated successfully.");
@@ -184,12 +179,10 @@ export default function AccountSettingsPage() {
     };
 
     if (isLoading) {
-        // Show loading placeholder while auth initializes
         return <div>Loading...</div>;
     }
 
     if (!isLoggedIn) {
-        // Redirect or show login prompt if user not logged in
         return <div>Please log in to access account settings.</div>;
     }
 
