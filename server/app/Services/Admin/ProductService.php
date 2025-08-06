@@ -11,42 +11,60 @@ class ProductService
     static function getAllProducts($id = null)
     {
         if (!$id) {
-            return Product::with('image')->get();
+            return \Cache::remember('admin.products.all', 3600, function () {
+                return Product::with('image')->get();
+            });
         }
-        return Product::with('image')->find($id);
+        return \Cache::remember("admin.products.{$id}", 3600, function () use ($id) {
+            return Product::with('image')->find($id);
+        });
     }
 
-    static function addOrUpdateProduct($data, $product)
+    static function getProductsByCategory($category)
     {
-
-        $product->name = $data["name"] ?? $product->name;
-        $product->description = $data["description"] ?? $product->description;
-        $product->category = $data["category"] ?? $product->category;
-        $product->price = $data["price"] ?? $product->price;
-        $product->stock = $data["stock"] ?? $product->stock;
-
-        $product->save();
-        
-        // Clear product cache after update
-        UserProductService::clearProductCache();
-        
-        return $product;
+        return \Cache::remember("admin.products.category.{$category}", 3600, function () use ($category) {
+            return Product::with('image')->where('category', $category)->get();
+        });
     }
 
-    static function deleteProduct($id)
+    static function getProductsHighToLow()
     {
-        $product = Product::with('image')->find($id);
+        return \Cache::remember('admin.products.high-to-low', 3600, function () {
+            return Product::with('image')->orderBy('price', 'desc')->get();
+        });
+    }
 
-        if (!$product) {
-            return null;
-        }
+    static function getProductsLowToHigh()
+    {
+        return \Cache::remember('admin.products.low-to-high', 3600, function () {
+            return Product::with('image')->orderBy('price', 'asc')->get();
+        });
+    }
 
-        if ($product->delete()) {
-            // Clear product cache after deletion
-            UserProductService::clearProductCache();
-            return true;
-        } else {
-            return false;
+    static function searchProducts($searchTerm)
+    {
+        return \Cache::remember("admin.products.search.{$searchTerm}", 1800, function () use ($searchTerm) {
+            return Product::with('image')->where('name', 'like', '%' . $searchTerm . '%')->get();
+        });
+    }
+
+    static function getUniqueCategories()
+    {
+        return \Cache::remember('admin.products.categories', 3600, function () {
+            return Product::distinct()->whereNotNull('category')->pluck('category');
+        });
+    }
+
+    static function clearProductCache()
+    {
+        \Cache::forget('admin.products.all');
+        \Cache::forget('admin.products.high-to-low');
+        \Cache::forget('admin.products.low-to-high');
+        \Cache::forget('admin.products.categories');
+        // Clear category caches
+        $categories = Product::distinct()->pluck('category');
+        foreach ($categories as $category) {
+            \Cache::forget("admin.products.category.{$category}");
         }
     }
 }

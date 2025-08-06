@@ -59,6 +59,10 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("product_images/{id?}", [AdminProductImageControler::class, "getAllProductImages"]);
             Route::get("product_images_by_product_id/{product_id}", [AdminProductImageControler::class, "getAllImagesByProductId"]);
             Route::post("add_update_product_image/{id?}", [AdminProductImageControler::class, "addOrUpdateProductImage"]);
+            Route::get("products_by_category/{category}", [AdminProductController::class, "getProductsByCategory"]);
+            Route::get("products_by_price/{filter}", [AdminProductController::class, "getProductsByPrice"]);
+            Route::get("products_by_search", [AdminProductController::class, "searchProducts"]);
+            Route::get("categories", [AdminProductController::class, "getUniqueCategories"]);
 
             // Admin Order Routes
             Route::get("orders", [AdminOrderController::class, "getAllOrders"]);
