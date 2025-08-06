@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import AccountLayoutSidebar from "./account-layout-sidebar";
 import "./account-layout.css";
 

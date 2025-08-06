@@ -3,7 +3,9 @@ import { CheckIcon, PencilSimpleLineIcon } from "@phosphor-icons/react";
 import Button from "@/components/shared/button";
 import Input from "@/components/shared/input";
 import api from "@/api";
+
 import "./account-settings.css";
+import useAuth from "@/hooks/use-auth";
 
 function getInitialForm(user) {
     return {
@@ -17,9 +19,9 @@ function getInitialForm(user) {
 }
 
 export default function AccountSettingsPage() {
-    const [user, setUser] = useState(null);
-    const [form, setForm] = useState(getInitialForm(null));
+    const { user, token, isLoggedIn, isLoading, signIn } = useAuth();
 
+    const [form, setForm] = useState(getInitialForm(user));
     const [isEditingAccount, setIsEditingAccount] = useState(false);
     const [isChangingPassword, setIsChangingPassword] = useState(false);
 
@@ -29,48 +31,39 @@ export default function AccountSettingsPage() {
 
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
-    const token = localStorage.getItem("auth-token");
 
-    const getuser = () => {
+    // Reset form when user changes (from hook)
+    useEffect(() => {
+        setForm(getInitialForm(user));
+    }, [user]);
+
+    const fetchUser = async () => {
+        setLoading(true);
+        setError("");
         try {
-            const storedUser = localStorage.getItem("auth-user");
-            if (!storedUser) return;
-
-            const parsedUser = JSON.parse(storedUser);
-            const userId = parsedUser.id;
-            if (!userId) return;
-
-            setLoading(true);
-            setError("");
-
-            api.get(`customer/user/${userId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-                .then(res => {
-                    if (res?.data?.payload) {
-                        setUser(res.data.payload);
-                        setForm(getInitialForm(res.data.payload));
-                        setError("");
-                    } else {
-                        setError("Failed to load user data.");
-                    }
-                })
-                .catch(() => {
-                    setError("Failed to load user data.");
-                })
-                .finally(() => {
-                    setLoading(false);
-                });
-        } catch (err) {
-            setError("Failed to parse user data.");
+            const res = await api.get(`customer/user/${user.id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res?.data?.payload) {
+                // Update Redux store so global user is fresh
+                signIn({ ...res.data.payload, token });
+                // Update form locally
+                setForm(getInitialForm(res.data.payload));
+                setError("");
+            } else {
+                setError("Failed to load user data.");
+            }
+        } catch {
+            setError("Failed to load user data.");
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        getuser();
-    }, []);
+        if (!isLoggedIn || !token || !user?.id) return;
+        fetchUser();
+    }, [isLoggedIn, token]);
 
     const handleChange = e => {
         const { id, value } = e.target;
@@ -94,9 +87,7 @@ export default function AccountSettingsPage() {
 
     const handleCancelAccountEdit = () => {
         setIsEditingAccount(false);
-        if (user) {
-            setForm(getInitialForm(user));
-        }
+        setForm(getInitialForm(user));
         setError("");
         setSuccessMessage("");
     };
@@ -114,22 +105,22 @@ export default function AccountSettingsPage() {
         setSuccessMessage("");
         setSavingAccount(true);
         setLoading(true);
+
         try {
             const payload = {
                 name: form.name,
                 email: form.email,
                 phone: form.phone,
             };
+
             const res = await api.put(`customer/account/edit`, payload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
+
             if (res?.data?.payload) {
-                setUser(res.data.payload);
+                // Update redux auth user with fresh data + token
+                signIn({ ...res.data.payload, token });
                 setForm(getInitialForm(res.data.payload));
-                localStorage.setItem(
-                    "auth-user",
-                    JSON.stringify(res.data.payload),
-                );
                 setSuccessMessage("Account updated successfully.");
                 setIsEditingAccount(false);
             } else {
@@ -166,7 +157,6 @@ export default function AccountSettingsPage() {
         setSavingPassword(true);
         setLoading(true);
         try {
-            const token = localStorage.getItem("auth-token");
             const payload = {
                 current_password: form.currentPassword,
                 new_password: form.newPassword,
@@ -176,11 +166,7 @@ export default function AccountSettingsPage() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (res?.data?.payload) {
-                setUser(res.data.payload);
-                localStorage.setItem(
-                    "auth-user",
-                    JSON.stringify(res.data.payload),
-                );
+                signIn({ ...res.data.payload, token });
                 setSuccessMessage("Password changed successfully.");
                 setIsChangingPassword(false);
                 resetPasswordFields();
@@ -197,9 +183,18 @@ export default function AccountSettingsPage() {
         }
     };
 
+    if (isLoading) {
+        // Show loading placeholder while auth initializes
+        return <div>Loading...</div>;
+    }
+
+    if (!isLoggedIn) {
+        // Redirect or show login prompt if user not logged in
+        return <div>Please log in to access account settings.</div>;
+    }
+
     return (
         <div className="account-settings">
-            {/* Show error / success messages */}
             {error && <div className="error-message">{error}</div>}
             {successMessage && (
                 <div className="success-message">{successMessage}</div>
@@ -215,6 +210,7 @@ export default function AccountSettingsPage() {
                             type="button"
                             className="text-gray-700 fs-button d-inline-flex items-center gap-1"
                             onClick={() => setIsEditingAccount(true)}
+                            disabled={loading}
                         >
                             <PencilSimpleLineIcon size={24} weight="bold" />
                             Edit account info
@@ -281,6 +277,7 @@ export default function AccountSettingsPage() {
                             type="button"
                             className="text-gray-700 fs-button d-inline-flex items-center gap-1"
                             onClick={() => setIsChangingPassword(true)}
+                            disabled={loading}
                         >
                             <PencilSimpleLineIcon size={24} weight="bold" />
                             Change password
