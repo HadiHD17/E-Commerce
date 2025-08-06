@@ -43,7 +43,7 @@ export default function AccountSettingsPage() {
             setLoading(true);
             setError("");
 
-            api.get(`customer/${userId}`, {
+            api.get(`customer/user/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
