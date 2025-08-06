@@ -38,6 +38,7 @@ export default function AdminProductsPage() {
                             name={prod.name}
                             price={prod.price}
                             stock={prod.stock}
+                            isAdmin
                         />
                     ))}
                 </div>

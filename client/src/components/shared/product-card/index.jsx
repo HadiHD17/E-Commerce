@@ -1,37 +1,119 @@
-import React from "react";
-import { HeartIcon } from "@phosphor-icons/react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { HeartIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
+import Button from "../button";
 import "./product-card.css";
-import { useNavigate } from "react-router-dom";
+import api from "@/api";
+import { AxiosError } from "axios";
+import useAuth from "@/hooks/use-auth";
 
-const ProductCard = ({ id, name, img, price, stock, category, newPrice }) => {
-    const navigate = useNavigate();
-    const handleClick = () => {
-        navigate(`/products/${id}`);
-    };
+export default function ProductCard({
+    id,
+    name,
+    img,
+    price,
+    stock,
+    category,
+    newPrice,
+    isAdmin = false,
+}) {
+    const { token } = useAuth();
+    const [showDeletePrompt, setShowDeletePrompt] = useState(false);
+
+    async function deleteProduct() {
+        try {
+            await api.get(`/admin/delete_product/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            window.location.reload();
+        } catch (err) {
+            console.warn(err instanceof AxiosError ? err.response.data : err);
+        }
+    }
+
+    const promptDelete = () => setShowDeletePrompt(true);
+
     return (
-        <div className="product-card" onClick={handleClick}>
+        <div className="product-card">
             <HeartIcon />
-            <div className="product-img">
-                <img src={img} alt="" />
-            </div>
-            <div className="product-category">{category}</div>
-            <div className="product-name">{name}</div>
-            <div className="product-price">
-                {newPrice ? (
-                    <>
-                        <div className="original-price">{price}$</div>
-                        <div className="current-price">{newPrice}$</div>
-                    </>
-                ) : (
-                    <div className="current-price">{price}$</div>
-                )}
-            </div>
+            <Link className="d-contents" to={`/products/${id}`}>
+                <div className="product-img">
+                    <img src={img} alt="" />
+                </div>
+                <div className="product-category">{category}</div>
+                <div className="product-name">{name}</div>
+                <div className="product-price">
+                    {newPrice ? (
+                        <>
+                            <div className="original-price">{price}$</div>
+                            <div className="current-price">{newPrice}$</div>
+                        </>
+                    ) : (
+                        <div className="current-price">{price}$</div>
+                    )}
+                </div>
+            </Link>
 
             <div className={`product-stock ${stock === 0 ? "out" : ""}`}>
                 {stock === 0 ? "Out of stock" : `${stock} left in stock`}
             </div>
+            {isAdmin && (
+                <div
+                    className="d-flex items-center gap-2"
+                    style={{ marginTop: 12, position: "relative" }}
+                >
+                    <button
+                        style={{
+                            padding: 10,
+                            border: "2px solid var(--color-danger-700)",
+                        }}
+                        className="d-flex items-center text-danger-700 rounded-md"
+                        onClick={promptDelete}
+                    >
+                        <TrashIcon size={24} />
+                    </button>
+                    <Link
+                        to={`/admin/edit-product/${id}`}
+                        style={{
+                            padding: 10,
+                            border: "2px solid var(--color-gray-700)",
+                        }}
+                        className="d-flex items-center text-gray-700 rounded-md"
+                    >
+                        <PencilSimpleIcon size={24} />
+                    </Link>
+                    {showDeletePrompt && (
+                        <div
+                            className="border-subtle rounded-md bg-gray-100"
+                            style={{
+                                padding: 12,
+                                position: "absolute",
+                                zIndex: 40,
+                                bottom: 0,
+                                left: 0,
+                            }}
+                        >
+                            <p>you sure you wanna delete?</p>
+                            <div className="d-flex items-center gap-2">
+                                <Button color="danger" onClick={deleteProduct}>
+                                    yes
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    color="gray"
+                                    onClick={() => setShowDeletePrompt(false)}
+                                >
+                                    no
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
-};
+}
 
-export default ProductCard;
+function DeleteProductPrompt({ onConfirm }) {
+    return <></>;
+}

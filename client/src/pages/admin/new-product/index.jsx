@@ -6,10 +6,10 @@ import ProductImagesInput from "@/components/product-images-input";
 import Button from "@/components/shared/button";
 import Input from "@/components/shared/input";
 import Textarea from "@/components/shared/textarea";
-import "./new-product.css";
 import api from "@/api";
 import useAuth from "@/hooks/use-auth";
 import ErrorAlert from "@/components/shared/error-alert";
+import "./new-product.css";
 
 export default function AdminNewProductPage() {
     const { token } = useAuth();

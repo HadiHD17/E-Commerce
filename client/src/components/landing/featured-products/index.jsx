@@ -37,6 +37,7 @@ export default function FeaturedProducts() {
                         key={product.id}
                         img={product.image?.[0]?.image_url}
                         {...product}
+                        isAdmin
                     />
                 ))}
             </div>

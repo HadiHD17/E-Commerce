@@ -19,6 +19,7 @@ import ChatPage from "@/pages/chat";
 import AdminHomePage from "@/pages/admin";
 import AdminLayout from "@/components/layouts/admin-layout";
 import AdminNewProductPage from "@/pages/admin/new-product";
+import AdminEditProductPage from "@/pages/admin/edit-product";
 import LandingPage from "@/pages/landing";
 
 export default function Router() {
@@ -53,6 +54,10 @@ export default function Router() {
                         <Route
                             path="new-product"
                             element={<AdminNewProductPage />}
+                        />
+                        <Route
+                            path="edit-product/:productId"
+                            element={<AdminEditProductPage />}
                         />
                         <Route
                             path="products"
