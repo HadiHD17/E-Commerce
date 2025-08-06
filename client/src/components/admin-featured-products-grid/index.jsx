@@ -37,6 +37,7 @@ export default function AdminFeaturedProductsGrid() {
                     name={prod.name}
                     price={prod.price}
                     stock={prod.stock}
+                    isAdmin
                 />
             ))}
         </div>

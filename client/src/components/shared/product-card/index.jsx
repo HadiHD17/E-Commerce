@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { HeartIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
-import "./product-card.css";
+import { PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
 import api from "@/api";
 import { AxiosError } from "axios";
 import useAuth from "@/hooks/use-auth";
 import DeleteProductPrompt from "@/components/delete-product-prompt";
+import "./product-card.css";
+import cls from "@/utils/classnames";
 
 export default function ProductCard({
     id,
@@ -35,61 +36,67 @@ export default function ProductCard({
 
     return (
         <div className="product-card">
-            <HeartIcon />
-            <Link className="d-contents" to={`/products/${id}`}>
-                <div className="product-img">
-                    <img src={img} alt="" />
-                </div>
-                <div className="product-category">{category}</div>
-                <div className="product-name">{name}</div>
-                <div className="product-price">
-                    {newPrice ? (
-                        <>
-                            <div className="original-price">{price}$</div>
-                            <div className="current-price">{newPrice}$</div>
-                        </>
-                    ) : (
-                        <div className="current-price">{price}$</div>
-                    )}
-                </div>
-            </Link>
-
-            <div className={`product-stock ${stock === 0 ? "out" : ""}`}>
-                {stock === 0 ? "Out of stock" : `${stock} left in stock`}
+            <div className="product-card__img">
+                <img src={img} alt="" />
             </div>
-            {isAdmin && (
+
+            <div className="product-card__content">
+                <Link className="d-contents" to={`/products/${id}`}>
+                    <div className="product-card__category">
+                        {category ?? "Other"}
+                    </div>
+                    <div className="product-card__name">{name}</div>
+                    <div className="product-card__price">
+                        {newPrice ? (
+                            <>
+                                <div className="original-price">{price}$</div>
+                                <div className="current-price">{newPrice}$</div>
+                            </>
+                        ) : (
+                            <div className="current-price">{price}$</div>
+                        )}
+                    </div>
+                </Link>
+
                 <div
-                    className="d-flex items-center gap-2"
-                    style={{ marginTop: 12, position: "relative" }}
+                    className={cls("product-card__stock", stock === 0 && "out")}
                 >
-                    <button
-                        style={{
-                            padding: 10,
-                            border: "2px solid var(--color-danger-700)",
-                        }}
-                        className="d-flex items-center text-danger-700 rounded-md"
-                        onClick={promptDelete}
-                    >
-                        <TrashIcon size={24} />
-                    </button>
-                    <Link
-                        to={`/admin/edit-product/${id}`}
-                        style={{
-                            padding: 10,
-                            border: "2px solid var(--color-gray-700)",
-                        }}
-                        className="d-flex items-center text-gray-700 rounded-md"
-                    >
-                        <PencilSimpleIcon size={24} />
-                    </Link>
-                    {showDeletePrompt && (
-                        <DeleteProductPrompt
-                            onConfirm={deleteProduct}
-                            onCancel={() => setShowDeletePrompt(false)}
-                        />
-                    )}
+                    {stock === 0 ? "Out of stock" : `${stock} left in stock`}
                 </div>
-            )}
+                {isAdmin && (
+                    <div
+                        className="d-flex items-center gap-2"
+                        style={{ marginTop: 12, position: "relative" }}
+                    >
+                        <button
+                            style={{
+                                padding: 10,
+                                border: "2px solid var(--color-danger-700)",
+                            }}
+                            className="d-flex items-center text-danger-700 rounded-md"
+                            onClick={promptDelete}
+                        >
+                            <TrashIcon size={24} />
+                        </button>
+                        <Link
+                            to={`/admin/edit-product/${id}`}
+                            style={{
+                                padding: 10,
+                                border: "2px solid var(--color-gray-700)",
+                            }}
+                            className="d-flex items-center text-gray-700 rounded-md"
+                        >
+                            <PencilSimpleIcon size={24} />
+                        </Link>
+                        {showDeletePrompt && (
+                            <DeleteProductPrompt
+                                onConfirm={deleteProduct}
+                                onCancel={() => setShowDeletePrompt(false)}
+                            />
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

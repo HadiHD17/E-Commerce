@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "@/components/shared/product-card";
-import "./featured-products.css";
 import api from "@/api";
 import { Link } from "react-router-dom";
+import "./featured-products.css";
 
 export default function FeaturedProducts() {
     const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -14,7 +14,6 @@ export default function FeaturedProducts() {
                 },
             });
             setFeaturedProducts(res.data.payload);
-            console.log("Featured products loaded:", res.data.payload);
         } catch (error) {
             console.error("Error fetching featured products:", error);
         }
@@ -22,12 +21,13 @@ export default function FeaturedProducts() {
     useEffect(() => {
         loadFeaturedProducts();
     }, []);
+
     return (
-        <div className="featured-section">
+        <section className="container home-page-section featured-section">
             <div className="featured-products-header">
-                <h2>Featured Products</h2>
-                <Link to="/search">
-                    <h4>More Products</h4>
+                <h2 className="fs-h2">Featured Products</h2>
+                <Link to="/search" className="fs-button">
+                    More Products →
                 </Link>
             </div>
 
@@ -37,10 +37,16 @@ export default function FeaturedProducts() {
                         key={product.id}
                         img={product.image?.[0]?.image_url}
                         {...product}
-                        isAdmin
+                    />
+                ))}
+                {featuredProducts.map(product => (
+                    <ProductCard
+                        key={product.id}
+                        img={product.image?.[0]?.image_url}
+                        {...product}
                     />
                 ))}
             </div>
-        </div>
+        </section>
     );
 }

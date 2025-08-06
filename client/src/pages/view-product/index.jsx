@@ -106,7 +106,7 @@ export default function ProductDetailsPage() {
     return (
         <div className="product-container">
             <div className="product-grid">
-                <div className="product-images">
+                <div className="product-details__images">
                     {mainImage ? (
                         <img
                             src={mainImage}
@@ -132,11 +132,13 @@ export default function ProductDetailsPage() {
                     </div>
                 </div>
 
-                <div className="product-info">
-                    <h2 className="product-title">{product.name}</h2>
+                <div className="product-details__info">
+                    <h2 className="product-details__title">{product.name}</h2>
                     <p className="product-category">{product.category}</p>
                     {product.delivery && (
-                        <p className="product-delivery">{product.delivery}</p>
+                        <p className="product-details__delivery">
+                            {product.delivery}
+                        </p>
                     )}
 
                     <div className="quantity-control">
@@ -155,7 +157,7 @@ export default function ProductDetailsPage() {
                         </button>
                     </div>
 
-                    <h3 className="product-price">${product.price}</h3>
+                    <h3 className="product-details__price">${product.price}</h3>
                     <button
                         className="add-to-cart"
                         onClick={handleAddToCart}
@@ -170,7 +172,7 @@ export default function ProductDetailsPage() {
                 </div>
             </div>
 
-            <div className="product-description">
+            <div className="product-details__description">
                 <h4>Description</h4>
                 <p>{product.description}</p>
             </div>

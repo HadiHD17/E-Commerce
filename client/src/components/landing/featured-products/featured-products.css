@@ -1,6 +1,4 @@
 .featured-section {
-    margin: 2rem 4rem;
-    padding-top: 3rem;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -9,16 +7,20 @@
 .featured-products-header {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
 }
 
 .featured-products-header h4 {
     text-decoration: underline;
 }
+.featured-products-header a {
+    color: inherit;
+}
 .featured-products-cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    justify-content: start;
+    align-content: start;
+    gap: var(--spacing-4);
 }
