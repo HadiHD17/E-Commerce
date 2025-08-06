@@ -43,12 +43,10 @@ export default function ProductsSearchPage() {
         dispatch(productsSlice.actions.setLoading(true));
         dispatch(productsSlice.actions.setError(null));
 
-        // Ensure categories are available first
         await getCategories();
 
         const token = localStorage.getItem("auth-token");
         if (!token) {
-            // No token → treat as unauthenticated (backend requires auth)
             dispatch(
                 productsSlice.actions.setError(
                     "You must be logged in to view products.",
@@ -79,7 +77,6 @@ export default function ProductsSearchPage() {
                 ? res.data.payload
                 : [];
 
-            // Sort numerically by price (in case price is a string)
             if (filters.sort === "asc") {
                 items.sort((a, b) => Number(a.price) - Number(b.price));
             } else if (filters.sort === "desc") {
@@ -100,7 +97,6 @@ export default function ProductsSearchPage() {
 
     useEffect(() => {
         fetchProducts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filters, searchQuery, currentPage]);
 
     const totalPages = useMemo(
@@ -119,7 +115,7 @@ export default function ProductsSearchPage() {
             <div className="products-search-container">
                 <div className="products-sidebar">
                     <FilterSidebar
-                        categories={allCategories} // <-- now provided
+                        categories={allCategories}
                         filters={filters}
                         setFilters={newFilters =>
                             dispatch(
@@ -148,7 +144,6 @@ export default function ProductsSearchPage() {
                         paginatedProducts.map(product => (
                             <ProductCard
                                 key={product.id}
-                                // first image url if present
                                 img={product.image?.[0]?.image_url}
                                 {...product}
                             />

@@ -13,10 +13,6 @@ export default function FilterSidebar() {
 
     const selectedCategories = filters.categories || [];
 
-    // Normalize categories to { key, label, value }
-    // Supports:
-    // - ["Books", "Electronics"]
-    // - [{ id: 1, name: "Books" }, { id: 2, name: "Electronics" }]
     const normalizedCategories = useMemo(() => {
         return (allCategories || []).map((cat, idx) => {
             if (typeof cat === "string") {
@@ -26,21 +22,17 @@ export default function FilterSidebar() {
             return {
                 key: cat?.id ?? label ?? idx,
                 label,
-                value: label, // we filter by category name string
+                value: label,
             };
         });
     }, [allCategories]);
 
     const handleCategoryChange = value => {
-        // toggleCategory expects a string category in your slice
         dispatch(productsSlice.actions.toggleCategory(value));
-        // Optionally, reset to page 1 when filters change:
-        // dispatch(productsSlice.actions.setCurrentPage(1));
     };
 
     const handleSortChange = sortOrder => {
         dispatch(productsSlice.actions.setSortOrder(sortOrder));
-        // dispatch(productsSlice.actions.setCurrentPage(1));
     };
 
     const isChecked = value => selectedCategories.includes(value);
