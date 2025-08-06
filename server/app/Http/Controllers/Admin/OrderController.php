@@ -10,6 +10,26 @@ use Exception;
 
 class OrderController extends Controller
 {
+    public function getAllOrders(Request $request)
+    {
+        try {
+            $filters = [
+                'status' => $request->get('status'),
+                'start_date' => $request->get('start_date'),
+                'end_date' => $request->get('end_date'),
+                'user_id' => $request->get('user_id'),
+                'order_id' => $request->get('order_id'),
+                'per_page' => $request->get('per_page', 15),
+                'page' => $request->get('page', 1),
+            ];
+
+            $orders = OrderService::getAllOrders($filters);
+            return $this->responseJSON($orders);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to retrieve orders", 500);
+        }
+    }
+
     public function getTodaysOrders()
     {
         try {

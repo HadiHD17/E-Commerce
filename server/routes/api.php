@@ -61,6 +61,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post("add_update_product_image/{id?}", [AdminProductImageControler::class, "addOrUpdateProductImage"]);
 
             // Admin Order Routes
+            Route::get("orders", [AdminOrderController::class, "getAllOrders"]);
             Route::get("todays_orders", [AdminOrderController::class, "getTodaysOrders"]);
             Route::get("todays_revenue", [AdminOrderController::class, "getTodaysRevenue"]);
             Route::get("revenue", [AdminOrderController::class, "getRevenue"]);

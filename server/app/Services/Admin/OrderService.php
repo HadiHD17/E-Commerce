@@ -11,6 +11,45 @@ use Illuminate\Support\Facades\DB;
 class OrderService
 {
     /**
+     * Get all orders with pagination and filtering
+     */
+    public static function getAllOrders($filters = [])
+    {
+        $query = Order::with(['user', 'orderItems.product']);
+
+        // Filter by status
+        if (isset($filters['status']) && $filters['status']) {
+            $query->where('status', $filters['status']);
+        }
+
+        // Filter by date range
+        if (isset($filters['start_date']) && $filters['start_date']) {
+            $query->whereDate('created_at', '>=', $filters['start_date']);
+        }
+
+        if (isset($filters['end_date']) && $filters['end_date']) {
+            $query->whereDate('created_at', '<=', $filters['end_date']);
+        }
+
+        // Filter by user ID
+        if (isset($filters['user_id']) && $filters['user_id']) {
+            $query->where('user_id', $filters['user_id']);
+        }
+
+        // Search by order ID
+        if (isset($filters['order_id']) && $filters['order_id']) {
+            $query->where('id', $filters['order_id']);
+        }
+
+        // Pagination
+        $perPage = $filters['per_page'] ?? 15;
+        $page = $filters['page'] ?? 1;
+
+        return $query->orderBy('created_at', 'desc')
+                    ->paginate($perPage, ['*'], 'page', $page);
+    }
+
+    /**
      * Get today's orders
      */
     public static function getTodaysOrders()
