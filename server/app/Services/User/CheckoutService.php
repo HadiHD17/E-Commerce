@@ -7,12 +7,14 @@ use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CheckoutService
 {
-    static function processCheckout(int $userId)
+    static function processCheckout()
     {
+        $userId = Auth::id();
         return DB::transaction(function () use ($userId) {
 
             $cartItems = CartItem::where('user_id', $userId)->get();

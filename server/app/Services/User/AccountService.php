@@ -60,7 +60,7 @@ class AccountService
         $user = Auth::user();
 
         $query = Order::where('user_id', $user->id)
-            ->with(['orderItems.product']);
+            ->with(['orderItems.product.image']);
 
         if ($status) {
             $query->where('status', $status);

@@ -8,16 +8,10 @@ use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
-    public function processCheckout(Request $request)
+    public function processCheckout()
     {
-        $userId = $request->input('user_id');
-
-        if (!$userId) {
-            return $this->responseJSON(null, "User ID is required", 400);
-        }
-
         try {
-            $order = CheckoutService::processCheckout($userId);
+            $order = CheckoutService::processCheckout();
             return $this->responseJSON($order);
         } catch (\Exception $e) {
             return $this->responseJSON(null, $e->getMessage(), 400);
