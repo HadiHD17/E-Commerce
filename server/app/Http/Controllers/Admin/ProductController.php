@@ -93,4 +93,69 @@ class ProductController extends Controller
             return $this->responseJSON(null, "Server error while deleting product", 500);
         }
     }
+
+    public function getProductsByCategory($category)
+    {
+        try {
+            $products = ProductService::getProductsByCategory($category);
+            return $this->responseJSON($products);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to retrieve products by category", 500);
+        }
+    }
+
+    public function getProductsHighToLow()
+    {
+        try {
+            $products = ProductService::getProductsHighToLow();
+            return $this->responseJSON($products);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to retrieve products", 500);
+        }
+    }
+
+    public function getProductsLowToHigh()
+    {
+        try {
+            $products = ProductService::getProductsLowToHigh();
+            return $this->responseJSON($products);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to retrieve products", 500);
+        }
+    }
+
+    public function searchProducts(Request $request)
+    {
+        try {
+            $searchTerm = $request->get('search');
+            $products = ProductService::searchProducts($searchTerm);
+            return $this->responseJSON($products);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to search products", 500);
+        }
+    }
+
+    public function getUniqueCategories()
+    {
+        try {
+            $categories = ProductService::getUniqueCategories();
+            return $this->responseJSON($categories);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to retrieve categories", 500);
+        }
+    }
+
+    public function getProductsByPrice($filter)
+    {
+        try {
+            if ($filter === 'high-to-low') {
+                $products = ProductService::getProductsHighToLow();
+            } else {
+                $products = ProductService::getProductsLowToHigh();
+            }
+            return $this->responseJSON($products);
+        } catch (Exception $e) {
+            return $this->responseJSON(null, "Failed to retrieve products", 500);
+        }
+    }
 }
