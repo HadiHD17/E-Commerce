@@ -41,7 +41,7 @@ export default function MyOrdersPage() {
                     productName: item.product.name,
                     quantity: item.quantity,
                     price: item.price_at_time,
-                    // image: item.product.image || "/images/products/default.jpg", // if image exists
+                    image: item.product.image[0].image_url,
                     status: order.status,
                 })),
             );
