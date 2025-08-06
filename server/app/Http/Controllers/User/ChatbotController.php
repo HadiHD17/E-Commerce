@@ -14,8 +14,7 @@ class ChatbotController extends Controller
             'message' => 'required|string|max:500',
         ]);
 
-        $reply = $ai->ask($request->input('message'));
-
+        $reply = $ai->ask($request->input('message'), $request->user());
 
         return $this->responseJSON($reply);
     }

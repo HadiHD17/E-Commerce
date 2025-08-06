@@ -31,4 +31,9 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(\App\Models\ProductNotification::class);
+    }
 }
