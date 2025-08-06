@@ -1,4 +1,5 @@
 .cart {
+    margin-block: var(--spacing-12);
     display: flex;
     flex-direction: column;
 

@@ -78,13 +78,6 @@ export default function Navbar() {
                 <div className="right">
                     {isLoggedIn ? (
                         <>
-                            <Link
-                                to="/account/my-orders"
-                                className="navbar__link"
-                            >
-                                My Orders
-                            </Link>
-                            
                             <Link to="/cart" className="text-gray-700">
                                 <ShoppingCartSimpleIcon size={32} />
                             </Link>

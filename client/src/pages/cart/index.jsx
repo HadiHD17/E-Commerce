@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import "./cart.css";
-import Button from "@/components/shared/button";
-import CartItem from "@/components/cart-item";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setCart, clearCart } from "@/store/slices/cart-slice";
 import api from "@/api";
+import CartItem from "@/components/cart-item";
+import Button from "@/components/shared/button";
+import { clearCart, setCart } from "@/store/slices/cart-slice";
+import "./cart.css";
 
 export default function CartPage() {
     const navigate = useNavigate();

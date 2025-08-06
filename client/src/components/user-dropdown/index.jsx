@@ -39,7 +39,7 @@ export default function UserDropdown() {
                 <UserIcon size={32} />
             </button>
             {isOpen && (
-                <div className="user-dropdown__menu border-subtle bg-gray-100 rounded-md shadow-lg">
+                <div className="user-dropdown__menu border-subtle bg-white rounded-md shadow-lg">
                     {userLinks.map(({ text, href }) => (
                         <Link
                             key={text}
