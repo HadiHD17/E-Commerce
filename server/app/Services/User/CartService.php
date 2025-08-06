@@ -3,7 +3,7 @@
 namespace App\Services\User;
 
 use App\Models\CartItem;
-use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,13 +66,5 @@ class CartService
     static function clearCart($userId)
     {
         return CartItem::where('user_id', $userId)->delete();
-    }
-}
-
-class UserService
-{
-    static function getUserById($userId)
-    {
-        return User::find($userId);
     }
 }
