@@ -18,10 +18,10 @@ export default function FiltersPanel() {
                     <input type="checkbox" /> Smartphones
                 </label>
                 <label>
-                    <input type="checkbox" checked /> Computers
+                    <input type="checkbox" defaultChecked /> Computers
                 </label>
                 <label>
-                    <input type="checkbox" checked /> Gadgets
+                    <input type="checkbox" defaultChecked /> Gadgets
                 </label>
                 <label>
                     <input type="checkbox" /> Accessories
@@ -36,7 +36,7 @@ export default function FiltersPanel() {
             <div className="filter-section">
                 <h5>Stock Status</h5>
                 <label>
-                    <input type="checkbox" checked /> In-stock
+                    <input type="checkbox" defaultChecked /> In-stock
                 </label>
                 <label>
                     <input type="checkbox" /> Out of stock
@@ -49,7 +49,8 @@ export default function FiltersPanel() {
                     <input type="radio" name="sort" /> Low to high
                 </label>
                 <label>
-                    <input type="radio" name="sort" checked /> High to low
+                    <input type="radio" name="sort" defaultChecked /> High to
+                    low
                 </label>
             </div>
         </div>

@@ -1,14 +1,10 @@
 {
     "compilerOptions": {
+        "typeRoots": ["node_modules/@types"],
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"]
-        },
-        "types": [],
-        "typeRoots": ["node_modules/@types"]
-    },
-    "typeAcquisition": {
-        "enable": true
+        }
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "**/node_modules/*"]

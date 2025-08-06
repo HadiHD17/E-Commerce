@@ -1,40 +1,14 @@
-import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
-import api from "@/api";
-import ProductCard from "@/components/shared/product-card";
 import ErrorAlert from "@/components/shared/error-alert";
-import useAuth from "@/hooks/use-auth";
+import ProductCard from "@/components/shared/product-card";
+import { useFetchDataWithAuth } from "@/hooks/use-fetch-data-with-auth";
 import "./admin-featured-products-grid.css";
 
 export default function AdminFeaturedProductsGrid() {
-    const { token } = useAuth();
-    const [products, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        async function fetchProducts() {
-            try {
-                setIsLoading(true);
-
-                const { data } = await api.get("/common/featured_products", {
-                    headers: {
-                        Authorization: `bearer ${token}`,
-                    },
-                });
-                setProducts(data.payload);
-            } catch (err) {
-                if (err instanceof AxiosError) {
-                    setError(err.response.data);
-                } else {
-                    setError("An unknown error occurred");
-                }
-            } finally {
-                setIsLoading(false);
-            }
-        }
-        fetchProducts();
-    }, [token]);
+    const {
+        data: products,
+        isLoading,
+        error,
+    } = useFetchDataWithAuth("/common/featured_products", []);
 
     if (isLoading) {
         return (
@@ -59,7 +33,7 @@ export default function AdminFeaturedProductsGrid() {
                     key={prod.id}
                     id={prod.id}
                     category={prod.category}
-                    img={prod.image[0].image_url}
+                    img={prod.image[0]?.image_url ?? "https://placehold.co/200"}
                     name={prod.name}
                     price={prod.price}
                     stock={prod.stock}
