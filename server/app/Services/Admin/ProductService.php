@@ -20,6 +20,47 @@ class ProductService
         });
     }
 
+    static function addOrUpdateProduct($data, $product)
+    {
+        try {
+            if (empty($data['name']) || empty($data['price']) || !isset($data['stock'])) {
+                return null;
+            }
+
+            $product->name = $data['name'];
+            $product->description = $data['description'] ?? null;
+            $product->price = $data['price'];
+            $product->stock = $data['stock'];
+            $product->category = $data['category'] ?? null;
+            $product->save();
+
+            self::clearProductCache();
+
+            return $product->load('image');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    static function deleteProduct($id)
+    {
+        try {
+            $product = Product::find($id);
+            
+            if (!$product) {
+                return false;
+            }
+
+            $product->delete();
+
+            self::clearProductCache();
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     static function getProductsByCategory($category)
     {
         return \Cache::remember("admin.products.category.{$category}", 3600, function () use ($category) {
