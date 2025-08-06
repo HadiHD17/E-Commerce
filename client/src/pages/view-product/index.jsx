@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import "./productdetails.css";
-import { productsSlice } from "@/store/slices/products-slice";
+import { useParams } from "react-router-dom";
+import { PlusIcon, MinusIcon } from "@phosphor-icons/react";
 import api from "@/api";
+import { productsSlice } from "@/store/slices/products-slice";
+import "./productdetails.css";
+import Button from "@/components/shared/button";
 
 export default function ProductDetailsPage() {
     const { id } = useParams();
@@ -104,8 +105,8 @@ export default function ProductDetailsPage() {
         .filter(Boolean);
 
     return (
-        <div className="product-container">
-            <div className="product-grid">
+        <div className="product-container container">
+            <div className="product-details__grid">
                 <div className="product-details__images">
                     {mainImage ? (
                         <img
@@ -132,48 +133,57 @@ export default function ProductDetailsPage() {
                     </div>
                 </div>
 
-                <div className="product-details__info">
-                    <h2 className="product-details__title">{product.name}</h2>
-                    <p className="product-category">{product.category}</p>
-                    {product.delivery && (
-                        <p className="product-details__delivery">
-                            {product.delivery}
+                <div className="product-details__info bg-gray-100 border-subtle shadow-2xs rounded-lg">
+                    <div className="product-details__hgroup">
+                        <h2 className="product-details__name fs-h2">
+                            {product.name}
+                        </h2>
+                        <p className="product-details__category fs-caption fs-caption fw-semibold border-subtle rounded-full">
+                            {product.category}
                         </p>
-                    )}
+                        {product.delivery && (
+                            <p className="product-details__delivery">
+                                {product.delivery}
+                            </p>
+                        )}
+                    </div>
+
+                    <p className="product-details__price fs-h2">
+                        ${product.price}
+                    </p>
 
                     <div className="quantity-control">
                         <button
+                            className="quantity-control__button d-inline-flex justify-center bg-gray-700 text-white rounded-base"
                             onClick={decrement}
                             aria-label="Decrease quantity"
                         >
-                            -
+                            <MinusIcon />
                         </button>
-                        <span>{quantity}</span>
+                        <span className="fw-bold">{quantity}</span>
                         <button
+                            className="quantity-control__button d-inline-flex justify-center bg-gray-700 text-white rounded-base"
                             onClick={increment}
                             aria-label="Increase quantity"
                         >
-                            +
+                            <PlusIcon />
                         </button>
                     </div>
 
-                    <h3 className="product-details__price">${product.price}</h3>
-                    <button
-                        className="add-to-cart"
+                    <Button
                         onClick={handleAddToCart}
+                        color="brand"
                         disabled={adding}
                     >
                         {adding ? "Adding..." : "Add to cart"}
-                    </button>
-                    {addError && <div className="error mt-2">{addError}</div>}
-                    {addSuccess && (
-                        <div className="success mt-2">{addSuccess}</div>
-                    )}
+                    </Button>
+                    {addError && <div className="error">{addError}</div>}
+                    {addSuccess && <div className="success">{addSuccess}</div>}
                 </div>
             </div>
 
             <div className="product-details__description">
-                <h4>Description</h4>
+                <h2 className="fs-h2">Description</h2>
                 <p>{product.description}</p>
             </div>
         </div>

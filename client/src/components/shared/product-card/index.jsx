@@ -5,8 +5,8 @@ import api from "@/api";
 import { AxiosError } from "axios";
 import useAuth from "@/hooks/use-auth";
 import DeleteProductPrompt from "@/components/delete-product-prompt";
-import "./product-card.css";
 import cls from "@/utils/classnames";
+import "./product-card.css";
 
 export default function ProductCard({
     id,
@@ -42,10 +42,10 @@ export default function ProductCard({
 
             <div className="product-card__content">
                 <Link className="d-contents" to={`/products/${id}`}>
+                    <div className="product-card__name">{name}</div>
                     <div className="product-card__category">
                         {category ?? "Other"}
                     </div>
-                    <div className="product-card__name">{name}</div>
                     <div className="product-card__price">
                         {newPrice ? (
                             <>

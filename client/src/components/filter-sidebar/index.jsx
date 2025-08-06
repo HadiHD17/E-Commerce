@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import "./filtersidebar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { productsSlice } from "@/store/slices/products-slice";
+import "./filtersidebar.css";
 
 export default function FilterSidebar() {
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export default function FilterSidebar() {
     const isChecked = value => selectedCategories.includes(value);
 
     return (
-        <aside className="filter-sidebar">
+        <aside className="filter-sidebar bg-gray-100 border-subtle shadow-2xs rounded-md">
             <section>
                 <h3>Categories</h3>
 
