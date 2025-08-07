@@ -139,7 +139,7 @@ export default function ProductDetailsPage() {
                             {product.name}
                         </h2>
                         <p className="product-details__category fs-caption fs-caption fw-semibold border-subtle rounded-full">
-                            {product.category}
+                            {product.category ?? "Other"}
                         </p>
                         {product.delivery && (
                             <p className="product-details__delivery">

@@ -3,7 +3,7 @@ import "./FiltersPanel.css";
 
 export default function FiltersPanel() {
     return (
-        <div className="filters-panel">
+        <div className="filters-panel bg-gray-100 rounded-lg border-subtle shadow-2xs">
             <div className="filters-header">
                 <h4>Filters</h4>
                 <button className="clear-btn">Clear filters</button>

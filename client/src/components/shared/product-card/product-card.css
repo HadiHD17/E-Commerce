@@ -97,3 +97,18 @@
 .product-card__stock.out {
     color: var(--text-danger-500);
 }
+
+.product-card__admin-btns {
+    margin-top: var(--spacing-3);
+    position: relative;
+}
+
+.product-card__admin-btn {
+    padding: 8px;
+}
+.product-card__admin-btn.edit {
+    border: 2px solid var(--color-gray-700);
+}
+.product-card__admin-btn.delete {
+    border: 2px solid var(--color-danger-700);
+}

@@ -37,7 +37,7 @@ export default function AdminOrdersPage() {
 
     return (
         <div className="admin-container">
-            <div className="admin-main">
+            <div className="admin-orders-main">
                 <div className="orders-content">
                     <input
                         type="text"

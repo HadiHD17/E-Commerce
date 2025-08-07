@@ -2,14 +2,11 @@
 .admin-container {
     display: flex;
     min-height: 100vh;
-    background-color: #f9fafb;
 }
 
 /* Main section (right of sidebar) */
 .admin-main {
     flex: 1;
-    padding: 20px 30px;
-    overflow-y: auto;
 }
 
 /* Products container */

@@ -64,27 +64,16 @@ export default function ProductCard({
                     {stock === 0 ? "Out of stock" : `${stock} left in stock`}
                 </div>
                 {isAdmin && (
-                    <div
-                        className="d-flex items-center gap-2"
-                        style={{ marginTop: 12, position: "relative" }}
-                    >
+                    <div className="product-card__admin-btns d-flex items-center gap-2">
                         <button
-                            style={{
-                                padding: 10,
-                                border: "2px solid var(--color-danger-700)",
-                            }}
-                            className="d-flex items-center text-danger-700 rounded-md"
+                            className="product-card__admin-btn delete d-flex items-center text-danger-700 rounded-md"
                             onClick={promptDelete}
                         >
                             <TrashIcon size={24} />
                         </button>
                         <Link
                             to={`/admin/edit-product/${id}`}
-                            style={{
-                                padding: 10,
-                                border: "2px solid var(--color-gray-700)",
-                            }}
-                            className="d-flex items-center text-gray-700 rounded-md"
+                            className="product-card__admin-btn edit d-flex items-center text-gray-700 rounded-md"
                         >
                             <PencilSimpleIcon size={24} />
                         </Link>
