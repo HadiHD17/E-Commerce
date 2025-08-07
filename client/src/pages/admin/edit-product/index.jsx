@@ -52,6 +52,7 @@ function EditForm({ initialData: init = {} }) {
     const [category, setCategory] = useState(init.category);
     const [stock, setStock] = useState(init.stock);
     const [price, setPrice] = useState(init.price);
+    const [images, setImages] = useState([]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -170,7 +171,7 @@ function EditForm({ initialData: init = {} }) {
                         onChange={e => setPrice(e.target.value)}
                         required
                     />
-                    <ProductImagesInput />
+                    <ProductImagesInput images={images} onChange={setImages} />
                 </fieldset>
             </section>
 
