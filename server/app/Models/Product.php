@@ -19,5 +19,21 @@ class Product extends Model
         'description',
         'price',
         'stock',
+        'category',
     ];
+
+
+    public function image()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+    public function orderitems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(\App\Models\ProductNotification::class);
+    }
 }

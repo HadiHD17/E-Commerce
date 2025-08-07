@@ -1,0 +1,19 @@
+.account-settings {
+    display: flex;
+    flex-direction: column;
+    column-gap: var(--spacing-8);
+    row-gap: var(--spacing-12);
+}
+@media (min-width: 960px) {
+    .account-settings {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.account-settings__section {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--spacing-8);
+}

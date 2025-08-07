@@ -1,0 +1,35 @@
+.filter-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+    width: 240px;
+    padding: 1.5rem 1rem;
+}
+
+.filter-sidebar h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.filter-sidebar label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.filter-sidebar input[type="checkbox"],
+.filter-sidebar input[type="radio"] {
+    accent-color: #2563eb; /* Use your brand blue if set in colors.css */
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 900px) {
+    .filter-sidebar {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+}

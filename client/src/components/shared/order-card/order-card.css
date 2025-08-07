@@ -1,0 +1,161 @@
+.order-card {
+    display: flex;
+    background: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.5rem;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.order-left img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.order-middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.order-middle h4 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111;
+}
+
+.order-middle p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.order-middle .price {
+    font-weight: 700;
+    color: #0a74da;
+    margin-top: 0.4rem;
+}
+
+.order-middle .address {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 0.6rem;
+    font-style: italic;
+}
+
+.order-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    min-width: 130px;
+}
+
+.order-id {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.status {
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 14px;
+    user-select: none;
+    min-width: 110px;
+    text-align: center;
+}
+
+/* STATUS: Pending */
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* STATUS: Shipped */
+.status-shipped {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+/* STATUS: Delivered */
+.status-delivered {
+    background-color: #d4f4dd;
+    color: #22863a;
+}
+
+/* STATUS: Paid */
+.status-paid {
+    background-color: #e2f0cb;
+    color: #3c763d;
+}
+
+/* STATUS: Cancelled */
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* STATUS: Packed */
+.status-packed {
+    background-color: #d6d8db;
+    color: #383d41;
+}
+
+/* Default/Fallback */
+.status-default {
+    background-color: #ececec;
+    color: #6c757d;
+}
+
+.view-btn {
+    margin-top: auto;
+    background-color: transparent;
+    border: 1.5px solid #1f1f1f; /* dark border */
+    color: #1f1f1f; /* dark text */
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.4rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+    box-shadow: none;
+}
+
+.view-btn:hover {
+    background-color: #1f1f1f; /* fill with black */
+    color: #fff; /* white text */
+    box-shadow: 0 4px 10px rgba(31, 31, 31, 0.4); /* subtle shadow */
+    text-decoration: none;
+}
+
+/* Responsive for order card */
+@media (max-width: 768px) {
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-left img {
+        width: 100%;
+        height: auto;
+    }
+
+    .order-right {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 1rem;
+        min-width: auto;
+    }
+}

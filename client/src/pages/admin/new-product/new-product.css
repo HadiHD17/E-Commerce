@@ -1,0 +1,33 @@
+.new-product {
+}
+
+.new-product__form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    column-gap: var(--spacing-8);
+    row-gap: var(--spacing-12);
+}
+@media (min-width: 1024px) {
+    .new-product__form-wrapper {
+        flex-direction: row;
+    }
+}
+
+.margin-top-some {
+    margin-top: var(--spacing-16);
+}
+
+.product-page-heading {
+    margin-bottom: var(--spacing-8);
+}
+
+.select-field select {
+    width: 100%;
+    padding: 11px;
+    border: 2px solid var(--color-gray-300);
+}
+.select-field label {
+    display: block;
+    margin-bottom: var(--spacing-1\.5);
+}

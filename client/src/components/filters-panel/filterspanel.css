@@ -1,0 +1,37 @@
+.filters-panel {
+    position: sticky;
+    top: 0;
+
+    padding: 1rem;
+    width: 250px;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+.filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.clear-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.filter-section {
+    margin-top: 1.5rem;
+}
+
+.filter-section h5 {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.filter-section label {
+    display: block;
+    margin: 0.4rem 0;
+    font-size: 0.85rem;
+}

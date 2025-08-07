@@ -1,0 +1,9 @@
+.error-alert {
+    color: var(--color-danger-700);
+    background-color: var(--color-danger-100);
+
+    border: 1px solid var(--color-danger-300);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-4);
+    margin-block: var(--spacing-4);
+}

@@ -1,0 +1,152 @@
+/*! Credits: modern-normalize v3.0.1 | https://github.com/sindresorhus/modern-normalize */
+
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+    box-sizing: border-box;
+}
+
+html {
+    /* Improve consistency of default fonts in all browsers. */
+    font-family:
+        "Inter", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji";
+
+    line-height: 1.5; /* Correct the line height in all browsers. */
+    -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS. */
+}
+
+/*
+Text-level semantics
+====================
+*/
+
+h1,
+h2,
+h3,
+h4 {
+    line-height: 1.1;
+}
+
+button,
+input,
+label,
+a {
+    line-height: 1;
+}
+
+/**
+Add the correct font weight in Chrome and Safari.
+*/
+strong {
+    font-weight: bolder;
+}
+
+/**
+1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+2. Correct the odd 'em' font sizing in all browsers.
+*/
+code,
+kbd,
+samp,
+pre {
+    font-family:
+        ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo,
+        monospace; /* 1 */
+    font-size: 1em; /* 2 */
+}
+
+/**
+Add the correct font size in all browsers.
+*/
+small {
+    font-size: 80%;
+}
+
+/**
+Prevent 'sub' and 'sup' elements from affecting the line height in all browsers.
+*/
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+/*
+Forms
+=====
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    /* Change the font styles in all browsers. */
+    font-family: inherit;
+    font-size: 100%;
+
+    /* Inherit fonts for inputs and buttons */
+    background-color: inherit;
+    color: inherit;
+}
+
+/**
+Correct the inability to style clickable types in iOS and Safari 
++ Add a better default cursor style
+*/
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+}
+:is(button, [type="button"], [type="reset"], [type="submit"]):enabled {
+    cursor: pointer;
+}
+
+/**
+Remove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.
+*/
+legend {
+    padding: 0;
+}
+
+/**
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+    height: auto;
+}
+
+/**
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+[type="search"] {
+    -webkit-appearance: textfield; /* 1 */
+    outline-offset: -2px; /* 2 */
+}
+
+/**
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+::-webkit-search-decoration {
+    -webkit-appearance: none;
+}

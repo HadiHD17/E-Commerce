@@ -1,0 +1,19 @@
+.featured-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.featured-products-header {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.featured-products-header h4 {
+    text-decoration: underline;
+}
+.featured-products-header a {
+    color: inherit;
+}

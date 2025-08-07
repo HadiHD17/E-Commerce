@@ -1,0 +1,26 @@
+.products-search-container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 1rem;
+    min-height: 70vh;
+}
+
+.products-sidebar {
+    min-width: 220px;
+}
+
+.products-search__list {
+    flex: 1;
+}
+
+@media (max-width: 900px) {
+    .products-search-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 0.5rem;
+    }
+    .products-sidebar {
+        min-width: 0;
+        width: 100%;
+    }
+}

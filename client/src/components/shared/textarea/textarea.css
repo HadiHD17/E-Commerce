@@ -1,0 +1,53 @@
+.textarea {
+}
+
+.textarea__label {
+    display: block;
+    margin-bottom: var(--spacing-1\.5);
+}
+
+.textarea__control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: var(--shadow-2xs);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+}
+.textarea__control:focus-within {
+    border-color: var(--color-brand-700);
+}
+.textarea--error .textarea__control {
+    border-color: var(--color-danger-700);
+    color: var(--color-danger-700);
+}
+.textarea--readonly .textarea__control {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.textarea__field {
+    resize: vertical;
+    outline: none;
+
+    min-height: 4rem;
+    max-height: 36rem;
+    width: 100%;
+
+    scroll-padding-block: 1em;
+    padding: var(--spacing-3);
+}
+
+.textarea__password-toggle {
+    font-size: 1.25rem;
+    height: 1.25rem;
+
+    margin-inline-start: var(--spacing-2);
+}
+
+.textarea__error {
+    margin-top: var(--spacing-1);
+    text-align: start;
+    color: var(--color-danger-700);
+}

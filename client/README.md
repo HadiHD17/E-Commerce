@@ -1,12 +1,33 @@
-# React + Vite
+# E-commerce (Volta) Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Powered by React + Vite.
 
-Currently, two official plugins are available:
+### Naming Conventions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Folders and files**: **ALL files MUST** use `kebab-case` (e.g.,
+  `example-component.jsx`, `user-slice.js`, `use-foo.js`).
+- **Components**: Each component folder must contain three files:
+    - `index.jsx` → component entry point
+    - `<component-name>.css` → styles scoped to the component
 
-## Expanding the ESLint configuration
+### Structure Rules
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Assets**: Assets that you'll **IMPORT in your JS code** (e.g. images and
+  fonts) should be located in `src/assets/`.
+    - Otherwise, add them to the `public/` folder
+- **Hooks**: Located in `src/hooks/`.
+- **Context Providers**: Located in `src/context/`.
+- **General styles, utilities, and resets**: In `src/styles/`.
+- **Helper functions**: In `src/utils/`.
+- **API helpers & initiators**: In `src/api/`.
+- **Redux store & slices**: In `src/store/`.
+
+### Import Aliasing
+
+- Use `@/` alias for imports within `src/`:
+
+```js
+import ExampleComponent from "@/components/example-component";
+import useCustomHook from "@/hooks/use-custom-hook";
+import { fetchData } from "@/api/api";
+```
