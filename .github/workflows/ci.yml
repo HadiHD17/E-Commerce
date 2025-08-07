@@ -1,4 +1,4 @@
-name: E-Commerce CI FSE
+name: Laravel Docker CI
 
 on:
   push:
@@ -6,44 +6,37 @@ on:
   pull_request:
     branches: [main]
 
-jobs: 
-  ci:
+jobs:
+  laravel-tests:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout Code 
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up PHP 
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-
-      - name: Install Composer Dependencies
-        working-directory: ./server
-        run: composer install --no-interaction --no-progress --optimize-autoloader
-
-      - name: Prepare Laravel
+      - name: Navigate to server and start Docker containers
         working-directory: ./server
         run: |
           cp .env.example .env
-          php artisan key:generate
+          docker compose up -d --build
 
-      - name: Run Laravel Tests
+      - name: Install dependencies inside container
         working-directory: ./server
-        run: php artisan test
+        run: |
+          docker compose exec -T app composer install --no-interaction --no-progress --optimize-autoloader
 
- # cd:
-   # needs: ci
-   # runs-on: ubuntu-latest
+      - name: Generate app key & JWT secret
+        working-directory: ./server
+        run: |
+          docker compose exec -T app php artisan key:generate
+          docker compose exec -T app php artisan jwt:secret --force
 
-   # steps:
-     # - name: Checkout my Code 
-      #  uses: actions/checkout@v4
+      - name: Run DB migrations
+        working-directory: ./server
+        run: |
+          docker compose exec -T app php artisan migrate --force
 
-     # - name: Connect to EC2 Server
-        #uses: appleboy/ssh-action@v1.2.1
-        #with:
-          #host: ${{ secrets.EC2_HOST }}
-          #username: ${{ secrets.EC2_USER }}
-          #key: ${{ secrets.EC2_SSH_KEY }}
+      - name: Run tests
+        working-directory: ./server
+        run: |
+          docker compose exec -T app php artisan test
