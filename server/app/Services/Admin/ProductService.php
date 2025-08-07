@@ -11,11 +11,11 @@ class ProductService
     static function getAllProducts($id = null)
     {
         if (!$id) {
-            return \Cache::remember('admin.products.all', 3600, function () {
+            return Cache::remember('admin.products.all', 3600, function () {
                 return Product::with('image')->get();
             });
         }
-        return \Cache::remember("admin.products.{$id}", 3600, function () use ($id) {
+        return Cache::remember("admin.products.{$id}", 3600, function () use ($id) {
             return Product::with('image')->find($id);
         });
     }
@@ -23,30 +23,50 @@ class ProductService
     static function addOrUpdateProduct($data, $product)
     {
         try {
-            if (empty($data['name']) || empty($data['price']) || !isset($data['stock'])) {
-                return null;
+            $isNew = !$product->exists; // Check if this is a new product
+
+            if ($isNew) {
+                // Require all required fields for creation
+                if (empty($data['name']) || empty($data['price']) || !isset($data['stock'])) {
+                    throw new \Exception('Missing required fields: name, price, or stock for new product');
+                }
             }
 
-            $product->name = $data['name'];
-            $product->description = $data['description'] ?? null;
-            $product->price = $data['price'];
-            $product->stock = $data['stock'];
-            $product->category = $data['category'] ?? null;
-            $product->save();
+            // Only update fields if they are provided
+            if (isset($data['name'])) {
+                $product->name = $data['name'];
+            }
+            if (isset($data['description'])) {
+                $product->description = $data['description'];
+            }
+            if (isset($data['price'])) {
+                $product->price = $data['price'];
+            }
+            if (isset($data['stock'])) {
+                $product->stock = $data['stock'];
+            }
+            if (isset($data['category'])) {
+                $product->category = $data['category'];
+            }
 
-            self::clearProductCache();
+            if (!$product->save()) {
+                throw new \Exception('Save failed');
+            }
 
+            // Optional: load relations
             return $product->load('image');
         } catch (\Exception $e) {
-            return null;
+            return ['__error' => $e->getMessage()];
         }
     }
+
+
 
     static function deleteProduct($id)
     {
         try {
             $product = Product::find($id);
-            
+
             if (!$product) {
                 return false;
             }

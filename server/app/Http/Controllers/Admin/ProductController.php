@@ -8,6 +8,7 @@ use App\Services\Admin\ProductService;
 use App\Services\Admin\AuditLogService;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -41,11 +42,15 @@ class ProductController extends Controller
             $data = $request->all();
             $product = ProductService::addOrUpdateProduct($data, $product);
 
+            if (is_array($product) && isset($product['__error'])) {
+                return $this->responseJSON(null, $product['__error'], 400);
+            }
+
             if ($product) {
                 // Log the audit action
                 $action = $isUpdate ? 'product_updated' : 'product_created';
                 AuditLogService::logAction(
-                    auth()->id(),
+                    Auth::id(),
                     $action,
                     'Product',
                     $product->id,
@@ -72,15 +77,15 @@ class ProductController extends Controller
                 $deleted = ProductService::deleteProduct($id);
 
                 if ($deleted) {
-                                    // Log the audit action
-                AuditLogService::logAction(
-                    auth()->id(),
-                    'product_deleted',
-                    'Product',
-                    $id,
-                    'active',
-                    'deleted'
-                );
+                    // Log the audit action
+                    AuditLogService::logAction(
+                        Auth::id(),
+                        'product_deleted',
+                        'Product',
+                        $id,
+                        'active',
+                        'deleted'
+                    );
 
                     return $this->responseJSON(null);
                 } else {
