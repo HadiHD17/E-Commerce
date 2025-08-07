@@ -6,24 +6,24 @@ export default function HeroSection() {
         <div className="hero-section">
             <div className="row">
                 <div className="box half">
-                    <img src="/offers/image1.jpeg" />
+                    <img src="/offers/image11.jpg" />
                 </div>
                 <div className="box half">
-                    <img src="/offers/image2.jpeg" />
+                    <img src="/offers/image15.jpg" />
                 </div>
                 <div className="box full">
-                    <img src="/offers/image3.jpeg" />
+                    <img src="/offers/image8.jpg" />
                 </div>
             </div>
             <div className="row">
                 <div className="box full">
-                    <img src="/offers/image4.jpeg" />
+                    <img src="/offers/image16.jpg" />
                 </div>
                 <div className="box half">
-                    <img src="/offers/image5.jpeg" />
+                    <img src="/offers/image13.jpg" />
                 </div>
                 <div className="box half">
-                    <img src="/offers/image6.jpeg" />
+                    <img src="/offers/image12.jpg" />
                 </div>
             </div>
         </div>
