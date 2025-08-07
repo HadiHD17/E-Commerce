@@ -11,7 +11,7 @@ import AdminOrdersPage from "@/pages/admin/orders";
 import AdminProductsPage from "@/pages/admin/products";
 import NotFoundPage from "@/pages/not-found";
 import AuthLayout from "@/components/layouts/auth-layout";
-import RootLayout from "@/components/layouts/root-layout";
+import MainLayout from "@/components/layouts/main-layout";
 import AccountLayout from "@/components/layouts/account-layout";
 import AccountSettingsPage from "@/pages/account/settings";
 import ChatPage from "@/pages/chat";
@@ -27,7 +27,7 @@ export default function Router() {
             future={{ v7_startTransition: false, v7_relativeSplatPath: false }}
         >
             <Routes>
-                <Route element={<RootLayout />}>
+                <Route element={<MainLayout />}>
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/search" element={<ProductsSearchPage />} />
@@ -42,29 +42,6 @@ export default function Router() {
                         path="/products/:id"
                         element={<ProductDetailsPage />}
                     />
-
-                    <Route path="/admin" element={<AdminLayout />}>
-                        <Route index element={<AdminHomePage />} />
-                        <Route path="orders" element={<AdminOrdersPage />} />
-                        <Route
-                            path="all-products"
-                            element={<AdminProductsPage />}
-                        />
-                        <Route
-                            path="new-product"
-                            element={<AdminNewProductPage />}
-                        />
-                        <Route
-                            path="edit-product/:productId"
-                            element={<AdminEditProductPage />}
-                        />
-                        <Route
-                            path="products"
-                            element={
-                                <Navigate to="/admin/all-products" replace />
-                            }
-                        />
-                    </Route>
 
                     <Route path="/account" element={<AccountLayout />}>
                         <Route
@@ -101,6 +78,31 @@ export default function Router() {
                     {/* Add other routes here */}
 
                     <Route path="*" element={<NotFoundPage />} />
+                </Route>
+
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route
+                        index
+                        element={<Navigate to="/admin/dashboard" replace />}
+                    />
+                    <Route path="dashboard" element={<AdminHomePage />} />
+                    <Route path="orders" element={<AdminOrdersPage />} />
+                    <Route
+                        path="all-products"
+                        element={<AdminProductsPage />}
+                    />
+                    <Route
+                        path="new-product"
+                        element={<AdminNewProductPage />}
+                    />
+                    <Route
+                        path="edit-product/:productId"
+                        element={<AdminEditProductPage />}
+                    />
+                    <Route
+                        path="products"
+                        element={<Navigate to="/admin/all-products" replace />}
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>

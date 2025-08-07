@@ -2,13 +2,13 @@ import Navbar from "@/components/shared/navbar";
 import Footer from "@/components/shared/footer";
 import { Outlet, useLocation } from "react-router-dom";
 import SearchWithAiButton from "@/components/shared/search-with-ai-button";
-import "./root-layout.css";
+import "./main-layout.css";
 
 const NO_NAVBAR_PAGES = ["/login", "/register", "/forgot-password"];
 const FOOTER_PAGES = ["/"];
 const CHAT_PAGES = ["/", "/search"];
 
-export default function RootLayout() {
+export default function MainLayout() {
     const { pathname } = useLocation();
 
     const isNoNavPage = NO_NAVBAR_PAGES.includes(pathname);
@@ -16,9 +16,9 @@ export default function RootLayout() {
     const isChatPage = CHAT_PAGES.includes(pathname);
 
     return (
-        <div className="root-layout">
+        <div className="main-layout">
             {!isNoNavPage && <Navbar />}
-            <main className="root-layout__body flex-1">
+            <main className="main-layout__body">
                 <Outlet />
                 {isChatPage && <SearchWithAiButton />}
             </main>

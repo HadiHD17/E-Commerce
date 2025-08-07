@@ -11,10 +11,10 @@ import {
 import Button from "../button";
 import NavbarSearch from "./navbar-search";
 import cls from "@/utils/classnames";
-import "./navbar.css";
 import useAuth from "@/hooks/use-auth";
 import UserDropdown from "@/components/user-dropdown";
 import NotificationDropdown from "@/components/notification-dropdown";
+import "./navbar.css";
 
 const links = {
     customer: [

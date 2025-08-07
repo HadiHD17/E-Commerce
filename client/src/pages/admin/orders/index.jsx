@@ -12,7 +12,7 @@ export default function AdminOrdersPage() {
 
     let ordersContent;
     if (isLoading) {
-        ordersContent = <p>Loading products...</p>;
+        ordersContent = <p>Loading orders...</p>;
     } else if (error) {
         ordersContent = <ErrorAlert error={error} />;
     } else {

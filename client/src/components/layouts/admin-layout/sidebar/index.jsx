@@ -1,44 +1,61 @@
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+    GaugeIcon,
+    PackageIcon,
+    PlusIcon,
+    SignOutIcon,
+    SquaresFourIcon,
+} from "@phosphor-icons/react";
 import Button from "@/components/shared/button";
+import { logout } from "@/store/slices/auth-slice";
+import AdminSidebarLink from "./admin-sidebar-link";
 import "./admin-sidebar.css";
-import { SignOutIcon } from "@phosphor-icons/react";
 
 export default function AdminSidebar() {
+    const dispatch = useDispatch();
+
     return (
         <div className="admin-sidebar">
-            <ul>
-                <li>
-                    <NavLink to="/admin">Dashboard</NavLink>
-                </li>
+            <div className="admin-sidebar-links">
+                <AdminSidebarLink icon={GaugeIcon} to="/admin/dashboard">
+                    Dashboard
+                </AdminSidebarLink>
 
-                <li className="has-submenu">
-                    <span>Products</span>
+                <div className="has-submenu">
+                    <p>Products</p>
 
                     <ul className="submenu">
                         <li>
-                            <NavLink to="/admin/all-products">
+                            <AdminSidebarLink
+                                icon={SquaresFourIcon}
+                                to="/admin/all-products"
+                            >
                                 All Products
-                            </NavLink>
+                            </AdminSidebarLink>
                         </li>
                         <li>
-                            <NavLink to="/admin/new-product">
+                            <AdminSidebarLink
+                                icon={PlusIcon}
+                                to="/admin/new-product"
+                            >
                                 New Product
-                            </NavLink>
+                            </AdminSidebarLink>
                         </li>
                     </ul>
-                </li>
+                </div>
 
-                <li>
-                    <NavLink to="/admin/orders">Orders</NavLink>
-                </li>
-            </ul>
+                <AdminSidebarLink icon={PackageIcon} to="/admin/orders">
+                    Orders
+                </AdminSidebarLink>
+            </div>
 
             <Button
-                variant="ghost"
+                variant="outlined"
                 color="danger"
-                className="admin-sidebar__logout "
+                className="admin-sidebar__logout justify-center"
+                onClick={() => dispatch(logout())}
             >
-                <SignOutIcon /> Log out
+                <SignOutIcon size={24} /> Log out
             </Button>
         </div>
     );

@@ -1,8 +1,9 @@
 /* Sidebar container */
 .admin-sidebar {
     flex: 1;
-    min-width: 16rem;
-    max-width: 24rem;
+    min-width: 200px;
+    max-width: 280px;
+    max-height: 100%;
 
     position: sticky;
     top: 0;
@@ -14,57 +15,9 @@
 
     background-color: var(--color-gray-100);
 
-    padding-inline: var(--spacing-5);
-    padding-block: var(--spacing-12);
+    padding-inline: var(--spacing-8);
+    padding-block: var(--spacing-10);
     border-right: 1px solid #e0e0e0;
-}
-
-/* Sidebar list */
-.admin-sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-/* Sidebar items */
-.admin-sidebar li {
-    margin-bottom: 15px;
-}
-
-/* Sidebar links */
-.admin-sidebar a,
-.admin-sidebar span {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    display: block;
-    transition: color 0.3s ease;
-}
-
-/* Hover effect */
-.admin-sidebar a:hover {
-    color: var(--color-brand-500);
-}
-
-/* Active link */
-.admin-sidebar .active {
-    color: var(--color-brand-500);
-    font-weight: var(--fw-bold);
-}
-
-/* Submenu styling */
-.admin-sidebar .has-submenu > span {
-    font-weight: var(--fw-medium);
-    margin-bottom: var(--spacing-3);
-}
-
-.admin-sidebar .submenu {
-    margin-inline-start: var(--spacing-4);
-    margin-top: var(--spacing-1\.5);
-}
-
-.admin-sidebar .submenu li {
-    margin-bottom: var(--spacing-3);
 }
 
 .admin-sidebar__logout {
@@ -72,4 +25,40 @@
     align-items: center;
     gap: var(--spacing-2);
     margin-top: auto;
+}
+
+/* sidebar-links */
+.admin-sidebar-links {
+    display: grid;
+    gap: var(--spacing-8);
+}
+
+.admin-sidebar-link {
+    all: unset;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    font-weight: var(--fw-medium);
+    color: var(--color-gray-700);
+}
+.admin-sidebar-link.active {
+    font-weight: var(--fw-bold);
+    color: var(--color-brand-500);
+}
+
+.has-submenu p {
+    font-weight: var(--fw-medium);
+    margin-bottom: var(--spacing-4);
+}
+
+.submenu {
+    display: grid;
+    gap: var(--spacing-4);
+    list-style: none;
+}
+.submenu .admin-sidebar-link {
+    margin-inline-start: var(--spacing-6);
 }
