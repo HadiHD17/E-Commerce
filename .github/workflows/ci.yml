@@ -1,4 +1,4 @@
-name: Laravel Docker CI
+name: Docker Laravel CI
 
 on:
   push:
@@ -11,32 +11,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Navigate to server and start Docker containers
+      - name: Set up Docker and Start Containers
         working-directory: ./server
         run: |
           cp .env.example .env
           docker compose up -d --build
 
-      - name: Install dependencies inside container
+      - name: Wait for MySQL to be Ready
         working-directory: ./server
         run: |
-          docker compose exec -T app composer install --no-interaction --no-progress --optimize-autoloader
+          echo "Waiting for DB to be ready..."
+          until docker compose exec -T backend mysqladmin ping -hdb --silent; do
+            sleep 2
+          done
 
-      - name: Generate app key & JWT secret
+      - name: Install Dependencies (Composer)
         working-directory: ./server
         run: |
-          docker compose exec -T app php artisan key:generate
-          docker compose exec -T app php artisan jwt:secret --force
+          docker compose exec -T backend composer install --no-interaction --no-progress --optimize-autoloader
 
-      - name: Run DB migrations
+      - name: Generate App Key and JWT Secret
         working-directory: ./server
         run: |
-          docker compose exec -T app php artisan migrate --force
+          docker compose exec -T backend php artisan key:generate
+          docker compose exec -T backend php artisan jwt:secret --force
 
-      - name: Run tests
+      - name: Run Migrations
         working-directory: ./server
-        run: |
-          docker compose exec -T app php artisan test
+        run: docker compose exec -T backend php artisan migrate --force
+
+      - name: Run Tests
+        working-directory: ./server
+        run: docker compose exec -T backend php artisan test
