@@ -11,7 +11,8 @@
     background-color: #d4edda;
     color: #155724;
 }
-.status.shipped {
+.status.shipped,
+.status.packed {
     background-color: #cce5ff;
     color: #004085;
 }
@@ -19,7 +20,6 @@
     background-color: #fff3cd;
     color: #856404;
 }
-
 .status.paid {
     background-color: #fff3cd;
     color: #856404;
