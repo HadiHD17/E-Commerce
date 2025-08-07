@@ -1,4 +1,4 @@
-name: Docker Laravel CI
+name: Laravel Docker CI
 
 on:
   push:
@@ -14,29 +14,33 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Copy .env and Start Docker Containers
-        run: |
-          cp server/.env.example server/.env
-          docker compose up -d --build
+      - name: Copy Laravel .env file
+        run: cp server/.env.example server/.env
 
-      - name: Wait for MySQL to be Ready
+      - name: Start Docker containers
+        run: docker compose up -d --build
+
+      - name: Wait for MySQL to be ready
         run: |
-          echo "Waiting for MySQL container to be ready..."
-          until docker compose exec -T db mysqladmin ping -hlocalhost --silent; do
+          echo "Waiting for MySQL..."
+          until docker exec mysql-db mysqladmin ping -hlocalhost --silent; do
             sleep 2
           done
 
-      - name: Install Composer Dependencies
+      - name: Install Composer dependencies inside backend container
+        run: docker exec -T backend composer install --no-interaction --no-progress --optimize-autoloader
+
+      - name: Generate Laravel app key and JWT secret
         run: |
-          docker compose exec -T backend composer install --no-interaction --no-progress --optimize-autoloader
+          docker exec -T backend php artisan key:generate
+          docker exec -T backend php artisan jwt:secret --force
 
-      - name: Generate App Key and JWT Secret
-        run: |
-          docker compose exec -T backend php artisan key:generate
-          docker compose exec -T backend php artisan jwt:secret --force
+      - name: Run migrations inside backend container
+        run: docker exec -T backend php artisan migrate --force
 
-      - name: Run Database Migrations
-        run: docker compose exec -T backend php artisan migrate --force
+      - name: Run tests inside backend container
+        run: docker exec -T backend php artisan test
 
-      - name: Run Laravel Tests
-        run: docker compose exec -T backend php artisan test
+      - name: Tear down Docker containers
+        if: always()
+        run: docker compose down
