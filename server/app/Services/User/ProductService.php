@@ -17,11 +17,6 @@ class ProductService
         return \Cache::remember("products.{$id}", 3600, function () use ($id) {
             return Product::with('image')->find($id);
         });
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
-
-        return $product;
     }
 
     static function getProductsByCategory($category)
