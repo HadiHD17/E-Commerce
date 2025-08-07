@@ -13,6 +13,7 @@ export default function CategoriesSection() {
                 },
             });
             setCategories(res.data.payload);
+            console.log(res.data.payload);
         } catch (error) {
             console.error("Error fetching categories:", error);
         }
