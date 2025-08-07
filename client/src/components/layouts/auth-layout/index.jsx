@@ -1,7 +1,7 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import cls from "@/utils/classnames";
-import "./auth-layout.css";
 import useAuth from "@/hooks/use-auth";
+import "./auth-layout.css";
 
 export default function AuthLayout() {
     const { isLoggedIn, isLoading } = useAuth();
@@ -21,15 +21,14 @@ export default function AuthLayout() {
             )}
         >
             <div className="auth-layout__illustration">
-                <div>
-                    <img src="/logo-brand.svg" alt="" height={36} />
-                </div>
-                <p className="fs-h3">
-                    Your one-stop shop for all modern electronics
-                </p>
+                <img src="/auth-layout-illustration.jpg" alt="" />
             </div>
             <section className="auth-layout__content">
                 <div className="auth-layout__form-container">
+                    <Link to="/">
+                        <img src="/logo-black.svg" alt="" height={32} />
+                    </Link>
+
                     <Outlet />
                 </div>
             </section>
