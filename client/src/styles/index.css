@@ -3,12 +3,20 @@
 @import "./spacing.css";
 @import "./colors.css";
 @import "./display.css";
+@import "./position.css";
 @import "./radii.css";
 @import "./shadows.css";
 @import "./typography.css";
 
+html,
+body,
+#root {
+    height: 100%;
+}
+
 body {
     color: var(--color-gray-900);
+    accent-color: var(--color-brand-500);
 
     font-size: var(--fs-body);
 
@@ -22,4 +30,9 @@ body {
 
     padding-inline: var(--spacing-4);
     margin-inline: auto;
+}
+
+.home-page-section {
+    margin-block: var(--spacing-8);
+    padding-top: var(--spacing-12);
 }

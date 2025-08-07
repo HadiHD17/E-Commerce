@@ -1,7 +1,6 @@
 import ErrorAlert from "@/components/shared/error-alert";
 import ProductCard from "@/components/shared/product-card";
 import { useFetchDataWithAuth } from "@/hooks/use-fetch-data-with-auth";
-import "./admin-featured-products-grid.css";
 
 export default function AdminFeaturedProductsGrid() {
     const {
@@ -10,24 +9,12 @@ export default function AdminFeaturedProductsGrid() {
         error,
     } = useFetchDataWithAuth("/common/featured_products", []);
 
-    if (isLoading) {
-        return (
-            <div className="admin-featured-products-grid">
-                <p>Loading products...</p>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="admin-featured-products-grid">
-                <ErrorAlert error={error} />
-            </div>
-        );
-    }
-
-    return (
-        <div className="admin-featured-products-grid">
+    return isLoading ? (
+        <p>Loading products...</p>
+    ) : error ? (
+        <ErrorAlert error={error} />
+    ) : (
+        <div className="products-grid">
             {products.map(prod => (
                 <ProductCard
                     key={prod.id}
@@ -37,6 +24,7 @@ export default function AdminFeaturedProductsGrid() {
                     name={prod.name}
                     price={prod.price}
                     stock={prod.stock}
+                    isAdmin
                 />
             ))}
         </div>

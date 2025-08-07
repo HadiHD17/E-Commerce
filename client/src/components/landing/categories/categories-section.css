@@ -1,15 +1,21 @@
 .categories-section {
-  margin: 2rem 4rem;
-  padding-top: 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.categories-cards{
+.categories-cards {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: var(--spacing-5);
     align-items: center;
-    justify-content: center;
+
+    padding-block: 0.25rem;
+
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: none;
+}
+.categories-cards::-webkit-scrollbar {
+    display: none;
 }

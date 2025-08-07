@@ -3,9 +3,8 @@
     height: 100vh;
 }
 
-.admin-main {
+.admin-orders-main {
     flex: 1;
-    padding: 2rem;
     background-color: #fff;
 }
 

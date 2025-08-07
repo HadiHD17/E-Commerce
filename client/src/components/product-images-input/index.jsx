@@ -1,16 +1,16 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import toBase64 from "@/utils/base64";
 import { PlusIcon, XIcon } from "@phosphor-icons/react";
 import "./product-images-input.css";
 
-export default function ProductImagesInput() {
+export default function ProductImagesInput({ images, onChange }) {
     const fileInputRef = useRef(null);
-    const [images, setImages] = useState([]);
+    // const [images, setImages] = useState([]);
 
     async function handleFileChange(e) {
-        const files = Array.from(e.target.files).slice(0, 4 - images.length);
+        const files = Array.from(e.target.files).slice(0, 1 - images.length);
         const base64Images = await Promise.all(files.map(toBase64));
-        setImages(prev => [...prev, ...base64Images]);
+        onChange([...images, ...base64Images]);
     }
 
     return (
@@ -41,9 +41,7 @@ export default function ProductImagesInput() {
                         <button
                             type="button"
                             onClick={() =>
-                                setImages(prev =>
-                                    prev.filter((_, i) => i !== idx),
-                                )
+                                onChange(images.filter((_, i) => i !== idx))
                             }
                             className="product-images-input__remove-btn d-flex justify-center items-center"
                         >
@@ -53,12 +51,12 @@ export default function ProductImagesInput() {
                 ))}
             </div>
 
-            <span className="product-images-input__note">
+            {/* <span className="product-images-input__note">
                 Max 4 images. The first image will be set as the thumbnail
-            </span>
+            </span> */}
 
             <input
-                disabled={images.length >= 4}
+                disabled={images.length >= 1}
                 type="file"
                 accept="image/png, image/jpeg"
                 className="product-images-input__input"

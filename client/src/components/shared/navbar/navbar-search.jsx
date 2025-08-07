@@ -1,11 +1,12 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { useDispatch } from "react-redux";
 import { productsSlice } from "@/store/slices/products-slice";
 import { useNavigate } from "react-router-dom";
 
 export default function NavbarSearch() {
     const [search, setSearch] = useState("");
+    const id = useId();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ export default function NavbarSearch() {
     return (
         <form className="navbar-search" onSubmit={handleSubmit}>
             <input
-                id="search"
+                id={`search-${id}`}
                 name="search"
                 type="search"
                 value={search}

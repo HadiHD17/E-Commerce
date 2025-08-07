@@ -2,20 +2,32 @@ import React from "react";
 import "./order-row.css";
 
 const statusClasses = {
-    Packed: "status packed",
-    Shipped: "status shipped",
-    Paid: "status paid",
-    Pending: "status pending",
-    Canceled: "status canceled",
+    packed: "status packed",
+    shipped: "status shipped",
+    paid: "status paid",
+    pending: "status pending",
+    canceled: "status canceled",
 };
 
-export default function OrderRow({ id, customer, status, total, date }) {
+export default function OrderRow({
+    id,
+    customer,
+    status,
+    total,
+    date,
+    onUpdateStatus,
+}) {
     return (
         <tr>
             <td>{id}</td>
             <td>{customer}</td>
             <td>
-                <button className={statusClasses[status]}>{status}</button>
+                <button
+                    className={statusClasses[status]}
+                    onClick={() => onUpdateStatus(id)}
+                >
+                    {status}
+                </button>
             </td>
             <td>{total}</td>
             <td>{date}</td>

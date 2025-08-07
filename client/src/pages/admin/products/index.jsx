@@ -4,16 +4,21 @@ import ProductCard from "@/components/shared/product-card";
 import ErrorAlert from "@/components/shared/error-alert";
 import FiltersPanel from "@/components/filters-panel";
 import { useFetchDataWithAuth } from "@/hooks/use-fetch-data-with-auth";
+import useDebounce from "@/hooks/use-debounce";
 import "./admin-products.css";
 
 export default function AdminProductsPage() {
     const [search, setSearch] = useState("");
+    const debouncedSearch = useDebounce(search);
 
     const {
         data: products,
         isLoading,
         error,
-    } = useFetchDataWithAuth("/admin/products", []);
+    } = useFetchDataWithAuth(
+        `/admin/products_by_search?search=${debouncedSearch}`,
+        [],
+    );
 
     let productsContent;
     if (isLoading) {
@@ -25,22 +30,21 @@ export default function AdminProductsPage() {
             products.length === 0 ? (
                 <p className="text-gray-700">No products found. 🤷‍♂️</p>
             ) : (
-                <div className="products-grid">
-                    {products.map(prod => (
-                        <ProductCard
-                            key={prod.id}
-                            id={prod.id}
-                            category={prod.category}
-                            img={
-                                prod.image[0]?.image_url ??
-                                "https://placehold.co/200"
-                            }
-                            name={prod.name}
-                            price={prod.price}
-                            stock={prod.stock}
-                        />
-                    ))}
-                </div>
+                products.map(prod => (
+                    <ProductCard
+                        key={prod.id}
+                        id={prod.id}
+                        category={prod.category}
+                        img={
+                            prod.image[0]?.image_url ??
+                            "https://placehold.co/200"
+                        }
+                        name={prod.name}
+                        price={prod.price}
+                        stock={prod.stock}
+                        isAdmin
+                    />
+                ))
             );
     }
 
@@ -60,7 +64,9 @@ export default function AdminProductsPage() {
                     </div>
 
                     <div className="products-content">
-                        {productsContent}
+                        <div className="admin__products-grid products-grid">
+                            {productsContent}
+                        </div>
 
                         <FiltersPanel />
                     </div>
