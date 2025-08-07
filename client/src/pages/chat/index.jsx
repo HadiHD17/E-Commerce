@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { MagnifyingGlassIcon, SparkleIcon } from "@phosphor-icons/react";
 import ChatSuggestion from "@/components/chat-suggestion";
@@ -5,24 +6,54 @@ import ChatInput from "@/components/chat-input";
 import ChatMessages from "@/components/chat-messages";
 import "./chat.css";
 
-const chatMessages = [
-    { id: 1, sender: "human", text: "Hello, how are you?" },
-    {
-        id: 2,
-        sender: "bot",
-        text: "I'm good, thank you! How can I help you today?",
-    },
-    { id: 3, sender: "human", text: "Can you tell me a joke?" },
-    {
-        id: 4,
-        sender: "bot",
-        text: "Why don't skeletons fight each other? They don't have the guts.",
-    },
-    { id: 5, sender: "human", text: "Haha, that's funny!" },
-];
-
 export default function ChatPage() {
     const [isChatting, setIsChatting] = useState(false);
+    const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    async function handleSendMessage(userMessage) {
+        const token = localStorage.getItem("auth-token");
+        setIsChatting(true);
+
+        setMessages(prev => [
+            ...prev,
+            { id: Date.now(), sender: "human", text: userMessage },
+        ]);
+
+        setLoading(true);
+
+        try {
+            const response = await axios.post(
+                "http://localhost:8000/api/v0.1/chatbot/ask",
+                { message: userMessage },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: "application/json",
+                    },
+                },
+            );
+
+            const botReply = response.data.payload;
+
+            setMessages(prev => [
+                ...prev,
+                { id: Date.now() + 1, sender: "bot", text: botReply },
+            ]);
+        } catch (err) {
+            console.error("Chat error:", err);
+            setMessages(prev => [
+                ...prev,
+                {
+                    id: Date.now() + 1,
+                    sender: "bot",
+                    text: "Oops! Something went wrong.",
+                },
+            ]);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <div className="chat-page">
@@ -43,7 +74,14 @@ export default function ChatPage() {
 
                 <div>
                     {isChatting ? (
-                        <ChatMessages messages={chatMessages} />
+                        <>
+                            <ChatMessages messages={messages} />
+                            {loading && (
+                                <div className="ai-loading-message">
+                                    <div className="ai-loading-dot" />
+                                </div>
+                            )}
+                        </>
                     ) : (
                         <div className="d-flex flex-col items-start gap-2">
                             <ChatSuggestion>
@@ -61,7 +99,7 @@ export default function ChatPage() {
 
                     <ChatInput
                         placeholder="Write your message..."
-                        onSubmit={() => setIsChatting(true)}
+                        onSubmit={handleSendMessage}
                     />
                 </div>
             </section>
