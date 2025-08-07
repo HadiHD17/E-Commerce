@@ -14,35 +14,29 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Docker and Start Containers
-        working-directory: ./server
+      - name: Copy .env and Start Docker Containers
         run: |
-          cp .env.example .env
+          cp server/.env.example server/.env
           docker compose up -d --build
 
       - name: Wait for MySQL to be Ready
-        working-directory: ./server
         run: |
-          echo "Waiting for DB to be ready..."
-          until docker compose exec -T backend mysqladmin ping -hdb --silent; do
+          echo "Waiting for MySQL container to be ready..."
+          until docker compose exec -T db mysqladmin ping -hlocalhost --silent; do
             sleep 2
           done
 
-      - name: Install Dependencies (Composer)
-        working-directory: ./server
+      - name: Install Composer Dependencies
         run: |
           docker compose exec -T backend composer install --no-interaction --no-progress --optimize-autoloader
 
       - name: Generate App Key and JWT Secret
-        working-directory: ./server
         run: |
           docker compose exec -T backend php artisan key:generate
           docker compose exec -T backend php artisan jwt:secret --force
 
-      - name: Run Migrations
-        working-directory: ./server
+      - name: Run Database Migrations
         run: docker compose exec -T backend php artisan migrate --force
 
-      - name: Run Tests
-        working-directory: ./server
+      - name: Run Laravel Tests
         run: docker compose exec -T backend php artisan test
