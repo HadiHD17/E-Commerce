@@ -28,18 +28,18 @@ jobs:
           done
 
       - name: Install Composer dependencies inside backend container
-        run: docker exec -T backend composer install --no-interaction --no-progress --optimize-autoloader
+        run: docker exec backend composer install --no-interaction --no-progress --optimize-autoloader
 
       - name: Generate Laravel app key and JWT secret
         run: |
-          docker exec -T backend php artisan key:generate
-          docker exec -T backend php artisan jwt:secret --force
+          docker exec backend php artisan key:generate
+          docker exec backend php artisan jwt:secret --force
 
       - name: Run migrations inside backend container
-        run: docker exec -T backend php artisan migrate --force
+        run: docker exec backend php artisan migrate --force
 
       - name: Run tests inside backend container
-        run: docker exec -T backend php artisan test
+        run: docker exec backend php artisan test
 
       - name: Tear down Docker containers
         if: always()
